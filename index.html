@@ -9,7 +9,7 @@
   <link rel="icon" href="https://www.universalrelocations.com/wp-content/uploads/2024/01/Universal-Round-Logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
@@ -45,45 +45,36 @@
   </header>
 
 
-<section class="hero">
-  <div class="container">
-    <div class="hero-copy">
-      <span class="eyebrow" style="color:var(--accent)">The One-Stop Relocation Service</span>
-      <h1>Across Borders,<br>Beyond Boundaries.<br>Your Global Move Begins Here.</h1>
-      <p>Expert international, interstate and intrastate moving tailored to you. From removals and logistics to customs clearance — we handle every detail so you can focus on your new chapter.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#" data-open-assistant>Get an Instant Estimate</a>
-        <a class="btn btn-outline" href="https://calendly.com/UniversalrelocationsOfficial">Schedule a Video Survey</a>
+<section class="hello-hero">
+  <div class="container hello-inner">
+    <h1 class="hello-title">Hello.</h1>
+    <p class="hello-sub">Whatever you're moving, wherever to — just tell us, and start here.</p>
+
+    <form class="hero-prompt" id="hero-prompt-form">
+      <input id="hero-prompt-input" type="text" autocomplete="off" aria-label="Describe your move in your own words">
+      <div class="hero-prompt-actions">
+        <button type="button" class="hp-icon" id="hp-mic" aria-label="Voice input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0014 0M12 17v4"/></svg>
+        </button>
+        <button type="submit" class="hp-go" aria-label="Start">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
-      <div class="hero-badges">
-        <div class="hero-badge"><b>28+</b><span>Years of Experience</span></div>
-        <div class="hero-badge"><b>190+</b><span>Countries Covered</span></div>
-        <div class="hero-badge"><b>4.5★</b><span>Trustpilot (2000+ reviews)</span></div>
-      </div>
+    </form>
+
+    <div class="hero-suggest">
+      <span class="hs-label">Try:</span>
+      <button class="hs-chip" data-prompt="I want to move my 3 bedroom apartment from New York to Delhi">Move a 3-bedroom, New York → Delhi</button>
+      <button class="hs-chip" data-prompt="I want to ship 5 boxes of 25 kg each from Chennai to San Francisco">Ship 5 boxes, Chennai → San Francisco</button>
+      <button class="hs-chip" data-prompt="I want to move my car from Dubai to Toronto">Move a car, Dubai → Toronto</button>
+      <button class="hs-chip" data-prompt="How much will it cost to move 10 boxes from Dallas to Abu Dhabi">10 boxes, Dallas → Abu Dhabi</button>
     </div>
 
-    <div class="quote-card">
-      <h3>Get your free quote</h3>
-      <p class="sub">Tell us about your move and we'll be in touch.</p>
-      <form id="quote-form">
-        <div class="quote-grid">
-          <div class="field"><label>Moving From *</label><input required placeholder="City / Country"></div>
-          <div class="field"><label>Moving To *</label><input required placeholder="City / Country"></div>
-          <div class="field"><label>Move Date</label><input type="date"></div>
-          <div class="field"><label>Move Size</label>
-            <select><option value="">Select…</option><option>Baggage</option><option>Studio</option>
-            <option>1 Bedroom</option><option>2 Bedroom</option><option>3 Bedroom</option><option>4+ Bedroom</option></select>
-          </div>
-          <div class="field full"><label>Name</label><input required placeholder="Your name"></div>
-          <div class="field"><label>Email</label><input type="email" required placeholder="you@email.com"></div>
-          <div class="field"><label>Phone</label><input type="tel" required placeholder="Phone"></div>
-          <div class="consent full">
-            <input type="checkbox" required id="sms">
-            <label for="sms" style="font-weight:400">I consent to receive SMS messages from Universal Relocations about my quote and shipment updates. Frequency may vary; data rates may apply. Reply STOP to opt out. See our <a href="/privacy-policy/" style="color:var(--blue)">Privacy Policy</a> &amp; <a href="/terms-and-condition/" style="color:var(--blue)">Terms</a>.</label>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+    <div class="hello-badges">
+      <div class="hb"><b>28+</b><span>Years of experience</span></div>
+      <div class="hb"><b>190+</b><span>Countries covered</span></div>
+      <div class="hb"><b>4.5★</b><span>Trustpilot · 2000+ reviews</span></div>
+      <div class="hb"><b>FMC</b><span>Licensed &amp; bonded NVOCC</span></div>
     </div>
   </div>
 </section>
