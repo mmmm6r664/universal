@@ -325,12 +325,6 @@ PRESS_LOGOS = "".join(f'<img src="{IMG}/2025/08/{n}" alt="{a}">' for n, a in [
 
 HOME_BODY = f"""
 <section class="hello-hero">
-  <svg class="hero-plane" viewBox="0 0 120 50" fill="currentColor" aria-hidden="true"><path d="M2 30 L80 24 q20 -2 30 2 q6 3 -2 6 L40 42 L22 40 L34 32 L12 33 Z"/><path d="M58 26 L72 7 L80 7 L70 25 Z"/></svg>
-  <svg class="hero-truck" viewBox="0 0 160 92" aria-hidden="true">
-    <g fill="currentColor"><path d="M4 12 h98 v54 h-98 z"/><path d="M102 30 h32 l22 22 v14 h-54 z"/></g>
-    <g class="wheel"><circle cx="36" cy="74" r="13" fill="currentColor"/><circle cx="36" cy="74" r="5" fill="#eef1f8"/><path d="M36 63v22 M25 74h22" stroke="#eef1f8" stroke-width="2"/></g>
-    <g class="wheel"><circle cx="130" cy="74" r="13" fill="currentColor"/><circle cx="130" cy="74" r="5" fill="#eef1f8"/><path d="M130 63v22 M119 74h22" stroke="#eef1f8" stroke-width="2"/></g>
-  </svg>
   <div class="container hello-inner">
     <h1 class="hello-title">Hello.</h1>
     <p class="hello-sub">Whatever you're moving, wherever to — just tell us, and start here.</p>

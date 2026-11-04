@@ -540,13 +540,11 @@ a.country-chip:hover { background: var(--blue); color: #fff; border-color: var(-
 .stat b { position: relative; display: inline-block; }
 .stat b::after { content: ""; display: block; width: 36px; height: 3px; background: var(--accent); border-radius: 3px; margin: 8px auto 10px; }
 
-/* ---- Hero animated plane + truck ---- */
-.hero-plane, .hero-truck { position: absolute; z-index: 1; pointer-events: none; color: var(--navy); }
-.hero-plane { top: 13%; left: -14%; width: 104px; opacity: .5; animation: hero-fly 19s linear infinite; }
-.hero-truck { bottom: 5%; left: -18%; width: 150px; opacity: .55; animation: hero-drive 15s linear infinite; }
-.hero-truck .wheel { transform-box: fill-box; transform-origin: center; animation: hero-spin 1.1s linear infinite; }
-@keyframes hero-fly   { 0% { transform: translateX(0) translateY(0); } 50% { transform: translateX(65vw) translateY(-14px); } 100% { transform: translateX(132vw) translateY(0); } }
-@keyframes hero-drive { 0% { transform: translateX(0); } 100% { transform: translateX(138vw); } }
-@keyframes hero-spin  { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .hero-plane, .hero-truck, .logos-track { animation: none; } }
-@media (max-width: 600px) { .hero-plane, .hero-truck { display: none; } .footer-cta .container { flex-direction: column; text-align: center; } }
+/* ---- Hero image: slow, subtle motion (Ken Burns) on the existing montage ---- */
+.hello-hero::before { animation: hero-pan 34s ease-in-out infinite alternate; will-change: transform; }
+@keyframes hero-pan {
+  from { transform: scale(1.04) translate(0, 0); }
+  to   { transform: scale(1.12) translate(-2%, -1.5%); }
+}
+@media (prefers-reduced-motion: reduce) { .hello-hero::before, .logos-track { animation: none; } }
+@media (max-width: 600px) { .footer-cta .container { flex-direction: column; text-align: center; } }
