@@ -102,3 +102,28 @@
   }
   t.textContent = ""; tick();
 })();
+
+// Scroll-reveal transitions (applied automatically, respects reduced-motion)
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var sel = '.feature, .svc, .hub-card, .review, .info-card, .promise .p, .stat, ' +
+            '.route-finder, .logos-slider, .section-title, .section-intro, .eyebrow, ' +
+            '.prose h2, .office-table, .country-grid, .related-routes, .ura-estimate';
+  var els = Array.prototype.slice.call(document.querySelectorAll(sel)).filter(function (el) {
+    return !el.closest('.hello-hero');
+  });
+  var counts = new Map();
+  els.forEach(function (el) {
+    el.classList.add('reveal');
+    var p = el.parentElement;
+    var n = counts.get(p) || 0; counts.set(p, n + 1);
+    el.style.transitionDelay = Math.min(n * 60, 360) + 'ms';
+  });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('in-view'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
