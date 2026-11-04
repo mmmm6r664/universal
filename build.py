@@ -96,7 +96,7 @@ HEADER = f"""
       <a class="nav-logo" href="/"><img src="{LOGO}" alt="Universal Relocations"></a>
       <ul class="nav-menu">{NAV}</ul>
       <div class="nav-cta">
-        <a class="btn btn-primary" href="/contact-us/">Get a Quote</a>
+        <a class="btn btn-primary" href="/contact-us/" data-open-assistant>Get a Quote</a>
         <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -221,6 +221,7 @@ def page(title, body, desc="", canonical=""):
 {body}
 {FOOTER}
 <script src="/assets/script.js"></script>
+<script src="/assets/assistant.js" defer></script>
 </body>
 </html>
 """
@@ -284,7 +285,7 @@ HOME_BODY = f"""
       <h1>Across Borders,<br>Beyond Boundaries.<br>Your Global Move Begins Here.</h1>
       <p>Expert international, interstate and intrastate moving tailored to you. From removals and logistics to customs clearance — we handle every detail so you can focus on your new chapter.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="https://portal.universalrelocations.com/moving-calculator/">Moving Calculator</a>
+        <a class="btn btn-primary" href="#" data-open-assistant>Get an Instant Estimate</a>
         <a class="btn btn-outline" href="https://calendly.com/UniversalrelocationsOfficial">Schedule a Video Survey</a>
       </div>
       <div class="hero-badges">
