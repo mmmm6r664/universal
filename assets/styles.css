@@ -180,8 +180,8 @@ h1, h2, h3, h4, h5, h6 {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("/assets/hero-bg.jpg") center bottom / cover no-repeat;
-  opacity: 0.22;
+  background: url("/assets/hero-bg.jpg") center center / cover no-repeat;
+  opacity: 0.62;
   pointer-events: none;
   z-index: 0;
 }
@@ -189,7 +189,12 @@ h1, h2, h3, h4, h5, h6 {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, #f6f8fc 0%, rgba(246,248,252,0.55) 38%, rgba(246,248,252,0.2) 100%);
+  background: linear-gradient(180deg,
+    rgba(246,248,252,0.86) 0%,
+    rgba(246,248,252,0.42) 30%,
+    rgba(246,248,252,0.30) 58%,
+    rgba(246,248,252,0.70) 88%,
+    #f6f8fc 100%);
   pointer-events: none;
   z-index: 0;
 }
