@@ -14,13 +14,14 @@ LOGO_WHITE = "/assets/logo-white.png"             # white reversed wordmark for 
 WA = "https://api.whatsapp.com/send/?phone=12017874088&text&type=phone_number&app_absent=0"
 
 def _asset_ver():
-    """Content hash for cache-busting /assets so deploys never serve stale CSS/JS."""
+    """Content hash of ALL assets for cache-busting so deploys never serve stale files."""
     import hashlib
     h = hashlib.md5()
-    for f in ["assets/styles.css", "assets/script.js", "assets/assistant.js"]:
-        p = ROOT / f
-        if p.exists():
-            h.update(p.read_bytes())
+    adir = ROOT / "assets"
+    if adir.exists():
+        for p in sorted(adir.glob("*")):
+            if p.is_file():
+                h.update(p.read_bytes())
     return h.hexdigest()[:8]
 ASSET_VER = _asset_ver()
 
@@ -160,7 +161,7 @@ FOOTER = f"""
     <div class="footer-top">
       <div class="container footer-grid">
         <div class="footer-brand">
-          <div class="footer-logo"><img src="{LOGO_WHITE}" alt="Universal Relocations"></div>
+          <div class="footer-logo"><img src="{LOGO_WHITE}?v={ASSET_VER}" alt="Universal Relocations"></div>
           <p>The one-stop relocation service for international, interstate and intrastate shipping needs. Established 1998, moving families and businesses across the world with precision and care.</p>
           {FOOTER_CONTACT}
           <div class="footer-social">{FOOTER_SOCIAL}</div>
