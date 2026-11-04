@@ -578,3 +578,10 @@ a.country-chip:hover { background: var(--blue); color: #fff; border-color: var(-
 .hub-card .tel svg { color: var(--accent-dark); }
 .hub-card .tel:hover { color: var(--blue); }
 .hub-card .row { gap: 12px; }
+
+/* ==========================================================================
+   Unify footer to one brand-blue color
+   ========================================================================== */
+.site-footer { background: var(--navy); }
+.footer-cta { background: var(--navy); border-bottom: 1px solid rgba(255,255,255,.10); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.10); }
