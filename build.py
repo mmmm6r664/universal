@@ -164,7 +164,7 @@ FOOTER = f"""
     <div class="footer-top">
       <div class="container footer-grid">
         <div class="footer-brand">
-          <div class="footer-logo"><img src="{LOGO_WHITE}?v={ASSET_VER}" alt="Universal Relocations"></div>
+          <div class="footer-brandname">Universal Relocations</div>
           <p>The one-stop relocation service for international, interstate and intrastate shipping needs. Established 1998, moving families and businesses across the world with precision and care.</p>
           {FOOTER_CONTACT}
           <div class="footer-social">{FOOTER_SOCIAL}</div>
