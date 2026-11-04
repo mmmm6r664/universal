@@ -49,9 +49,9 @@ TOPBAR = f"""
         <a href="mailto:contact@universalrelocations.com">contact@universalrelocations.com</a>
       </div>
       <div class="topbar-right">
-        <span class="phone"><img src="{IMG}/2024/02/united-states-flag-icon-1.png" alt="USA">1-888-323-7356</span>
-        <span class="phone"><img src="{IMG}/2024/02/india-flag-icon-1.png" alt="India">1-800-103-7356</span>
-        <span class="phone"><img src="{IMG}/2024/06/images-1.png" alt="UAE">800-13-7356</span>
+        <span class="phone"><img src="{IMG}/2024/02/united-states-flag-icon-1.png" alt="USA"><a href="tel:+18883237356">1-888-323-7356</a></span>
+        <span class="phone"><img src="{IMG}/2024/02/india-flag-icon-1.png" alt="India"><a href="tel:+18001037356">1-800-103-7356</a></span>
+        <span class="phone"><img src="{IMG}/2024/06/images-1.png" alt="UAE"><a href="tel:+8001137356">800-13-7356</a></span>
         <span class="socials">
           <a href="https://portal.universalrelocations.com/moving-calculator/">Moving Calculator</a>
           <a href="/faq/">FAQ</a>

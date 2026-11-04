@@ -492,6 +492,17 @@ a.country-chip:hover { background: var(--blue); color: #fff; border-color: var(-
   .features, .hubs, .services-grid, .stats, .promise, .reviews, .card-grid, .footer-grid, .footer-locations { grid-template-columns: 1fr; }
   .quote-grid { grid-template-columns: 1fr; }
   .section { padding: 54px 0; }
+  /* Collapse the cluttered utility strip to one clean tap-to-call line */
+  .topbar .container { justify-content: center; gap: 0; min-height: 38px; padding-top: 4px; padding-bottom: 4px; }
+  .topbar-left { display: none; }
+  .topbar .socials { display: none; }
+  .topbar-right { gap: 0; justify-content: center; width: 100%; }
+  .topbar-right .phone { display: none; }
+  .topbar-right .phone:first-child { display: inline-flex; font-size: .9rem; }
+  .topbar-right .phone:first-child a { color: #fff; font-weight: 600; }
+  /* Tighter header row on phones */
+  .nav { min-height: 64px; }
+  .nav-logo img { height: 38px; }
 }
 
 /* ==========================================================================
