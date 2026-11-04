@@ -8,8 +8,8 @@ import os, pathlib
 
 ROOT = pathlib.Path(__file__).parent
 IMG = "https://www.universalrelocations.com/wp-content/uploads"  # existing hosted assets
-LOGO = f"{IMG}/2023/12/Universal-Logo-BLUE.png"
-LOGO_WHITE = f"{IMG}/2024/01/UR-LOGO-1-1200x286.png"
+LOGO = "/assets/logo-dark.png"          # navy artwork on transparent — for white header
+LOGO_WHITE = "/assets/logo-white.png"    # white artwork on transparent — for navy footer
 
 WA = "https://api.whatsapp.com/send/?phone=12017874088&text&type=phone_number&app_absent=0"
 
@@ -113,7 +113,7 @@ FOOTER = f"""
     <div class="footer-top">
       <div class="container footer-grid">
         <div>
-          <div class="footer-logo"><img src="{LOGO}" alt="Universal Relocations"></div>
+          <div class="footer-logo"><img src="{LOGO_WHITE}" alt="Universal Relocations"></div>
           <p>The one-stop relocation service for international, interstate and intrastate shipping needs. Established 1998, moving families and businesses across the world with precision and care.</p>
           <p class="fmc-note">MC #836909-C &nbsp; New Jersey #39PC00115200 &nbsp; TxDMV #007065281C<br>
           FMC OTI #NF025083 &nbsp; US DOT #2428388 &nbsp; CA #662949</p>
@@ -212,7 +212,7 @@ def page(title, body, desc="", canonical=""):
   <link rel="icon" href="{IMG}/2024/01/Universal-Round-Logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
@@ -451,8 +451,26 @@ def interior(title, crumbs, inner, desc=""):
     body = page_hero(title, crumbs) + f'<section class="section"><div class="container">{inner}</div></section>'
     return page(f"{title} | Universal Relocations", body, desc)
 
+ASSISTANT_BODY = """
+<section class="chat-page">
+  <div class="chat-wrap">
+    <div class="chat-head">
+      <h1>Universal Move Assistant</h1>
+      <p>Tell me about your move and I'll get you an instant estimate.</p>
+    </div>
+    <div class="chat-stream" id="chat-stream"></div>
+    <div class="chat-inputbar" id="chat-inputbar"></div>
+  </div>
+</section>
+"""
+
 if __name__ == "__main__":
     import pages  # the rest of the content pages
+    write("assistant", page(
+        "Move Assistant | Universal Relocations",
+        ASSISTANT_BODY,
+        "Plan your move and get an instant estimate with the Universal Move Assistant.",
+    ))
     write("index", page(
         "Universal Relocations | Your Trusted Expert Moving Partner",
         HOME_BODY,

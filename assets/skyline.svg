@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 420" fill="none" stroke="#07204a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+  <!-- ground line -->
+  <path d="M0 392 H1600" stroke-width="2"/>
+
+  <!-- ===== Statue of Liberty (USA) — simplified original silhouette ===== -->
+  <g transform="translate(150,150)">
+    <path d="M22 242 h20 v-150 h-20 z"/>              <!-- pedestal -->
+    <path d="M14 242 h36"/>                            <!-- base -->
+    <path d="M32 92 q-3 -22 0 -40"/>                   <!-- torso -->
+    <circle cx="32" cy="40" r="11"/>                   <!-- head -->
+    <path d="M23 34 l-6 -6 M41 34 l6 -6 M27 30 l-2 -8 M37 30 l2 -8 M32 28 v-9 M30 31 l-5 -6 M34 31 l5 -6"/> <!-- crown rays -->
+    <path d="M24 60 l-16 -22"/>                         <!-- arm up -->
+    <path d="M8 38 l-3 -14 M8 38 l-10 -6 M8 38 l2 -12"/> <!-- torch flame -->
+    <path d="M40 66 l14 8"/>                            <!-- tablet arm -->
+    <rect x="50" y="68" width="14" height="20"/>       <!-- tablet -->
+  </g>
+
+  <!-- ===== Burj Khalifa (UAE) — simplified tapering tower ===== -->
+  <g transform="translate(470,70)">
+    <path d="M70 322 L84 120 L92 322 Z"/>
+    <path d="M52 322 L74 180 L70 322 Z"/>
+    <path d="M110 322 L94 180 L92 322 Z"/>
+    <path d="M84 120 V46"/>                              <!-- spire -->
+    <path d="M40 322 L62 230 L58 322 Z M126 322 L104 230 L108 322 Z"/>
+  </g>
+  <!-- small city towers -->
+  <g transform="translate(360,250)">
+    <rect x="0" y="0" width="34" height="142"/>
+    <rect x="44" y="40" width="26" height="102"/>
+  </g>
+
+  <!-- ===== Taj Mahal (India) — simplified original silhouette ===== -->
+  <g transform="translate(760,170)">
+    <path d="M60 222 h160 v-96 h-160 z"/>               <!-- plinth -->
+    <path d="M110 126 q30 -70 60 0"/>                    <!-- main dome base -->
+    <path d="M140 56 q-26 24 -30 70 h60 q-4 -46 -30 -70z"/> <!-- onion dome -->
+    <path d="M140 56 v-16 M136 40 h8"/>                  <!-- finial -->
+    <path d="M90 126 q14 -30 28 0 M152 126 q14 -30 28 0"/> <!-- side domes -->
+    <!-- four minarets -->
+    <path d="M50 222 v-110 M44 112 h12 M50 108 v-10 M54 222 l-8 0"/>
+    <path d="M230 222 v-110 M224 112 h12 M230 108 v-10"/>
+    <path d="M86 222 v-96 M80 126 h12"/>
+    <path d="M194 222 v-96 M188 126 h12"/>
+    <path d="M120 222 v-50 q20 -26 40 0 v50"/>           <!-- central arch -->
+  </g>
+
+  <!-- ===== Cargo ship with containers (sea freight) ===== -->
+  <g transform="translate(1040,250)">
+    <path d="M10 118 q10 26 40 26 h150 q30 0 40 -26 z"/>  <!-- hull -->
+    <rect x="26" y="70" width="40" height="48"/>          <!-- containers -->
+    <rect x="70" y="70" width="40" height="48"/>
+    <rect x="114" y="70" width="40" height="48"/>
+    <rect x="40" y="36" width="40" height="34"/>
+    <rect x="86" y="36" width="40" height="34"/>
+    <rect x="170" y="54" width="34" height="64"/>         <!-- bridge -->
+    <path d="M182 54 v-18 M176 36 h18"/>
+  </g>
+
+  <!-- ===== Airplane (air freight) ===== -->
+  <g transform="translate(1180,70)">
+    <path d="M10 40 L150 24 q24 -3 30 6 q4 8 -8 12 L70 70 L44 66 L64 50 L30 52 Z"/>
+    <path d="M96 40 L120 8 L132 8 L116 38 Z"/>
+  </g>
+
+  <!-- ===== Delivery truck + boxes (road + branded) ===== -->
+  <g transform="translate(1320,276)">
+    <rect x="0" y="20" width="118" height="78"/>          <!-- box body -->
+    <path d="M118 46 h40 l24 30 v22 h-64 z"/>             <!-- cab -->
+    <circle cx="34" cy="110" r="16"/>
+    <circle cx="150" cy="110" r="16"/>
+    <path d="M14 44 h90 v30 h-90 z"/>                     <!-- label panel (UR) -->
+  </g>
+  <!-- stacked boxes -->
+  <g transform="translate(700,316)">
+    <rect x="0" y="40" width="48" height="36"/>
+    <rect x="52" y="40" width="48" height="36"/>
+    <rect x="24" y="2" width="48" height="36"/>
+    <path d="M24 20 h48 M0 58 h48 M52 58 h48"/>           <!-- tape lines -->
+  </g>
+</svg>

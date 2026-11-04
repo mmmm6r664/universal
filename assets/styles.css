@@ -4,8 +4,8 @@
    ========================================================================== */
 
 :root {
-  --navy: #0b2b5e;
-  --navy-deep: #07204a;
+  --navy: #07204a;        /* exact brand navy, sampled from the logo */
+  --navy-deep: #04152f;
   --blue: #1f5fbf;
   --blue-light: #eaf1fb;
   --accent: #f4a124;
@@ -23,7 +23,8 @@
   --shadow: 0 10px 34px rgba(11, 43, 94, 0.10);
   --shadow-lg: 0 24px 60px rgba(11, 43, 94, 0.16);
   --max: 1200px;
-  --font: "Poppins", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font: "Lora", Georgia, "Times New Roman", serif;
+  --serif-display: "Fraunces", Georgia, serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,7 +45,8 @@ a { color: inherit; text-decoration: none; }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--ink);
-  font-weight: 700;
+  font-family: var(--serif-display);
+  font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
@@ -165,6 +167,8 @@ h1, h2, h3, h4, h5, h6 {
    "Hello" prompt hero
    ========================================================================== */
 .hello-hero {
+  position: relative;
+  overflow: hidden;
   background:
     radial-gradient(1200px 500px at 50% -10%, #eaf1fb 0%, rgba(234,241,251,0) 60%),
     linear-gradient(180deg, #f6f8fc 0%, #ffffff 100%);
@@ -172,7 +176,18 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   border-bottom: 1px solid var(--line);
 }
-.hello-inner { max-width: 860px; }
+.hello-hero::before {
+  content: "";
+  position: absolute;
+  left: 50%; bottom: 0;
+  transform: translateX(-50%);
+  width: min(1500px, 108%); height: 78%;
+  background: url("/assets/skyline.svg") center bottom / contain no-repeat;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+.hello-inner { max-width: 860px; position: relative; z-index: 1; }
 .hello-title {
   font-family: "Fraunces", Georgia, serif;
   font-weight: 500;
@@ -203,7 +218,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero-prompt:focus-within { border-color: var(--blue); box-shadow: 0 22px 60px rgba(11, 43, 94, 0.2); }
 .hero-prompt input {
   flex: 1; border: 0; outline: 0; background: transparent;
-  font: 400 1.08rem/1.4 "Poppins", system-ui, sans-serif; color: var(--ink);
+  font: 400 1.08rem/1.4 "Lora", system-ui, sans-serif; color: var(--ink);
   padding: 12px 0;
 }
 .hero-prompt input::placeholder { color: var(--muted); }
@@ -230,7 +245,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero-suggest .hs-label { color: var(--muted); font-size: 0.9rem; }
 .hs-chip {
   background: #fff; border: 1px solid var(--line); color: var(--body);
-  border-radius: 999px; padding: 8px 15px; font: 500 0.86rem/1 "Poppins", sans-serif;
+  border-radius: 999px; padding: 8px 15px; font: 500 0.86rem/1 "Lora", sans-serif;
   cursor: pointer; transition: .18s;
 }
 .hs-chip:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
@@ -247,6 +262,55 @@ h1, h2, h3, h4, h5, h6 {
   .hello-badges { gap: 26px; }
   .hero-suggest .hs-label { width: 100%; }
 }
+
+/* ==========================================================================
+   Full-page chat (/assistant/)
+   ========================================================================== */
+.chat-page {
+  background: #f6f8fc;
+  min-height: calc(100vh - 170px);
+  display: flex;
+  flex-direction: column;
+}
+.chat-wrap {
+  width: 100%; max-width: 820px; margin: 0 auto; flex: 1;
+  display: flex; flex-direction: column; padding: 0 16px; min-height: 0;
+}
+.chat-head {
+  text-align: center; padding: 26px 0 8px;
+}
+.chat-head h1 {
+  font-family: "Fraunces", Georgia, serif; font-weight: 500;
+  font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--navy); margin-bottom: 4px;
+}
+.chat-head p { color: var(--muted); font-size: 0.92rem; }
+.chat-stream {
+  flex: 1; overflow-y: auto; padding: 22px 4px 10px;
+  display: flex; flex-direction: column; gap: 14px; min-height: 0;
+}
+.chat-stream .ura-row { max-width: 76%; }
+.chat-inputbar {
+  position: sticky; bottom: 0; background: linear-gradient(180deg, rgba(246,248,252,0), #f6f8fc 24%);
+  padding: 12px 0 26px;
+}
+/* reuse .ura-input, make it a large centered pill on the page */
+.chat-inputbar .ura-input input {
+  border: 1.5px solid var(--line); border-radius: 999px; padding: 15px 20px;
+  font-size: 1rem; box-shadow: 0 8px 26px rgba(11,43,94,.08);
+}
+.chat-inputbar .ura-input input:focus { border-color: var(--blue); }
+.chat-inputbar .ura-input button { width: 50px; height: 50px; }
+.chat-hint {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 0.85rem; border: 1.5px dashed var(--line);
+  border-radius: 999px; padding: 15px 20px; background: #fff;
+}
+.chat-restart {
+  display: inline-flex; align-items: center; gap: 7px; justify-content: center;
+  width: 100%; background: #fff; border: 1.5px solid var(--blue); color: var(--blue);
+  border-radius: 999px; padding: 14px; font: 600 0.95rem/1 "Lora", sans-serif; cursor: pointer;
+}
+.chat-restart:hover { background: var(--blue); color: #fff; }
 
 /* ==========================================================================
    Feature strip
@@ -367,7 +431,7 @@ h1, h2, h3, h4, h5, h6 {
 .site-footer li { margin-bottom: 9px; }
 .site-footer a { color: #9fb0ce; transition: color .2s; }
 .site-footer a:hover { color: #fff; }
-.footer-logo img { height: 44px; margin-bottom: 18px; filter: brightness(0) invert(1); }
+.footer-logo img { height: 52px; margin-bottom: 18px; }
 .footer-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
 .footer-locations { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
 .footer-locations h6 { color: #fff; font-size: .82rem; margin: 2px 0 10px; letter-spacing: .04em; }
