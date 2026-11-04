@@ -24,7 +24,7 @@
   --shadow-lg: 0 24px 60px rgba(11, 43, 94, 0.16);
   --max: 1200px;
   --font: "Lora", Georgia, "Times New Roman", serif;
-  --serif-display: "Fraunces", Georgia, serif;
+  --serif-display: "Playfair Display", Georgia, serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -179,17 +179,23 @@ h1, h2, h3, h4, h5, h6 {
 .hello-hero::before {
   content: "";
   position: absolute;
-  left: 50%; bottom: 0;
-  transform: translateX(-50%);
-  width: min(1500px, 108%); height: 78%;
-  background: url("/assets/skyline.svg") center bottom / contain no-repeat;
-  opacity: 0.05;
+  inset: 0;
+  background: url("/assets/hero-bg.jpg") center bottom / cover no-repeat;
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
+.hello-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #f6f8fc 0%, rgba(246,248,252,0.55) 38%, rgba(246,248,252,0.2) 100%);
   pointer-events: none;
   z-index: 0;
 }
 .hello-inner { max-width: 860px; position: relative; z-index: 1; }
 .hello-title {
-  font-family: "Fraunces", Georgia, serif;
+  font-family: "Playfair Display", Georgia, serif;
   font-weight: 500;
   font-size: clamp(3rem, 8vw, 5.5rem);
   letter-spacing: -0.02em;
@@ -255,7 +261,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;
   margin-top: 46px;
 }
-.hello-badges .hb b { display: block; font-size: 1.7rem; color: var(--navy); font-weight: 700; font-family: "Fraunces", serif; }
+.hello-badges .hb b { display: block; font-size: 1.7rem; color: var(--navy); font-weight: 700; font-family: "Playfair Display", serif; }
 .hello-badges .hb span { font-size: 0.82rem; color: var(--muted); }
 @media (max-width: 600px) {
   .hero-prompt input { font-size: 0.98rem; }
@@ -280,7 +286,7 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center; padding: 26px 0 8px;
 }
 .chat-head h1 {
-  font-family: "Fraunces", Georgia, serif; font-weight: 500;
+  font-family: "Playfair Display", Georgia, serif; font-weight: 500;
   font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--navy); margin-bottom: 4px;
 }
 .chat-head p { color: var(--muted); font-size: 0.92rem; }

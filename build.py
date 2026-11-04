@@ -8,8 +8,8 @@ import os, pathlib
 
 ROOT = pathlib.Path(__file__).parent
 IMG = "https://www.universalrelocations.com/wp-content/uploads"  # existing hosted assets
-LOGO = "/assets/logo-dark.png"          # navy artwork on transparent — for white header
-LOGO_WHITE = "/assets/logo-white.png"    # white artwork on transparent — for navy footer
+LOGO = f"{IMG}/2023/12/Universal-Logo-BLUE.png"   # real brand logo (navy) for white header
+LOGO_WHITE = "/assets/logo-white.png"             # white reversed wordmark for navy footer
 
 WA = "https://api.whatsapp.com/send/?phone=12017874088&text&type=phone_number&app_absent=0"
 
@@ -212,7 +212,7 @@ def page(title, body, desc="", canonical=""):
   <link rel="icon" href="{IMG}/2024/01/Universal-Round-Logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>

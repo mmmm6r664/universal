@@ -269,16 +269,6 @@
   }
 
   function setupEntryPoints() {
-    // Floating launcher -> /assistant/
-    var launch = document.createElement("a");
-    launch.className = "ura-launch";
-    launch.href = "/assistant/";
-    launch.setAttribute("aria-label", "Open the Move Assistant");
-    launch.innerHTML = '<span class="ura-dot"></span>' +
-      '<svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.2 1.1 4.2 2.9 5.6L4 21l4.7-2.3c1 .2 2.1.3 3.3.3 5.5 0 10-3.6 10-8s-4.5-8-10-8z"/></svg>' +
-      '<span>Get an instant estimate</span>';
-    document.body.appendChild(launch);
-
     // Any [data-open-assistant] element -> /assistant/
     document.addEventListener("click", function (e) {
       var t = e.target.closest("[data-open-assistant]");
