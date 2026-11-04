@@ -13,6 +13,17 @@ LOGO_WHITE = "/assets/logo-white.png"             # white reversed wordmark for 
 
 WA = "https://api.whatsapp.com/send/?phone=12017874088&text&type=phone_number&app_absent=0"
 
+def _asset_ver():
+    """Content hash for cache-busting /assets so deploys never serve stale CSS/JS."""
+    import hashlib
+    h = hashlib.md5()
+    for f in ["assets/styles.css", "assets/script.js", "assets/assistant.js"]:
+        p = ROOT / f
+        if p.exists():
+            h.update(p.read_bytes())
+    return h.hexdigest()[:8]
+ASSET_VER = _asset_ver()
+
 # ---------------------------------------------------------------------------
 # Shared TOP BAR + HEADER
 # ---------------------------------------------------------------------------
@@ -109,16 +120,16 @@ HEADER = f"""
 def flink(label, href): return f'<li><a href="{href}">{label}</a></li>'
 
 # ---- Footer icons ----
-IC_PHONE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L7.8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6A2 2 0 0 1 22 16.9z"/></svg>'
-IC_MAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>'
-IC_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
+IC_PHONE = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L7.8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6A2 2 0 0 1 22 16.9z"/></svg>'
+IC_MAIL = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>'
+IC_PIN = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
 
 _SOC = [
-  ("Facebook", "https://facebook.com/universalrelocations", '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.6 4.5-4.6 1.3 0 2.6.2 2.6.2v2.9h-1.5c-1.4 0-1.9.9-1.9 1.8V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12z"/></svg>'),
-  ("X", "https://twitter.com/Universal_Relo", '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2.2h3.3l-7.2 8.3L23 21.8h-6.6l-5.2-6.8-6 6.8H1.9l7.7-8.8L1.3 2.2H8l4.7 6.2 5.5-6.2zm-1.2 17.6h1.8L7.1 4.1H5.2l11.8 15.7z"/></svg>'),
-  ("Instagram", "https://instagram.com/universalrelocationsinc", '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4a3.7 3.7 0 0 1-1.4-.9 3.7 3.7 0 0 1-.9-1.4c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.8-11.2a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z"/></svg>'),
-  ("YouTube", "https://www.youtube.com/channel/UCSt03dR9jOcvrHaV22CLH0Q", '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>'),
-  ("WhatsApp", WA, '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.511 5.26l-.999 3.648 3.742-.981z"/></svg>'),
+  ("Facebook", "https://facebook.com/universalrelocations", '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.6 4.5-4.6 1.3 0 2.6.2 2.6.2v2.9h-1.5c-1.4 0-1.9.9-1.9 1.8V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12z"/></svg>'),
+  ("X", "https://twitter.com/Universal_Relo", '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2.2h3.3l-7.2 8.3L23 21.8h-6.6l-5.2-6.8-6 6.8H1.9l7.7-8.8L1.3 2.2H8l4.7 6.2 5.5-6.2zm-1.2 17.6h1.8L7.1 4.1H5.2l11.8 15.7z"/></svg>'),
+  ("Instagram", "https://instagram.com/universalrelocationsinc", '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4a3.7 3.7 0 0 1-1.4-.9 3.7 3.7 0 0 1-.9-1.4c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.8-11.2a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z"/></svg>'),
+  ("YouTube", "https://www.youtube.com/channel/UCSt03dR9jOcvrHaV22CLH0Q", '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>'),
+  ("WhatsApp", WA, '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.511 5.26l-.999 3.648 3.742-.981z"/></svg>'),
 ]
 FOOTER_SOCIAL = "".join(
     f'<a class="soc" href="{u}" aria-label="{n}" target="_blank" rel="noopener">{s}</a>'
@@ -249,15 +260,15 @@ def page(title, body, desc="", canonical=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/styles.css?v={ASSET_VER}">
 </head>
 <body>
 {TOPBAR}
 {HEADER}
 {body}
 {FOOTER}
-<script src="/assets/script.js"></script>
-<script src="/assets/assistant.js" defer></script>
+<script src="/assets/script.js?v={ASSET_VER}"></script>
+<script src="/assets/assistant.js?v={ASSET_VER}" defer></script>
 </body>
 </html>
 """
@@ -285,7 +296,7 @@ def icon(name):
         "shield": '<path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/>',
         "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     }
-    return (f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+    return (f'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
             f'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{paths[name]}</svg>')
 
 def svc_card(title, text, href):
@@ -313,11 +324,11 @@ def review(text, who, src="Google Review"):
       <div class="who">{who}</div><div class="src">{src}</div>
     </div>"""
 
-AFFIL_LOGOS = "".join(f'<img src="{IMG}/2026/10/{n}" alt="{a}">' for n, a in [
+AFFIL_LOGOS = "".join(f'<img height="64" src="{IMG}/2026/10/{n}" alt="{a}">' for n, a in [
     ("01-fidi.png", "FIDI"), ("02-faim.png", "FAIM"), ("03-iamx.png", "IAM"),
     ("05-paima.png", "PAIMA"), ("06-ipata.png", "IPATA"), ("07-ara.png", "ARA"),
     ("09-fmc.png", "FMC"), ("10-iso-9001.png", "ISO 9001")])
-PRESS_LOGOS = "".join(f'<img src="{IMG}/2025/08/{n}" alt="{a}">' for n, a in [
+PRESS_LOGOS = "".join(f'<img height="42" src="{IMG}/2025/08/{n}" alt="{a}">' for n, a in [
     ("Forbes.png", "Forbes"), ("Fox-News.png", "Fox News"), ("Yahoo.png", "Yahoo Finance"),
     ("MSN.png", "MSN"), ("Associated-Press.png", "Associated Press"),
     ("Bussiness-Insider.png", "Business Insider"), ("Gulf-News.png", "Gulf News"),
@@ -410,9 +421,9 @@ HOME_BODY = f"""
 <section class="section section-navy">
   <div class="container">
     <div class="promise">
-      <div class="p"><div class="p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h0M8 14h2M12 14h2M16 14h0M8 18h2M12 18h2M16 18h0"/></svg></div><h4>Moving Calculator</h4><p>Calculate the volume of your items &amp; get an instant quote.</p><a class="btn btn-primary" style="margin-top:14px" href="https://portal.universalrelocations.com/moving-calculator/">Calculate Now</a></div>
-      <div class="p"><div class="p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.8L3 20l1-4a8.4 8.4 0 0 1-.8-3.6A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg></div><h4>Talk to a Move Manager</h4><p>Get in touch with our move consultants for personal guidance.</p><a class="btn btn-ghost" style="margin-top:14px" href="/contact-us/">Contact Us</a></div>
-      <div class="p"><div class="p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg></div><h4>Video Pre-Move Survey</h4><p>Pick a day and time to join our surveyor on a video call for a complimentary estimate.</p><a class="btn btn-ghost" style="margin-top:14px" href="https://calendly.com/UniversalrelocationsOfficial">Schedule a Call</a></div>
+      <div class="p"><div class="p-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h0M8 14h2M12 14h2M16 14h0M8 18h2M12 18h2M16 18h0"/></svg></div><h4>Moving Calculator</h4><p>Calculate the volume of your items &amp; get an instant quote.</p><a class="btn btn-primary" style="margin-top:14px" href="https://portal.universalrelocations.com/moving-calculator/">Calculate Now</a></div>
+      <div class="p"><div class="p-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.8L3 20l1-4a8.4 8.4 0 0 1-.8-3.6A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg></div><h4>Talk to a Move Manager</h4><p>Get in touch with our move consultants for personal guidance.</p><a class="btn btn-ghost" style="margin-top:14px" href="/contact-us/">Contact Us</a></div>
+      <div class="p"><div class="p-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg></div><h4>Video Pre-Move Survey</h4><p>Pick a day and time to join our surveyor on a video call for a complimentary estimate.</p><a class="btn btn-ghost" style="margin-top:14px" href="https://calendly.com/UniversalrelocationsOfficial">Schedule a Call</a></div>
     </div>
   </div>
 </section>

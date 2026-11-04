@@ -159,11 +159,10 @@
 
     /* ----- flow ----- */
     function askNext() {
-      if (!data.typeLabel && !data.sizeKey) return askType();
       if (!data.from) return askFrom();
       if (!data.to) return askTo();
-      if (!data.sizeKey) return askSize();
       if (!data.route) data.route = (isUS(data.from) && isUS(data.to)) ? "domestic" : "international";
+      if (!data.sizeKey) return (data.typeLabel === "household move" || data.typeLabel === "office / commercial move") ? askSize() : askWhat();
       if (!data.infoShown) return showInfo();
       if (!data.date) return askDate();
       if (!data.special) return askSpecial();
@@ -175,28 +174,26 @@
       return submitLead();
     }
 
-    function askType() {
-      botSay("No problem — I'll help you plan it. First, what kind of move are you looking at?", function () {
+    function askWhat() {
+      botSay("And what are you moving?", function () {
         chips([
-          { label: "International move", value: "i|household move" },
-          { label: "Interstate / domestic move", value: "d|household move" },
-          { label: "Ship baggage / boxes", value: "?|baggage / box shipment" },
-          { label: "Ship a car / vehicle", value: "?|vehicle shipment" }
+          { label: "A full home / household", value: "home" },
+          { label: "An office / business", value: "office" },
+          { label: "Just a few boxes / baggage", value: "baggage" },
+          { label: "A car / vehicle", value: "car" }
         ], function (v) {
-          var p = v.split("|"); data.typeLabel = p[1];
-          if (p[0] === "i") data.route = "international";
-          if (p[0] === "d") data.route = "domestic";
-          if (/baggage/.test(p[1])) data.sizeKey = "baggage";
-          if (/vehicle/.test(p[1])) data.sizeKey = "car";
-          askNext();
+          if (v === "home") { data.typeLabel = "household move"; return askSize(); }
+          if (v === "office") { data.typeLabel = "office / commercial move"; return askSize(); }
+          if (v === "baggage") { data.typeLabel = "baggage / box shipment"; data.sizeKey = "baggage"; return askNext(); }
+          data.typeLabel = "vehicle shipment"; data.sizeKey = "car"; askNext();
         });
       });
     }
     function askFrom() { botSay("Lovely. So I can tailor everything to you — which city and country are you moving <b>from</b>?", function () { askText("e.g. Dubai, UAE", "text", function (v) { data.from = v; askNext(); }); }); }
     function askTo() { botSay("And where are you headed?", function () { askText("e.g. New York, USA", "text", function (v) { data.to = v; askNext(); }); }); }
     function askSize() {
-      botSay("Roughly how much are you planning to move? This helps me point you to the right shipping option.", function () {
-        chips(["baggage", "studio", "1br", "2br", "3br", "4br"].map(function (k) { return { label: SIZE_LABELS[k], value: k }; }),
+      botSay("Roughly how big is it? This helps me size the right shipping option.", function () {
+        chips(["studio", "1br", "2br", "3br", "4br"].map(function (k) { return { label: SIZE_LABELS[k], value: k }; }),
           function (v) { data.sizeKey = v; askNext(); });
       });
     }
