@@ -230,12 +230,7 @@ FOOTER = f"""
     <div class="footer-bottom">
       <div class="container">
         <span>© Copyright 2026. All rights reserved. Universal Relocations.</span>
-        <span>
-          <a href="https://facebook.com/universalrelocations">Facebook</a> &nbsp;·&nbsp;
-          <a href="http://Twitter.com/Universal_Relo">Twitter</a> &nbsp;·&nbsp;
-          <a href="http://instagram.com/universalrelocationsinc">Instagram</a> &nbsp;·&nbsp;
-          <a href="https://www.youtube.com/channel/UCSt03dR9jOcvrHaV22CLH0Q">YouTube</a>
-        </span>
+        <span>Licensed &amp; bonded NVOCC · FMC-OTI No. NF025083</span>
       </div>
     </div>
   </footer>
@@ -312,7 +307,7 @@ def hub_card(name, text, href, tel, img):
         <h3>{name}</h3><p>{text}</p>
         <div class="row">
           <a class="btn btn-ghost" href="{href}">Explore Hub</a>
-          <span class="tel">{tel}</span>
+          <a class="tel" href="tel:{tel}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L7.8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6A2 2 0 0 1 22 16.9z"/></svg><span>{tel}</span></a>
         </div>
       </div>
     </div>"""
@@ -498,7 +493,7 @@ ASSISTANT_BODY = """
 <section class="chat-page">
   <div class="chat-wrap">
     <div class="chat-head">
-      <h1>Universal Move Assistant</h1>
+      <h1>Universal Relocations Move Assistant</h1>
       <p>Tell me about your move and I'll get you an instant estimate.</p>
     </div>
     <div class="chat-stream" id="chat-stream"></div>

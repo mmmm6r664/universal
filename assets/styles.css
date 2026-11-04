@@ -548,3 +548,33 @@ a.country-chip:hover { background: var(--blue); color: #fff; border-color: var(-
 }
 @media (prefers-reduced-motion: reduce) { .hello-hero::before, .logos-track { animation: none; } }
 @media (max-width: 600px) { .footer-cta .container { flex-direction: column; text-align: center; } }
+
+/* ==========================================================================
+   Stats + CTA cards — polish
+   ========================================================================== */
+.stat { text-align: center; }
+.stat b { display: block; font-family: var(--serif-display); font-weight: 700; line-height: 1; }
+.stat b::after { margin: 12px auto 10px; }
+.stat span { display: block; color: #9fb2d4; font-size: .92rem; }
+
+.promise .p { padding: 36px 28px; border-radius: 16px; }
+.promise .p .p-ic {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  color: #fff; box-shadow: 0 10px 24px rgba(0,5,110,.28);
+}
+.promise .p .p-ic svg { width: 28px; height: 28px; }
+.promise .p h4 { color: var(--navy); font-size: 1.2rem; }
+
+/* ==========================================================================
+   Footer CTA contrast + hub-card phone formatting
+   ========================================================================== */
+.footer-cta .btn-primary { background: #fff; color: var(--navy); font-weight: 600; box-shadow: 0 10px 26px rgba(0,0,0,.18); }
+.footer-cta .btn-primary:hover { background: #eef1ff; color: var(--navy); transform: translateY(-2px); }
+.footer-cta .btn-outline { border-color: rgba(255,255,255,.75); color: #fff; }
+.footer-cta .btn-outline:hover { background: #fff; color: var(--navy); }
+
+.hub-card .tel { display: inline-flex; align-items: center; gap: 7px; color: var(--navy); font-weight: 600; font-size: .98rem; white-space: nowrap; }
+.hub-card .tel svg { color: var(--accent-dark); }
+.hub-card .tel:hover { color: var(--blue); }
+.hub-card .row { gap: 12px; }
