@@ -670,3 +670,25 @@ a { transition: color .18s ease; }
 }
 .route-finder .btn { padding: 15px 32px; margin-bottom: 1px; }
 @media (max-width: 760px) { .route-finder { padding: 22px; gap: 14px; } .route-arrow { transform: rotate(90deg); } }
+
+/* ==========================================================================
+   Cookie consent banner
+   ========================================================================== */
+.cookie-banner {
+  position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 120;
+  max-width: 760px; margin: 0 auto;
+  background: #fff; border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: 0 22px 55px rgba(0,5,110,.20); padding: 16px 20px;
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: space-between;
+  transform: translateY(160%); transition: transform .45s cubic-bezier(.22,.61,.36,1);
+}
+.cookie-banner.show { transform: none; }
+.cookie-banner p { font-size: .88rem; line-height: 1.5; margin: 0; flex: 1; min-width: 230px; color: var(--body); }
+.cookie-banner a { color: var(--blue); font-weight: 600; }
+.cookie-actions { display: flex; gap: 10px; }
+.cookie-banner .btn { padding: 10px 22px; font-size: .9rem; }
+@media (max-width: 600px) {
+  .cookie-banner { bottom: 84px; left: 12px; right: 12px; padding: 14px 16px; }
+  .cookie-actions { width: 100%; }
+  .cookie-actions .btn { flex: 1; }
+}

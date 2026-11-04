@@ -277,6 +277,13 @@ def page(title, body, desc="", canonical=""):
 {HEADER}
 {body}
 {FOOTER}
+<div class="cookie-banner" id="cookie-banner" hidden>
+  <p>We use cookies to improve your experience, analyze site traffic and for marketing. By clicking Accept, you agree to our use of cookies. See our <a href="/universal-relocations-cookies-policy/">Cookies Policy</a>.</p>
+  <div class="cookie-actions">
+    <button class="btn btn-ghost" id="cookie-decline">Decline</button>
+    <button class="btn btn-primary" id="cookie-accept">Accept</button>
+  </div>
+</div>
 <script src="/assets/script.js?v={ASSET_VER}"></script>
 <script src="/assets/assistant.js?v={ASSET_VER}" defer></script>
 </body>

@@ -127,3 +127,21 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
   els.forEach(function (el) { io.observe(el); });
 })();
+
+// Cookie consent banner
+(function () {
+  var b = document.getElementById('cookie-banner');
+  if (!b) return;
+  var KEY = 'ur_cookie_consent';
+  try { if (localStorage.getItem(KEY)) return; } catch (e) {}
+  b.hidden = false;
+  requestAnimationFrame(function () { b.classList.add('show'); });
+  function set(v) {
+    try { localStorage.setItem(KEY, v); } catch (e) {}
+    b.classList.remove('show');
+    setTimeout(function () { b.hidden = true; }, 350);
+  }
+  var a = document.getElementById('cookie-accept'), d = document.getElementById('cookie-decline');
+  if (a) a.onclick = function () { set('accepted'); };
+  if (d) d.onclick = function () { set('declined'); };
+})();
