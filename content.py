@@ -193,6 +193,269 @@ TERMS = """
 <p style="font-size:.86rem;color:var(--muted);margin-top:24px">For the complete, binding wording of any clause, please contact us.</p>
 """
 
+# ---------------------------------------------------------------------------
+# Destinations — countries served + the standard move process
+# ---------------------------------------------------------------------------
+PROCESS = _ul([
+    "<b>Request a free quote</b> — tell us your origin, destination, move date and shipment size.",
+    "<b>Talk to a move consultant</b> — we go over your route, priorities and service options.",
+    "<b>Complete a survey</b> — virtual or in person, so we can confirm volume and an exact price.",
+    "<b>We pack &amp; collect</b> — export-grade packing and careful collection of your goods.",
+    "<b>Shipping &amp; documentation</b> — we coordinate ocean/air freight and all customs paperwork for your route.",
+    "<b>Destination delivery</b> — door-to-door delivery and unpacking, per the service you choose.",
+])
+
+SHIP_NOTE = ("<p>Universal Relocations Inc. is a New Jersey corporation licensed by the US Federal "
+             "Maritime Commission (FMC-OTI No. NF025083) to operate an NVOCC service for international "
+             "household goods to and from the USA. The U.S. Shipping Act of 1984 requires Ocean "
+             "Transportation Intermediaries to be licensed and bonded — protection for you as a consumer.</p>")
+
+def _dest(region, intro, countries):
+    chips = "".join('<span class="country-chip">%s</span>' % c for c in countries)
+    return ('<p style="font-size:1.1rem">%s</p>'
+            '<h2>Countries we serve in %s</h2>'
+            '<p>From your door to theirs, we move households and businesses to %d destinations across %s:</p>'
+            '<div class="country-grid">%s</div>'
+            '<h2>How your move works</h2>%s'
+            '<h2>Services for your %s move</h2>%s'
+            '<h2>Shipping &amp; licensing</h2>%s'
+            % (intro, region, len(countries), region, chips, PROCESS, region,
+               _ul(["International (door-to-door) relocation", "Groupage / shared-container shipping",
+                    "Baggage &amp; box shipping", "Transit insurance", "Storage &amp; warehousing",
+                    "Pet relocation", "Fine-art relocation", "Corporate &amp; office moves", "Auto / vehicle shipping"]),
+               SHIP_NOTE))
+
+EUROPE = ["Iceland","Norway","Sweden","Finland","Russia","Estonia","Latvia","Ireland","United Kingdom","Denmark","Portugal","Spain","France","Switzerland","Luxembourg","Belgium","Netherlands","Germany","Italy","Malta","Poland","Czech Republic","Slovakia","Austria","Hungary","Slovenia","Croatia","Greece","Bulgaria","Romania","Ukraine"]
+NORTH_AMERICA = ["Canada","United States","Mexico","Guatemala","El Salvador","Honduras","Costa Rica","Nicaragua","Panama","Jamaica","Dominican Republic","Barbados","Trinidad & Tobago"]
+ASIA = ["India","Oman","UAE","Qatar","Bahrain","Saudi Arabia","Kuwait","Jordan","Israel","Turkey","Pakistan","China","Hong Kong","Nepal","Sri Lanka","Bangladesh","Myanmar","Thailand","Cambodia","Vietnam","Malaysia","Singapore","Philippines","South Korea","Japan"]
+AFRICA = ["Morocco","Algeria","Tunisia","Egypt","Mauritania","Senegal","Guinea","Sierra Leone","Ghana","Ethiopia","Uganda","Kenya","Rwanda","Tanzania","Zambia","Malawi","Mozambique","Namibia","Botswana","Zimbabwe","South Africa","Madagascar","Mauritius"]
+OCEANIA = ["Australia","New Zealand","Papua New Guinea","Fiji"]
+SOUTH_AMERICA = ["Colombia","Venezuela","Brazil","Ecuador","Peru","Bolivia","Paraguay","Chile","Argentina","Uruguay"]
+
+DEST = {
+    "moving-to-europe": (None, _dest("Europe",
+        "Relocating to Europe? From the historic streets of Spain to the vibrant markets of Poland, our tailored European moving service gives you a seamless transition to this diverse and culturally rich continent — with secure packing, ocean and groupage shipping, and full customs coordination.", EUROPE)),
+    "moving-to-north-america": (None, _dest("North America",
+        "Whether you're headed to New York, Vancouver or anywhere across the continent, our North America moving service makes your relocation stress-free — expert packing, door-to-door shipping and smooth customs clearance from start to finish.", NORTH_AMERICA)),
+    "moving-to-asia": (None, _dest("Asia",
+        "Moving to Asia? We provide professional packing, secure door-to-door sea shipping and smooth customs clearance across the Middle East, South Asia, Southeast Asia and the Far East — backed by our own hubs in India and the UAE.", ASIA)),
+    "moving-to-africa": (None, _dest("Africa",
+        "From the markets of Morocco to the sights of Egypt and beyond, our specialized Moving to Africa service delivers a seamless, stress-free relocation with reliable door-to-door container transport, packing and shipping.", AFRICA)),
+    "moving-to-oceania": (None, _dest("Oceania",
+        "Relocating to Australia, New Zealand or the Pacific? Our dedicated Oceania service manages every step of your international move — packing, ocean freight, documentation and destination delivery.", OCEANIA)),
+    "moving-to-south-america": (None, _dest("South America",
+        "Our specialized Moving to South America service is built to keep your relocation smooth and low-stress — from export packing and ocean shipping to customs and final delivery across the continent.", SOUTH_AMERICA)),
+    "shipping-worldwide": (None,
+        '<p style="font-size:1.1rem">From local moves to international relocations, Universal Relocations ships to and from destinations across six continents — Africa, Asia, Europe, North America, Oceania and South America — backed by our own operating hubs in the USA, India and the UAE.</p>'
+        '<h2>How a worldwide move works</h2>' + PROCESS +
+        '<h2>Explore moving guides by region</h2>' +
+        '<div class="country-grid">'
+        '<a class="country-chip" href="/moving-to-africa/">Africa</a>'
+        '<a class="country-chip" href="/moving-to-asia/">Asia</a>'
+        '<a class="country-chip" href="/moving-to-europe/">Europe</a>'
+        '<a class="country-chip" href="/moving-to-north-america/">North America</a>'
+        '<a class="country-chip" href="/moving-to-oceania/">Oceania</a>'
+        '<a class="country-chip" href="/moving-to-south-america/">South America</a></div>'
+        '<h2>Shipping &amp; licensing</h2>' + SHIP_NOTE),
+}
+
+# ---------------------------------------------------------------------------
+# Resources — packing tips, checklist, glossaries
+# ---------------------------------------------------------------------------
+PACKING = (
+    '<p style="font-size:1.1rem">Good packing is the single biggest factor in a damage-free move. '
+    'Here are our movers\' tried-and-tested tips — or let our team handle it all for you.</p>'
+    '<h2>Materials</h2>' + _ul([
+        "Start with professional supplies: plain newsprint, masking tape, scissors, permanent markers and heavy-duty double-wall boxes.",
+        "Use newsprint only for cushioning — never directly against fine china, as ink can transfer.",
+        "Stretch wrap protects furniture from snags, tears and dirt.",
+    ]) +
+    '<h2>Choosing the right carton</h2>' + _ul([
+        "<b>Dishpacks / china barrels</b> — dishes, china, crystal and glassware.",
+        "<b>Double-wall cartons</b> — fine china and high-value, hard-to-replace items.",
+        "<b>1.5 cu. ft.</b> — heavy items like books, files and CDs/DVDs.",
+        "<b>3.0 cu. ft.</b> — pots, pans, toys and small appliances.",
+        "<b>4.5 cu. ft.</b> — bulky items like linens and towels.",
+        "<b>6.0 cu. ft.</b> — large, light items like pillows and lampshades.",
+        "<b>Wardrobe cartons</b> — clothes and draperies on a built-in bar.",
+        "<b>Mirror &amp; mattress cartons</b> — framed pictures, mirrors, glass and bedding.",
+    ]) +
+    '<h2>Packing basics</h2>' + _ul([
+        "Finish packing the evening before moving day; leave only essentials for last.",
+        "Start with items you won't need soon — basement, garage, attic.",
+        "Pack room by room, and keep each carton under 50 lbs.",
+        "Cushion the bottom of each box with crumpled newsprint; wrap every breakable.",
+        "Pack heavy items first, then lighter ones, filling gaps with newsprint.",
+        "Use sturdy cartons and tape the seams — never plastic containers.",
+        "Let our movers handle marble/glass tops, mirrors 40\"×60\"+, pianos, pool tables, chandeliers and major appliances.",
+    ]) +
+    '<h2>Electronics</h2>' + _ul([
+        "Back up computer files before the move; label and disconnect all cables.",
+        "Remove toner/ink cartridges; wrap monitors; use several medium boxes rather than one overloaded one.",
+        "Mark boxes “Fragile” / “This Side Up” and pad with bubble wrap or blankets.",
+    ]) +
+    '<h2>Labeling</h2>' + _ul([
+        "Label every carton with room and contents using a felt-tipped marker.",
+        "Mark fragile boxes “FRAGILE” and upright ones “THIS END UP.”",
+        "Number your cartons and keep a matching list; mark first-needed boxes with a 1 or A.",
+    ]) +
+    '<h2>What NOT to pack</h2>'
+    '<p>Carry valuables and irreplaceables yourself. Never ship hazardous materials — paints, thinners, '
+    'lighter fluid, gasoline, fireworks, propane/oxygen cylinders, matches, automotive chemicals or firearms — '
+    'or perishable food and prescription medication you need right away.</p>'
+)
+
+CHECKLIST = (
+    '<p style="font-size:1.1rem">Stay organized from the first box to moving day with our step-by-step timeline.</p>'
+    '<h2>8 weeks before</h2>' + _ul([
+        "Take a full inventory of your belongings and clear out attic, basement and storage.",
+        "Use up items you can't move (frozen food, cleaning supplies).",
+        "Contact Universal Relocations to arrange your move date and details, and review your insurance.",
+    ]) +
+    '<h2>6 weeks before</h2>' + _ul([
+        "Confirm which expenses your employer covers (if a work move); check tax-deductible costs.",
+        "Decide what to sell or donate; list everyone who needs your new address.",
+        "Request personal records from schools, doctors, dentists and accountants.",
+    ]) +
+    '<h2>4 weeks before</h2>' + _ul([
+        "File a change of address with the post office; tell us if you're bringing pets.",
+        "Arrange utility disconnection (keep phone/utilities until moving day).",
+        "Update insurance for your new home; start packing non-essentials.",
+    ]) +
+    '<h2>3–2 weeks before</h2>' + _ul([
+        "Book travel (avoid flying on moving day); gather key papers — policies, wills, deeds.",
+        "Close/open bank accounts; have your car serviced; schedule building elevators if needed.",
+        "Confirm all arrangements with your relocation consultant.",
+    ]) +
+    '<h2>1 week before</h2>' + _ul([
+        "Settle local bills; empty your safe deposit box; pick up dry cleaning.",
+        "Take pets to the vet for records; drain fuel from power equipment.",
+        "Prepare directions, itinerary and emergency numbers for the moving team.",
+    ]) +
+    '<h2>2–3 days before &amp; moving day</h2>' + _ul([
+        "Defrost the fridge/freezer; have major appliances disconnected.",
+        "Pack a “open-first” box and load it last (or carry it yourself).",
+        "On moving day, record meter readings and read the bill of lading and inventory carefully before signing.",
+    ])
+)
+
+def _glossary(pairs):
+    return "".join('<p><b>%s</b> — %s</p>' % (t, d) for t, d in pairs)
+
+MOVING_TERMS = (
+    '<p style="font-size:1.1rem">A plain-English glossary of the moving terms you\'ll see on your estimate and paperwork.</p>'
+    + _glossary([
+        ("Accessorial (Additional) Services", "Extra services such as packing, appliance prep or unpacking, billed separately from transportation."),
+        ("Advanced Charges", "Fees for third-party work the mover pays on your behalf and adds to your bill."),
+        ("Bill of Lading", "The receipt for your goods and the contract for their transport — review it before signing."),
+        ("Binding / Non-Binding Estimate", "A binding estimate fixes the total in advance; a non-binding estimate is an approximation, with final charges based on actual weight and tariff."),
+        ("Carrier", "The mover that transports your household goods."),
+        ("Change Order", "A form that amends the original estimate when items or services change."),
+        ("Destination / Origin Agent", "Agents near your destination and origin who handle services and paperwork at each end."),
+        ("High Value Article", "An item worth more than $100 per pound — disclose these for proper protection."),
+        ("Inventory", "A detailed list of your goods, with the number and condition of each item."),
+        ("Linehaul Charges", "Fees for the vehicle-transport portion of your move."),
+        ("Long Carry / Flight Charge", "Extra fees for carrying items a long distance, or up and down stairs."),
+        ("Storage-In-Transit (SIT)", "Temporary warehouse storage before final delivery — must be requested, limited to 90 days, with added charges."),
+        ("Valuation", "The level of liability the mover assumes beyond the base transport charge."),
+        ("Van Foreman", "The driver responsible for loading, transporting and unloading your belongings."),
+    ])
+)
+
+SHIPPING_TERMS = (
+    '<p style="font-size:1.1rem">Key ocean and air freight terms, explained simply.</p>'
+    + _glossary([
+        ("Ad Valorem", "A charge calculated according to the value of the goods."),
+        ("Arrival Notice", "The carrier's notice that a ship has arrived, sent to the consignee and named parties."),
+        ("Bill of Lading (B/L)", "A contract between shipper and carrier that is also a document of title and a receipt for goods."),
+        ("Bonded Warehouse", "A Customs-authorized facility where duties are deferred until goods leave storage."),
+        ("CIF (Cost, Insurance, Freight)", "The seller pays for goods, insurance and freight to a named destination port."),
+        ("Consignee / Consignor", "The party receiving the shipment / the shipper named on the bill of lading."),
+        ("Container", "A detachable trailer body for ship, rail or truck — typically 20, 40 or 45 ft."),
+        ("Customs Entry", "A declaration an importer files for incoming foreign goods, usually with duty payment."),
+        ("Demurrage / Detention", "Penalties for holding cargo at port, or a carrier's equipment, beyond the free time allowed."),
+        ("Door-to-Door", "Transport of a container and its contents all the way from consignor to consignee."),
+        ("Drayage", "Local hauling of containers or cargo by truck."),
+        ("FCL / LCL", "Full Container Load fills a whole container; Less-than-Container Load is consolidated with other shipments."),
+        ("NVOCC", "A Non-Vessel Operating Common Carrier consolidates cargo space and issues its own bills of lading without operating ships."),
+        ("Reefer", "A refrigerated container."),
+        ("Ro/Ro (Roll-On/Roll-Off)", "A method where wheeled vehicles drive on and off a ship without cranes — common for auto shipping."),
+    ])
+)
+
+RESOURCES = {
+    "packing-tips": (None, PACKING),
+    "moving-check-list": (None, CHECKLIST),
+    "moving-terms": (None, MOVING_TERMS),
+    "shipping-terms": (None, SHIPPING_TERMS),
+}
+
+# ---------------------------------------------------------------------------
+# Hubs — USA, India, UAE (real offices, routes, services)
+# ---------------------------------------------------------------------------
+HUB_SERVICES = _ul([
+    "International relocation &amp; household-goods shipping", "Baggage shipping",
+    "Groupage (shared-container) shipping", "Corporate &amp; office relocation",
+    "Pet relocation", "Auto / vehicle shipping", "Storage &amp; warehousing",
+    "Transit insurance", "Fine-art relocation", "Packing &amp; unpacking",
+])
+
+def _offices(rows):
+    head = "<tr><th>Office</th><th>Phone</th><th>Hours</th></tr>"
+    body = "".join("<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % r for r in rows)
+    return '<div class="table-wrap"><table class="office-table">%s%s</table></div>' % (head, body)
+
+def _hub(intro, routes, offices, tollfree):
+    return (('<p style="font-size:1.1rem">%s</p>' % intro) +
+            '<h2>Popular routes</h2>' + _ul(routes) +
+            '<h2>Services from this hub</h2>' + HUB_SERVICES +
+            '<h2>How your move works</h2>' + PROCESS +
+            '<h2>Our offices</h2>' + offices +
+            ('<p style="margin-top:14px"><b>Toll-free:</b> %s &nbsp;·&nbsp; <b>Email:</b> '
+             '<a href="mailto:contact@universalrelocations.com">contact@universalrelocations.com</a></p>' % tollfree) +
+            '<h2>Licensed &amp; accredited</h2>' + SHIP_NOTE)
+
+USA_HUB = _hub(
+    "Established in 1998 with 28+ years of experience, Universal Relocations moves families, corporate expatriates, diplomats and businesses across the United States and around the world. We offer domestic (local &amp; interstate) moves, popular routes to India and the UAE, and worldwide shipping.",
+    ["Domestic moves within the USA (local &amp; interstate)", "USA → India (our most popular route)",
+     "USA → UAE", "USA → worldwide destinations"],
+    _offices([
+        ("New Jersey — Parsippany, NJ", "973-227-5964", "Mon–Fri 9–5"),
+        ("Maryland — Gaithersburg, MD", "1-972-318-9646", "Mon–Fri 9–5"),
+        ("Georgia — Alpharetta, GA", "1-917-277-3639", "Mon–Fri 9–7"),
+        ("Texas — Addison, TX", "1-803-220-0045", "Mon–Fri 9–5"),
+        ("California — Newark, CA", "1-510-500-4466", "Mon–Fri 9–5"),
+    ]),
+    "1-888-323-7356")
+
+INDIA_HUB = _hub(
+    "International moving and shipping services from India, backed by 28+ years of experience. We coordinate packing, shipping, documentation and delivery for moves within India and to destinations worldwide.",
+    ["Moves within India (local &amp; interstate)", "India → USA (a popular route)",
+     "India → UAE (Dubai &amp; beyond)", "India → worldwide destinations"],
+    _offices([
+        ("Chennai", "+91-44-40408800", "Mon–Sat 9–5"),
+        ("Bengaluru", "+91-44-40408800", "Mon–Sat 9–5"),
+        ("Hyderabad", "+91-9080954113", "Mon–Fri 9–5, Sat 10–4"),
+        ("Mumbai", "+91-7395813329", "Mon–Fri 9–5"),
+        ("New Delhi", "+91-9599312595", "Mon–Fri 9–5"),
+    ]),
+    "1-800-103-7356")
+
+UAE_HUB = _hub(
+    "International moving, packing, shipping and delivery from the UAE, with 28+ years of experience. We move households and businesses across the Emirates and to destinations worldwide.",
+    ["Within the UAE (Dubai, Abu Dhabi, Sharjah, Ajman, Fujairah, RAK, Umm Al-Quwain)",
+     "UAE → USA", "UAE → India", "UAE → worldwide (Europe, Asia, Africa, Oceania)"],
+    _offices([
+        ("Dubai — Warehouse 63, Dubai Investment Park First (DIP-1)", "800-13-7356", "Mon–Fri 9–5"),
+    ]),
+    "800-13-7356")
+
+HUBS = {
+    "usa": ("USA Hub", USA_HUB),
+    "india": ("India Hub", INDIA_HUB),
+    "uae": ("UAE Hub", UAE_HUB),
+}
+
 # slug -> (optional title override, inner html)
 RICH = {
     "company": (None, COMPANY),
@@ -204,3 +467,6 @@ RICH = {
     "cancel-and-refund-policy": (None, REFUND),
     "terms-and-condition": (None, TERMS),
 }
+RICH.update(DEST)
+RICH.update(RESOURCES)
+RICH.update(HUBS)

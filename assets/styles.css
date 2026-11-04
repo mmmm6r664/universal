@@ -407,6 +407,22 @@ h1, h2, h3, h4, h5, h6 {
 .prose ul { margin: 0 0 18px 20px; }
 .prose li { margin-bottom: 8px; }
 
+/* office tables on hub pages */
+.table-wrap { overflow-x: auto; margin: 10px 0 6px; }
+.office-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.office-table th { text-align: left; background: var(--navy); color: #fff; padding: 11px 14px; font-family: var(--font); font-weight: 600; }
+.office-table td { padding: 11px 14px; border-bottom: 1px solid var(--line); }
+.office-table tr:nth-child(even) td { background: var(--bg-soft); }
+
+/* country chips on destination pages */
+.country-grid { display: flex; flex-wrap: wrap; gap: 9px; margin: 14px 0 6px; }
+.country-chip {
+  display: inline-block; background: var(--blue-light); color: var(--navy);
+  border: 1px solid #d4e2f6; border-radius: 999px; padding: 7px 15px;
+  font-size: 0.88rem; font-family: var(--font); transition: .15s;
+}
+a.country-chip:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
 .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .info-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; transition: .25s; }
 .info-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
