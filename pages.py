@@ -201,4 +201,44 @@ def build(g):
                   [("Home", "/"), (hub.upper(), f"/{hub}/"), (name, "")], inner,
                   f"Moving and relocation services in {name}."))
 
+    # ---- Route-pair pages: Moving from X to Y (all ordered pairs) ----
+    from urllib.parse import quote
+    COUNTRIES = g["COUNTRIES"]; HUBS_C = g["HUB_COUNTRIES"]
+    SVC_LIST = C._ul([
+        "International door-to-door relocation",
+        "Groupage / shared-container shipping (cost-effective for smaller loads)",
+        "Baggage &amp; box shipping", "Vehicle / auto shipping", "Transit insurance",
+        "Storage &amp; warehousing", "Pet relocation", "Fine-art &amp; specialist handling",
+    ])
+    def route_page(fn, fs, tn, ts):
+        bits = []
+        if fs in HUBS_C:
+            bits.append(f"Because {fn} is one of our hub countries, your packing, collection and export paperwork are handled directly by our own Universal Relocations team on the ground.")
+        if ts in HUBS_C:
+            bits.append(f"With our own hub in {tn}, customs clearance and final door-to-door delivery are managed end-to-end by our local team.")
+        hub_html = ("<p>" + " ".join(bits) + "</p>") if bits else ""
+        others = [(n, s) for n, s in COUNTRIES if s not in (fs, ts)][:6]
+        rel = f'<a href="/moving/{ts}-to-{fs}/">{tn} &rarr; {fn}</a>' + "".join(
+            f'<a href="/moving/{fs}-to-{s}/">{fn} &rarr; {n}</a>' for n, s in others)
+        inner = (
+            '<div class="prose">'
+            f'<p style="font-size:1.1rem">Planning a move from <b>{fn}</b> to <b>{tn}</b>? Universal Relocations makes your international relocation from {fn} to {tn} seamless — from export-grade packing and ocean or air freight to customs clearance and door-to-door delivery. With 28+ years of experience and full FMC licensing, we move households, professionals and businesses on this route with precision and care.</p>'
+            f'<h2>How your {fn} &rarr; {tn} move works</h2>' + C.PROCESS +
+            f'<h2>Services for your {fn} &rarr; {tn} move</h2>' + SVC_LIST +
+            f'<h2>What to know about moving from {fn} to {tn}</h2>'
+            f'<p>Most {fn}-to-{tn} household moves travel by sea freight, with air freight available for urgent or smaller shipments. Our team prepares all export and import documentation and handles customs clearance — including any transfer-of-residence or duty-relief paperwork — at both ends. Transit times vary by season and port; your dedicated move manager confirms exact timing and the most cost-effective option for your volume.</p>'
+            + hub_html +
+            f'<div style="margin:22px 0"><a class="btn btn-primary" href="/assistant/?q={quote("I want to move from " + fn + " to " + tn)}">Get an instant {fn} &rarr; {tn} estimate</a></div>'
+            f'<h2>Related routes</h2><div class="related-routes">{rel}</div>'
+            '</div>')
+        write(f"moving/{fs}-to-{ts}", interior(f"Moving from {fn} to {tn}",
+              [("Home", "/"), (f"{fn} &rarr; {tn}", "")], inner,
+              f"Moving from {fn} to {tn} — international relocation, shipping and customs with Universal Relocations."))
+    rc = 0
+    for fn, fs in COUNTRIES:
+        for tn, ts in COUNTRIES:
+            if fs != ts:
+                route_page(fn, fs, tn, ts); rc += 1
+    print(f"Route pages built: {rc}")
+
     print("Content pages built.")

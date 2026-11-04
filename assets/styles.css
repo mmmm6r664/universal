@@ -603,3 +603,30 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: -0.01em; }
 
 /* footer text wordmark (logo removed) */
 .footer-brandname { color: #fff; font-family: var(--serif-display); font-weight: 700; font-size: 1.4rem; margin-bottom: 16px; letter-spacing: -0.01em; }
+
+/* ==========================================================================
+   Route finder
+   ========================================================================== */
+.route-finder { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center; gap: 16px; margin-top: 34px; }
+.route-field { text-align: left; }
+.route-field label { display: block; font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 6px; }
+.route-finder select {
+  min-width: 240px; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: 12px;
+  font: inherit; font-size: 1rem; background: #fff; color: var(--ink); cursor: pointer; transition: border .2s;
+}
+.route-finder select:focus { outline: none; border-color: var(--blue); }
+.route-arrow { font-size: 1.5rem; color: var(--accent-dark); padding-bottom: 12px; font-weight: 700; }
+.route-finder .btn { padding: 14px 30px; }
+.route-error { color: #e53e3e; font-size: .9rem; margin-top: 12px; }
+@media (max-width: 760px) { .route-arrow { transform: rotate(90deg); padding: 0; } .route-finder select { min-width: 260px; } }
+
+/* route page */
+.route-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0; }
+.related-routes { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 10px; }
+.related-routes a { background: var(--blue-light); color: var(--navy); border: 1px solid #d4e2f6; border-radius: 999px; padding: 7px 15px; font-size: .88rem; }
+.related-routes a:hover { background: var(--blue); color: #fff; }
+
+/* hero rotating typewriter headline */
+.hello-title { font-size: clamp(1.9rem, 4.8vw, 3.5rem); line-height: 1.14; min-height: 2.35em; display: flex; align-items: center; justify-content: center; }
+.hr-cursor { color: var(--accent); font-weight: 700; margin-left: 3px; animation: hr-blink 1s step-end infinite; }
+@keyframes hr-blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }

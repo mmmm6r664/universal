@@ -13,6 +13,17 @@ LOGO_WHITE = "/assets/logo-white.png"             # white reversed wordmark for 
 
 WA = "https://api.whatsapp.com/send/?phone=12017874088&text&type=phone_number&app_absent=0"
 
+# Route-finder countries (name, slug). Hubs where Universal has offices:
+COUNTRIES = [
+    ("India", "india"), ("United Kingdom", "uk"), ("United States", "usa"),
+    ("Canada", "canada"), ("UAE", "uae"), ("Saudi Arabia", "saudi-arabia"),
+    ("Mexico", "mexico"), ("Germany", "germany"), ("Philippines", "philippines"),
+    ("Japan", "japan"), ("Australia", "australia"), ("New Zealand", "new-zealand"),
+    ("France", "france"), ("Italy", "italy"),
+]
+ROUTE_OPTIONS = "".join(f'<option value="{s}">{n}</option>' for n, s in COUNTRIES)
+HUB_COUNTRIES = {"usa", "india", "uae"}
+
 # Hero background video (plane flying) — generated from the hero montage, hosted locally.
 HERO_VIDEO = "/assets/hero.mp4"
 
@@ -339,7 +350,7 @@ HOME_BODY = f"""
     <source src="{HERO_VIDEO}?v={ASSET_VER}" type="video/mp4">
   </video>
   <div class="container hello-inner">
-    <h1 class="hello-title">Hello.</h1>
+    <h1 class="hello-title" id="hero-rotate"><span class="hr-text">Hello,</span><span class="hr-cursor">|</span></h1>
     <p class="hello-sub">Whatever you're moving, wherever to — just tell us, and start here.</p>
 
     <form class="hero-prompt" id="hero-prompt-form">
@@ -384,6 +395,28 @@ HOME_BODY = f"""
       <div class="feature"><div class="ic">{icon('ship')}</div><h4>Global Network</h4><p>We understand the intricacies of each destination, ensuring a smooth transition and making you feel at home, no matter where you go.</p></div>
       <div class="feature"><div class="ic">{icon('bolt')}</div><h4>Innovation in Motion</h4><p>From state-of-the-art logistics to cutting-edge tracking technology, we embrace innovation to enhance your moving experience.</p></div>
     </div>
+  </div>
+</section>
+
+<!-- Route finder -->
+<section class="section section-soft">
+  <div class="container text-center">
+    <span class="eyebrow">Find Your Route</span>
+    <h2 class="section-title">Where are you moving?</h2>
+    <p class="section-intro">Pick your origin and destination to see a dedicated moving guide, timelines and services for your exact route.</p>
+    <form id="route-form" class="route-finder">
+      <div class="route-field">
+        <label>Moving from</label>
+        <select id="route-from" required><option value="" disabled selected>Select country…</option>{ROUTE_OPTIONS}</select>
+      </div>
+      <span class="route-arrow" aria-hidden="true">→</span>
+      <div class="route-field">
+        <label>Moving to</label>
+        <select id="route-to" required><option value="" disabled selected>Select country…</option>{ROUTE_OPTIONS}</select>
+      </div>
+      <button type="submit" class="btn btn-primary">Find Your Route</button>
+    </form>
+    <p id="route-error" class="route-error" hidden>Please choose two different countries.</p>
   </div>
 </section>
 

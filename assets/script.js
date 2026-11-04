@@ -58,3 +58,47 @@
     setTimeout(function () { btn.textContent = original; btn.disabled = false; form.reset(); }, 4000);
   });
 })();
+
+// Route finder — navigate to the dedicated route page
+(function () {
+  var form = document.getElementById('route-form');
+  if (!form) return;
+  var from = document.getElementById('route-from');
+  var to = document.getElementById('route-to');
+  var err = document.getElementById('route-error');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = from.value, t = to.value;
+    if (!f || !t || f === t) { if (err) err.hidden = false; return; }
+    if (err) err.hidden = true;
+    location.href = '/moving/' + f + '-to-' + t + '/';
+  });
+})();
+
+// Hero rotating typewriter headline
+(function () {
+  var el = document.getElementById('hero-rotate');
+  if (!el) return;
+  var t = el.querySelector('.hr-text');
+  var msgs = [
+    "Hello,",
+    "Welcome to Universal Relocations",
+    "One of the largest international movers",
+    "28+ years of experience",
+    "We're here to help with your international move"
+  ];
+  var mi = 0, ci = 0, del = false;
+  function tick() {
+    var full = msgs[mi];
+    if (!del) {
+      ci++; t.textContent = full.slice(0, ci);
+      if (ci >= full.length) { del = true; return setTimeout(tick, 1800); }
+      setTimeout(tick, 58);
+    } else {
+      ci--; t.textContent = full.slice(0, ci);
+      if (ci <= 0) { del = false; mi = (mi + 1) % msgs.length; return setTimeout(tick, 320); }
+      setTimeout(tick, 28);
+    }
+  }
+  t.textContent = ""; tick();
+})();
