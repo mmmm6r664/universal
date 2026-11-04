@@ -87,10 +87,10 @@
   .ura-typing span:nth-child(2){animation-delay:.2s}.ura-typing span:nth-child(3){animation-delay:.4s}
   @keyframes ura-b{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
   .ura-quick{display:flex;flex-wrap:wrap;gap:9px;margin-top:2px;align-self:flex-start;max-width:92%}
-  .ura-chip{background:#fff;border:1.5px solid #2731c9;color:#2731c9;border-radius:999px;padding:10px 16px;font:500 14px/1 "Lora",serif;cursor:pointer;transition:.15s}
+  .ura-chip{background:#fff;border:1.5px solid #2731c9;color:#2731c9;border-radius:999px;padding:10px 16px;font:500 14px/1 "Poppins",serif;cursor:pointer;transition:.15s}
   .ura-chip:hover{background:#2731c9;color:#fff}
   .ura-estimate{background:#fff;border:1px solid #e4e8f0;border-radius:14px;padding:18px;box-shadow:0 2px 10px rgba(0,5,110,.08)}
-  .ura-estimate .ura-amt{font-size:27px;font-weight:700;color:#00056e;font-family:"Playfair Display",serif}
+  .ura-estimate .ura-amt{font-size:27px;font-weight:700;color:#00056e;font-family:"Poppins",serif}
   .ura-estimate .ura-lbl{font-size:13px;color:#8a94a6;margin-top:3px}
   .ura-estimate small{display:block;margin-top:11px;font-size:12px;color:#8a94a6;line-height:1.5}
   .ura-input{display:flex;gap:9px}

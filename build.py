@@ -13,6 +13,9 @@ LOGO_WHITE = "/assets/logo-white.png"             # white reversed wordmark for 
 
 WA = "https://api.whatsapp.com/send/?phone=12017874088&text&type=phone_number&app_absent=0"
 
+# Hero background video (plane flying) — generated from the hero montage, hosted locally.
+HERO_VIDEO = "/assets/hero.mp4"
+
 def _asset_ver():
     """Content hash of ALL assets for cache-busting so deploys never serve stale files."""
     import hashlib
@@ -255,7 +258,7 @@ def page(title, body, desc="", canonical=""):
   <link rel="icon" href="{IMG}/2024/01/Universal-Round-Logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css?v={ASSET_VER}">
 </head>
 <body>
@@ -332,6 +335,9 @@ PRESS_LOGOS = "".join(f'<img height="42" src="{IMG}/2025/08/{n}" alt="{a}">' for
 
 HOME_BODY = f"""
 <section class="hello-hero">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/assets/hero-bg.jpg?v={ASSET_VER}">
+    <source src="{HERO_VIDEO}?v={ASSET_VER}" type="video/mp4">
+  </video>
   <div class="container hello-inner">
     <h1 class="hello-title">Hello.</h1>
     <p class="hello-sub">Whatever you're moving, wherever to — just tell us, and start here.</p>
