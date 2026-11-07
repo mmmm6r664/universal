@@ -179,9 +179,27 @@ def build(g):
         elif slug == "shipping-worldwide":
             faqs = X.dest_faqs("destinations worldwide")
         if faqs is not None:
+            # relevant body photo per destination / hub
+            REGION_PHOTO = {
+                "moving-to-north-america": g["PH_CANADA"], "moving-to-oceania": g["PH_AUS1"],
+                "moving-to-asia": g["HERO_INDIA"], "moving-to-europe": g["PH_SHIP2"],
+                "moving-to-africa": g["HERO_SHIP"], "moving-to-south-america": g["HERO_SHIP"],
+                "shipping-worldwide": g["HERO_SHIP"], "usa": g["PH_STAFF1"],
+                "india": g["PH_STAFF2"], "uae": g["HERO_LOGISTICS"],
+            }
+            bphoto = REGION_PHOTO.get(slug, g["HERO_SHIP"])
+            where = title.replace("Moving to ", "").replace(" Hub", "")
+            mrow = X.media_row(bphoto, f"Why move with Universal Relocations",
+                '<p>One accredited team owns your move end-to-end — export-grade packing, ocean or air freight, '
+                'in-house customs clearance and door-to-door delivery — backed by 28+ years and our own hubs in the '
+                'USA, India and the UAE.</p>'
+                + X._ul(["Door-to-door LCL, FCL &amp; air freight", "In-house customs &amp; Transfer of Residence",
+                         "All-risk transit insurance &amp; live tracking", "One dedicated move coordinator"]),
+                reverse=True)
             # Rich sectioned layout for destination & hub pages
             sections = (X.isec(f'<div class="prose">{body}</div>')
-                        + X.why_us_band(alt=True)
+                        + X.isec(mrow, alt=True)
+                        + X.why_us_band(alt=False)
                         + X.isec(X.callout("Planning this move?",
                                  "Get a free, no-obligation quote and a clear plan from our move consultants.",
                                  "Get a free quote", "/contact-us/", "Estimate volume", "/moving-calculator/"))
@@ -276,7 +294,7 @@ def build(g):
                      head=X.sec_head(f"Services for your {fn} &rarr; {tn} move",
                            "One team for every part of the journey.", "What we do"))
             + mode_sec
-            + X.isec(X.media_row(g["HERO_SHIP"], f"What to know about moving from {fn} to {tn}", know))
+            + X.isec(X.media_row(g["PH_STAFF1"], f"What to know about moving from {fn} to {tn}", know))
             + X.why_us_band(alt=True)
             + X.isec(f'<div class="related-routes">{rel}</div>',
                      head=X.sec_head("Related routes", "", "Explore"))

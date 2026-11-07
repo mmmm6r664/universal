@@ -446,7 +446,11 @@ def build_services(g, SERVICES, SERVICE_ORDER, cta_block):
         hero = heroes.get(d.get("hero", "HERO_SHIP"), g["HERO_SHIP"])
         faqs = d.get("faqs", [])
         tclean = _strip(title)
-        photo = heroes.get("HERO_SURVEY") if slug in ("corporate-relocation","pet-relocations") else hero
+        SVC_BODY = {"international":"PH_STAFF1","corporate-relocation":"HERO_SURVEY","pet-relocations":"HERO_MOVE1",
+                    "groupage-solution":"PH_SHIP2","storage":"HERO_LOGISTICS","intrastate":"HERO_MOVE2",
+                    "baggage-shipping":"HERO_MOVE2","insurance":"PH_STAFF2","fine-art-relocations":"HERO_MOVE1",
+                    "hospitality-relocations":"HERO_LOGISTICS","auto-shipping":"PH_SHIP2"}
+        photo = g.get(SVC_BODY.get(slug, "PH_STAFF1"), g["HERO_SHIP"])
         lead_html = (f'<p>{lead}</p>'
                      + (f'<p><b>Who it’s for:</b> {d["who"]}</p>' if d.get("who") else ''))
         sections = (
@@ -515,7 +519,7 @@ def build_cities(g, cta_block):
                 isec(lead_split(lead_html, STATS))
                 + isec(svc_cards, alt=True, head=sec_head(f"Our moving services in {city}",
                        "One team for every kind of move, local or international.", "Services"))
-                + isec(media_row(hero, f"How your {city} move works",
+                + isec(media_row(g.get("HERO_MOVE1", hero), f"How your {city} move works",
                        '<p>From first survey to final box, one dedicated coordinator keeps your move on track.</p>'
                        + _ul([t for _, t in step_pairs])))
                 + isec(f'<div class="related-routes">{dl}</div>',

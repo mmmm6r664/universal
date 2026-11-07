@@ -541,10 +541,17 @@ HERO_UAE     = f"{IMG}/2026/08/UAE-Hub-Page.png"
 HERO_INDIA   = f"{IMG}/2026/08/India-Taj-Mahal-1.jpg.jpeg"
 HERO_TRUCK   = f"{IMG}/2023/12/truck-and-flight-1.png"
 HERO_LOGISTICS = f"{IMG}/elementor/thumbs/logistics-transportation-contain-qu8ux9g7remb6y9c6lug6xga6jre6wa4nqfd67viqk.jpg"
+# Expanded real-photo library (harvested from the live site)
+PH_SHIP2     = f"{IMG}/2024/01/large-cargo-ship-with-containers.jpg"      # containers close-up
+PH_STAFF1    = f"{IMG}/2025/03/0J1A9376-scaled.jpg"                       # our team / operations
+PH_STAFF2    = f"{IMG}/2025/03/0J1A9422-scaled.jpg"                       # our team / operations
+PH_CANADA    = f"{IMG}/2023/12/canada-landscape-1.jpg"                    # N. America scenic
+PH_AUS1      = f"{IMG}/2023/12/istockphoto-475705160-612x612-1.jpg"       # Oceania scenic
+PH_AUS2      = f"{IMG}/2023/12/istockphoto-801269928-612x612-1.jpg"       # Oceania scenic
 
 def page_hero(title, crumbs, hero_img=HERO_BRAND, subtitle="", ctas=""):
     trail = ' / '.join(f'<a href="{h}">{l}</a>' if h else f'<span>{l}</span>' for l, h in crumbs)
-    style = f' style="background-image:linear-gradient(120deg,rgba(0,5,110,.88),rgba(0,5,110,.62) 55%,rgba(39,49,201,.55)),url(\'{hero_img}\')"' if hero_img else ''
+    style = f' style="background-image:linear-gradient(118deg,rgba(0,5,110,.78),rgba(0,5,110,.50) 52%,rgba(39,49,201,.42)),url(\'{hero_img}\')"' if hero_img else ''
     cls = "page-hero has-img" if hero_img else "page-hero"
     sub = f'<p class="ph-sub">{subtitle}</p>' if subtitle else ''
     cta = f'<div class="ph-cta">{ctas}</div>' if ctas else ''
