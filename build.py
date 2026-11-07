@@ -385,7 +385,7 @@ HOME_BODY = f"""
 
     <div class="hello-badges">
       <div class="hb"><b>28+</b><span>Years of experience</span></div>
-      <div class="hb"><b>190+</b><span>Countries covered</span></div>
+      <div class="hb"><b>300+</b><span>Professionals worldwide</span></div>
       <div class="hb"><b>4.5★</b><span>Trustpilot · 2000+ reviews</span></div>
       <div class="hb"><b>FMC</b><span>Licensed &amp; bonded NVOCC</span></div>
     </div>
@@ -478,9 +478,9 @@ HOME_BODY = f"""
   <div class="container">
     <div class="stats">
       <div class="stat"><b data-count="28" data-suffix="+">0</b><span>Years of Experience</span></div>
-      <div class="stat"><b data-count="50" data-suffix="k+">0</b><span>Satisfied Clients</span></div>
-      <div class="stat"><b data-count="190" data-suffix="+">0</b><span>Countries Covered</span></div>
-      <div class="stat"><b data-count="2" data-suffix="MM+">0</b><span>Tons Moved</span></div>
+      <div class="stat"><b data-count="300" data-suffix="+">0</b><span>Professionals Worldwide</span></div>
+      <div class="stat"><b data-count="3">0</b><span>Global Hubs (USA · India · UAE)</span></div>
+      <div class="stat"><b data-count="2000" data-suffix="+">0</b><span>Customer Reviews</span></div>
     </div>
   </div>
 </section>

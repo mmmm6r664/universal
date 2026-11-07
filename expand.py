@@ -762,8 +762,8 @@ def isec(html, alt=False, head=""):
     return f'<section class="isec {"alt" if alt else ""}"><div class="container">{head}{html}</div></section>'
 
 # Standard trust/stat + why-us content reused across pages
-STATS = [("28+", "Years of experience"), ("190+", "Countries served"),
-         ("4.5★", "Average rating"), ("3", "Global hubs: USA · India · UAE")]
+STATS = [("28+", "Years of experience"), ("300+", "Professionals worldwide"),
+         ("4.5★", "Trustpilot · 2000+ reviews"), ("3", "Global hubs: USA · India · UAE")]
 WHY_US = [
     ("award", "28+ years, FIDI/FAIM accredited", "Nearly three decades relocating families, diplomats and corporations — to FIDI/FAIM global quality standards."),
     ("globe", "Our own hubs on both ends", "Offices and crews across the USA, India and the UAE mean one team owns your move door-to-door."),
@@ -772,11 +772,29 @@ WHY_US = [
     ("doc", "In-house customs &amp; TR", "We prepare every document and clear customs ourselves, including Transfer of Residence and duty relief."),
     ("clock", "Door-to-door tracking", "Live updates at every stage, from survey and packing to customs and final delivery."),
 ]
+# SFL-style dark stat band — every figure is sourced from universalrelocations.com:
+#  "28 Years of Expertise" / founded 1998; "300+ skilled professionals globally";
+#  offices across 3 countries (USA, India, UAE) each with own crew, warehouse &
+#  in-house customs brokers; Trustpilot 4.5 based on 2000+ reviews.
+WHY_SHIP = [
+    ("28+", "Years of Experience",
+     "A one-stop relocation service since 1998 — grown from one man with one truck into a global mover."),
+    ("300+", "Professionals Worldwide",
+     "A dedicated team of 300+ skilled professionals across our own offices."),
+    ("3", "Global Hubs",
+     "Own offices, crews, warehouses and in-house customs brokers in the USA, India and the UAE."),
+    ("4.5★", "Rated on Trustpilot",
+     "A 4.5 rating based on 2000+ customer reviews."),
+]
 def why_us_band(alt=True):
-    return isec(feature_cards(WHY_US), alt=alt,
-                head=sec_head("Why families and businesses choose Universal Relocations",
-                              "The service, accreditations and people behind every move.",
-                              "Why Universal"))
+    cards = "".join(
+        f'<div class="ws-card"><div class="ws-top"><span class="ws-num c{i}">{n}</span>'
+        f'<h3>{t}</h3></div><p>{d}</p></div>'
+        for i, (n, t, d) in enumerate(WHY_SHIP))
+    head = ('<div class="ws-head"><div class="eyebrow">Why Universal Relocations</div>'
+            '<h2>Why move with Universal Relocations</h2></div>')
+    return (f'<section class="isec why-ship"><div class="container">{head}'
+            f'<div class="ws-grid">{cards}</div></div></section>')
 
 
 GEN_STEPS = [

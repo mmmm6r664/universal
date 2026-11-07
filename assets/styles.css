@@ -907,3 +907,19 @@ a { transition: color .18s ease; }
 .toc { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
 .toc a { background:#fff; border:1px solid var(--line); border-radius:20px; padding:8px 16px; font-size:.86rem; font-weight:600; color:var(--navy); transition:all .18s; }
 .toc a:hover { background:var(--blue); color:#fff; border-color:var(--blue); }
+
+/* ===== "Why move with us" dark stat band (facts from universalrelocations.com) ===== */
+.why-ship { background:linear-gradient(135deg,#00103f 0%,#00056e 60%,#0a1f8c 100%); color:#fff; }
+.why-ship .ws-head { max-width:720px; margin:0 auto 38px; text-align:center; }
+.why-ship .ws-head .eyebrow { color:var(--accent); font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.8rem; }
+.why-ship .ws-head h2 { color:#fff; font-size:clamp(1.6rem,3.2vw,2.2rem); margin-top:8px; }
+.ws-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.ws-card { background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:28px 26px; transition:transform .2s, background .2s; }
+.ws-card:hover { transform:translateY(-4px); background:rgba(255,255,255,.09); }
+.ws-top { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+.ws-num { font-size:2.2rem; font-weight:800; line-height:1; }
+.ws-num.c0{color:#fea70e}.ws-num.c1{color:#5b8cff}.ws-num.c2{color:#3ad29f}.ws-num.c3{color:#a99cff}
+.ws-top h3 { color:#fff; font-size:1.05rem; font-weight:700; margin:0; }
+.ws-card p { color:#b9c4e6; font-size:.92rem; line-height:1.6; margin:0; }
+@media (max-width:900px){ .ws-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:520px){ .ws-grid { grid-template-columns:1fr; } }
