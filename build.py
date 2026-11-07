@@ -500,6 +500,18 @@ HOME_BODY = f"""
   </div>
 </section>
 
+<!-- Video -->
+<section class="section video-sec">
+  <div class="container text-center">
+    <span class="eyebrow">Our Story</span>
+    <h2 class="section-title">See Universal Relocations in motion</h2>
+    <p class="section-intro">A look at how we move families and businesses across the world — with care at every step.</p>
+    <div class="video-wrap" style="margin-top:28px">
+      <video autoplay muted loop playsinline poster="/assets/hero-bg.jpg"><source src="/assets/hero.mp4?v={ASSET_VER}" type="video/mp4"></video>
+    </div>
+  </div>
+</section>
+
 <!-- Reviews (real aggregate ratings) -->
 <section class="section">
   <div class="container text-center">

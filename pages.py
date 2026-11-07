@@ -168,6 +168,8 @@ def build(g):
         r = slug.replace("moving-to-", "").replace("-", " ").title()
         return r
     X.build_checklist_page(g)   # custom designed timeline page
+    X.build_leadership(g)       # leadership index + Anu/Sai Dattani bios
+    X.build_country_pages(g, cta_block)  # ~100 individual country pages
     for slug, (title_override, body) in C.RICH.items():
         if slug == "moving-check-list":
             continue

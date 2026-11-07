@@ -1064,3 +1064,203 @@ def orange_stats():
         f'<div class="os-cell"><div class="os-num">{n}</div>'
         f'<div class="os-label">{l}</div></div>' for n, l in BIG_STATS)
     return f'<section class="os-band"><div class="container"><div class="os-grid">{cells}</div></div></section>'
+
+
+# ===========================================================================
+# Leadership + founder/VP bio pages (content from universalrelocations.com)
+# ===========================================================================
+ANU_BIO = [
+    "Anu Dattani is Vice President of Universal Relocations, where she is known for her leadership and innovative approach to global relocation and logistics. She began her career in the relocation industry at just 18 and today oversees company operations — from client relations and business development to strategic planning.",
+    "A passionate advocate for employee development, Anu champions a collaborative, innovative culture across the company. She holds a Bachelor’s degree in Business Administration from Pratt Institute, is a certified relocation professional, and serves on the IAM Young Professional Management Board. She speaks five languages — English, Hindi, Tamil, Italian and Spanish — and is active in community and philanthropic work.",
+    "Away from work, her interests include jazz, pottery, car racing and horse riding. Her vision is to make Universal Relocations the top logistics company in the entire world.",
+]
+ANU_CERTS = [
+    "Live Animals Regulations (IATA)", "Master in Global Mobility (FIDI)",
+    "Residential Sales Training Program (IAM Learning)", "Trusted Moving Specialist (IAM Learning)",
+    "Trusted US Military Moving Specialist (IAM Learning)", "Move Coordinator Training Program (IAM Learning)",
+    "Global Mobility Specialist (Worldwide ERC)", "Certified Moving Consultant (American Trucking Associations)",
+]
+SAI_BIO = [
+    "Sai Dattani is the President and founder of Universal Relocations. He started the company in 1998 — famously as “one man with one truck” — and over more than 28 years has grown it into a one-stop international relocation and logistics company with its own offices, crews and warehouses across the USA, India and the UAE.",
+    "From the very beginning the business focused on international moves for corporate expatriates and diplomats, and many of those first clients are still with Universal Relocations today — a testament to the service, integrity and personal care that remain at the heart of the company.",
+]
+
+def _initials(name):
+    parts = [p for p in name.split() if p]
+    return (parts[0][0] + (parts[-1][0] if len(parts) > 1 else "")).upper()
+
+def _photo_div(cls, name, img):
+    if img:
+        return f'<div class="{cls}" style="background-image:url(\'{img}\')"></div>'
+    return f'<div class="{cls} initials">{_initials(name)}</div>'
+
+def _leader_card(name, role, href, img):
+    return (f'<a class="lead-card" href="{href}">{_photo_div("lead-photo", name, img)}'
+            f'<div class="lead-meta"><h3>{name}</h3><span>{role}</span>'
+            f'<span class="lead-more">Read bio &rarr;</span></div></a>')
+
+def build_leadership(g):
+    interior = g["interior"]; write = g["write"]; IMG = g["IMG"]
+    pres_img = g["PH_PRESIDENT"]
+    vp_img = ""  # no verified portrait for Anu yet -> branded initials avatar
+    # Leadership index
+    cards = _leader_card("Sai Dattani", "President &amp; Founder", "/sai-dattani/", pres_img) + \
+            _leader_card("Anu Dattani", "Vice President", "/anu-dattani/", vp_img)
+    inner = (
+        isec('<div class="prose" style="max-width:820px;margin:0 auto;text-align:center">'
+             '<p style="font-size:1.12rem">Meet the people behind Universal Relocations — a leadership team that '
+             'has spent decades building a trusted, accredited, one-stop relocation company across three countries.</p></div>')
+        + isec(f'<div class="lead-grid">{cards}</div>', alt=True,
+               head=sec_head("Our leadership", "Experience, integrity and a global outlook.", "Leadership"))
+        + video_section(g)
+        + why_us_band()
+        + trust_logos(g, alt=True)
+        + cta_isec())
+    write("leadership", interior("Leadership", [("Home","/"),("About us","/about-us/"),("Leadership","")],
+          inner, "Meet the leadership team behind Universal Relocations.",
+          hero_img=g["HERO_SURVEY"], subtitle="The people behind Universal Relocations.", raw=True))
+
+    def bio_page(slug, name, role, paras, certs, img):
+        body = "".join(f"<p>{p}</p>" for p in paras)
+        left = (f'<div class="bio-aside">{_photo_div("bio-photo", name, img)}'
+                f'<div class="bio-name"><h3>{name}</h3><span>{role}</span></div></div>')
+        certs_html = ""
+        if certs:
+            certs_html = isec(check_grid(certs), alt=True,
+                head=sec_head(f"{name.split()[0]}’s certifications &amp; training", "", "Credentials"))
+        inner = (
+            isec(f'<div class="bio-layout">{left}<div class="bio-body prose">{body}</div></div>')
+            + certs_html
+            + why_us_band()
+            + cta_isec())
+        write(slug, interior(name, [("Home","/"),("Leadership","/leadership/"),(name,"")],
+              inner, f"{name}, {_strip(role)} at Universal Relocations.",
+              hero_img=g["HERO_SURVEY"], subtitle=role, raw=True))
+    bio_page("anu-dattani", "Anu Dattani", "Vice President", ANU_BIO, ANU_CERTS, vp_img)
+    bio_page("sai-dattani", "Sai Dattani", "President &amp; Founder", SAI_BIO, [], pres_img)
+    print("Leadership + bio pages built.")
+
+def video_section(g):
+    return (f'<section class="isec video-sec"><div class="container">'
+            + sec_head("See Universal Relocations in motion", "A look at how we move families and businesses across the world.", "Our story")
+            + f'<div class="video-wrap"><video autoplay muted loop playsinline '
+            f'poster="{g["HERO_SHIP"]}"><source src="/assets/hero.mp4" type="video/mp4"></video></div>'
+            '</div></section>')
+
+
+# ===========================================================================
+# Individual country pages: /moving-to-{slug}/  (full sitemap coverage)
+# ===========================================================================
+COUNTRIES_FULL = [
+    # Europe
+    ("Austria","austria","Europe"),("Belgium","belgium","Europe"),("Bulgaria","bulgaria","Europe"),
+    ("Croatia","croatia","Europe"),("Czech Republic","czech-republic","Europe"),("Denmark","denmark","Europe"),
+    ("Estonia","estonia","Europe"),("Finland","finland","Europe"),("France","france","Europe"),
+    ("Germany","germany","Europe"),("Greece","greece","Europe"),("Hungary","hungary","Europe"),
+    ("Iceland","iceland","Europe"),("Ireland","ireland","Europe"),("Italy","italy","Europe"),
+    ("Latvia","latvia","Europe"),("Luxembourg","luxembourg","Europe"),("Malta","malta","Europe"),
+    ("Netherlands","netherlands","Europe"),("Norway","norway","Europe"),("Poland","poland","Europe"),
+    ("Portugal","portugal","Europe"),("Romania","romania","Europe"),("Russia","russia","Europe"),
+    ("Slovakia","slovakia","Europe"),("Slovenia","slovenia","Europe"),("Spain","spain","Europe"),
+    ("Sweden","sweden","Europe"),("Switzerland","switzerland","Europe"),("Turkey","turkey","Europe"),
+    ("Ukraine","ukraine","Europe"),("United Kingdom","uk","Europe"),
+    # Asia
+    ("Bangladesh","bangladesh","Asia"),("Cambodia","cambodia","Asia"),("China","china","Asia"),
+    ("Hong Kong","hong-kong","Asia"),("Japan","japan","Asia"),("Malaysia","malaysia","Asia"),
+    ("Myanmar","myanmar","Asia"),("Nepal","nepal","Asia"),("Philippines","philippines","Asia"),
+    ("Singapore","singapore","Asia"),("South Korea","south-korea","Asia"),("Sri Lanka","sri-lanka","Asia"),
+    ("Thailand","thailand","Asia"),("Vietnam","vietnam","Asia"),
+    # Middle East
+    ("Bahrain","bahrain","the Middle East"),("Israel","israel","the Middle East"),("Jordan","jordan","the Middle East"),
+    ("Kuwait","kuwait","the Middle East"),("Oman","oman","the Middle East"),("Qatar","qatar","the Middle East"),
+    ("Saudi Arabia","saudi-arabia","the Middle East"),
+    # North America
+    ("Canada","canada","North America"),("Mexico","mexico","North America"),
+    # Central America & Caribbean
+    ("Barbados","barbados","the Caribbean"),("Costa Rica","costa-rica","Central America"),
+    ("Dominican Republic","dominican-republic","the Caribbean"),("El Salvador","el-salvador","Central America"),
+    ("Guatemala","guatemala","Central America"),("Honduras","honduras","Central America"),
+    ("Jamaica","jamaica","the Caribbean"),("Nicaragua","nicaragua","Central America"),
+    ("Panama","panama","Central America"),("Trinidad and Tobago","trinidad-and-tobago","the Caribbean"),
+    # South America
+    ("Argentina","argentina","South America"),("Bolivia","bolivia","South America"),("Brazil","brazil","South America"),
+    ("Chile","chile","South America"),("Colombia","colombia","South America"),("Ecuador","ecuador","South America"),
+    ("Paraguay","paraguay","South America"),("Peru","peru","South America"),("Uruguay","uruguay","South America"),
+    ("Venezuela","venezuela","South America"),
+    # Africa
+    ("Algeria","algeria","Africa"),("Botswana","botswana","Africa"),("Egypt","egypt","Africa"),
+    ("Ethiopia","ethiopia","Africa"),("Ghana","ghana","Africa"),("Guinea","guinea","Africa"),
+    ("Kenya","kenya","Africa"),("Madagascar","madagascar","Africa"),("Malawi","malawi","Africa"),
+    ("Mauritania","mauritania","Africa"),("Mauritius","mauritius","Africa"),("Morocco","morocco","Africa"),
+    ("Mozambique","mozambique","Africa"),("Namibia","namibia","Africa"),("Rwanda","rwanda","Africa"),
+    ("Senegal","senegal","Africa"),("Sierra Leone","sierra-leone","Africa"),("South Africa","south-africa","Africa"),
+    ("Tanzania","tanzania","Africa"),("Tunisia","tunisia","Africa"),("Uganda","uganda","Africa"),
+    ("Zambia","zambia","Africa"),("Zimbabwe","zimbabwe","Africa"),
+    # Oceania
+    ("Australia","australia","Oceania"),("Fiji","fiji","Oceania"),("New Zealand","new-zealand","Oceania"),
+    ("Papua New Guinea","papua-new-guinea","Oceania"),
+]
+def _country_faqs(name):
+    return [
+        (f"How much does moving to {name} cost?",
+         f"Your price for a move to {name} depends on volume, service (LCL, FCL, air or baggage) and any extras like storage or a vehicle. Book a free survey or use our Moving Calculator for a firm, itemised quote — no hidden fees."),
+        (f"How long does shipping to {name} take?",
+         f"Transit time to {name} varies by origin, port and season. Ocean freight is the economical choice and takes a few weeks to a couple of months door-to-door; air freight is far faster. Your move manager confirms exact timing for your route."),
+        (f"Do you handle customs clearance in {name}?",
+         f"Yes — we prepare all export paperwork and clear customs on arrival in {name}, including any Transfer of Residence or duty-relief you qualify for."),
+        (f"Can I ship a part-load or just a few boxes to {name}?",
+         "Absolutely — choose LCL (shared container) or baggage/box shipping for smaller loads, or FCL (your own container) for a full home."),
+        ("Is my shipment insured and tracked?",
+         "Yes — all-risk transit insurance is available and you get door-to-door tracking with updates at every stage."),
+    ]
+def build_country_pages(g, cta_block):
+    interior = g["interior"]; write = g["write"]
+    by_region = {}
+    for n, s, r in COUNTRIES_FULL: by_region.setdefault(r, []).append((n, s))
+    SVC_CARDS = feature_cards([
+        ("globe","International relocation","Full door-to-door household moves by ocean or air."),
+        ("ship","LCL / groupage","Shared-container shipping — pay only for the space you use."),
+        ("cubes","FCL full container","Your own 20ft/40ft container for a complete home."),
+        ("box","Baggage &amp; boxes","Send boxes and excess luggage with no airline fees."),
+        ("car","Vehicle shipping","Cars and motorcycles by container or RoRo."),
+        ("paw","Pet relocation","IPATA-affiliated, airline-approved pet moves."),
+    ])
+    count = 0
+    for n, s, r in COUNTRIES_FULL:
+        faqs = _country_faqs(n)
+        peers = [(pn, ps) for pn, ps in by_region[r] if ps != s][:6]
+        rel = "".join(f'<a href="/moving-to-{ps}/">Moving to {pn}</a>' for pn, ps in peers)
+        intro = (f'<p>Planning a move to <b>{n}</b>? Universal Relocations makes relocating to {n} and across {r} '
+                 f'seamless — from export-grade packing and ocean or air freight to customs clearance and door-to-door '
+                 f'delivery. With 28+ years of experience, full FMC licensing and our own hubs in the USA, India and the UAE, '
+                 f'we move households, professionals and businesses to {n} with precision and care.</p>'
+                 f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
+                 f'<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Get a free quote</a></p>')
+        know = (f'<p>Most household moves to {n} travel by sea freight, with air freight available for urgent or smaller '
+                f'shipments. Our team prepares all export and import documentation and handles customs clearance in {n} '
+                f'— including any transfer-of-residence or duty relief you qualify for. Transit times vary by season and '
+                f'port; your dedicated move manager confirms exact timing and the most cost-effective option for your volume.</p>')
+        sections = (
+            isec(lead_split(intro, STATS))
+            + orange_stats()
+            + prompt_band(title=f"Get an instant estimate for moving to {n}")
+            + isec(SVC_CARDS, alt=True, head=sec_head(f"Our services for moving to {n}",
+                   "One team for every part of your move.", "What we do"))
+            + isec(media_row(g["HERO_SHIP"], f"What to know about moving to {n}", know))
+            + compare_table()
+            + cost_timeline_section(f"your move to {n}")
+            + docs_section(alt=False)
+            + core_strengths()
+            + why_us_band()
+            + trust_logos(g, alt=True)
+            + (isec(f'<div class="related-routes">{rel}</div>',
+                   head=sec_head(f"Other destinations in {r}", "", "Explore")) if rel else "")
+            + faq_isec(faqs)
+            + cta_isec())
+        write(f"moving-to-{s}", interior(f"Moving to {n}",
+              [("Home","/"),("Destinations","/shipping-worldwide/"),(f"Moving to {n}","")], sections,
+              f"Moving to {n} with Universal Relocations — international packing, shipping, customs and door-to-door delivery.",
+              hero_img=g["HERO_SHIP"], extra_head=faq_schema(faqs),
+              subtitle=f"Seamless door-to-door relocation to {n}.", raw=True))
+        count += 1
+    print(f"Country pages built: {count}")

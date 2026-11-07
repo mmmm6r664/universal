@@ -1004,3 +1004,25 @@ a { transition: color .18s ease; }
 .os-label { color:#fff; font-weight:600; margin-top:10px; font-size:1.02rem; opacity:.97; }
 @media (max-width:760px){ .os-grid { grid-template-columns:1fr 1fr; gap:28px 10px; } .os-cell:nth-child(2)::after{display:none} }
 @media (max-width:420px){ .os-grid { grid-template-columns:1fr 1fr; } }
+
+/* ===== Leadership / bios / video ===== */
+.lead-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:28px; max-width:860px; margin:0 auto; }
+.lead-card { display:flex; gap:22px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:20px; padding:24px; box-shadow:var(--shadow-sm); transition:transform .2s, box-shadow .2s; }
+.lead-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
+.lead-photo { width:120px; height:120px; border-radius:50%; background:#e7ecfb center/cover; flex-shrink:0; border:3px solid var(--blue-light); }
+.lead-meta h3 { color:var(--navy); font-size:1.3rem; margin-bottom:4px; }
+.lead-meta > span { color:var(--muted); font-weight:600; display:block; }
+.lead-more { color:var(--blue); font-weight:700; font-size:.9rem; margin-top:12px; }
+.bio-layout { display:grid; grid-template-columns:280px 1fr; gap:44px; align-items:start; }
+.bio-aside { position:sticky; top:100px; text-align:center; }
+.bio-photo { width:100%; aspect-ratio:1; border-radius:20px; background:#e7ecfb center/cover; box-shadow:var(--shadow); }
+.bio-name { margin-top:18px; } .bio-name h3 { color:var(--navy); font-size:1.4rem; } .bio-name span { color:var(--accent-dark); font-weight:700; }
+.bio-body p { font-size:1.05rem; line-height:1.8; margin-bottom:16px; }
+.video-sec { background:var(--bg-soft); }
+.video-wrap { max-width:960px; margin:0 auto; border-radius:22px; overflow:hidden; box-shadow:var(--shadow); aspect-ratio:16/9; background:#00056e; }
+.video-wrap video { width:100%; height:100%; object-fit:cover; display:block; }
+@media (max-width:760px){ .lead-grid { grid-template-columns:1fr; } .bio-layout { grid-template-columns:1fr; } .bio-aside { position:static; max-width:260px; margin:0 auto; } }
+
+.lead-photo.initials, .bio-photo.initials { display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; background:linear-gradient(135deg,var(--navy),var(--blue)); }
+.lead-photo.initials { font-size:2.4rem; }
+.bio-photo.initials { font-size:4rem; }
