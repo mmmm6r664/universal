@@ -109,9 +109,13 @@
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var sel = '.feature, .svc, .hub-card, .review, .info-card, .promise .p, .stat, ' +
             '.route-finder, .logos-slider, .section-title, .section-intro, .eyebrow, ' +
-            '.prose h2, .office-table, .country-grid, .related-routes, .ura-estimate';
+            '.prose h2, .office-table, .country-grid, .related-routes, .ura-estimate, ' +
+            // interior design-system components
+            '.sec-head, .lead-split, .fcard, .media-row, .callout, .step-cards .sc, ' +
+            '.check-grid .ck, .cmp-wrap, .rules-cols .rule-card, .ws-card, .tl-item, ' +
+            '.trust-strip img, .mode-chip-grid a, .page-banner';
   var els = Array.prototype.slice.call(document.querySelectorAll(sel)).filter(function (el) {
-    return !el.closest('.hello-hero');
+    return !el.closest('.hello-hero') && !el.closest('.page-hero');
   });
   var counts = new Map();
   els.forEach(function (el) {

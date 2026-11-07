@@ -198,7 +198,9 @@ def build(g):
                          "All-risk transit insurance &amp; live tracking", "One dedicated move coordinator"]),
                 reverse=True)
             # Rich sectioned layout for destination & hub pages
+            _dest_name = title.replace("Moving to ", "").replace(" Hub", "")
             sections = (X.isec(f'<div class="prose">{body}</div>')
+                        + X.prompt_band(title=f"Get an instant estimate for {_dest_name}")
                         + X.isec(mrow, alt=True)
                         + X.compare_table()
                         + X.docs_section(alt=False)

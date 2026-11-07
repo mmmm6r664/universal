@@ -532,22 +532,28 @@ HOME_BODY = f"""
 # ---------------------------------------------------------------------------
 # ---- Real photographic images (from universalrelocations.com media library) ----
 HERO_BRAND   = f"{IMG}/2024/01/01.png"                                   # site-wide brand banner
-HERO_SHIP    = f"{IMG}/2024/01/aerial-view-cargo-ship-cargo-con.jpg"     # ocean freight
-HERO_SURVEY  = f"{IMG}/2024/02/medium-shot-man-holding-clipboar.jpg"     # survey / coordinator
-HERO_MOVE1   = f"{IMG}/2023/12/istockphoto-624394918-612x612-1.jpg"      # packing / household
-HERO_MOVE2   = f"{IMG}/2023/12/istockphoto-506433734-612x612-1.jpg"      # moving boxes
-HERO_USA     = f"{IMG}/2026/08/usa-hub.png"
-HERO_UAE     = f"{IMG}/2026/08/UAE-Hub-Page.png"
-HERO_INDIA   = f"{IMG}/2026/08/India-Taj-Mahal-1.jpg.jpeg"
-HERO_TRUCK   = f"{IMG}/2023/12/truck-and-flight-1.png"
-HERO_LOGISTICS = f"{IMG}/elementor/thumbs/logistics-transportation-contain-qu8ux9g7remb6y9c6lug6xga6jre6wa4nqfd67viqk.jpg"
-# Expanded real-photo library (harvested from the live site)
-PH_SHIP2     = f"{IMG}/2024/01/large-cargo-ship-with-containers.jpg"      # containers close-up
-PH_STAFF1    = f"{IMG}/2025/03/0J1A9376-scaled.jpg"                       # our team / operations
-PH_STAFF2    = f"{IMG}/2025/03/0J1A9422-scaled.jpg"                       # our team / operations
-PH_CANADA    = f"{IMG}/2023/12/canada-landscape-1.jpg"                    # N. America scenic
-PH_AUS1      = f"{IMG}/2023/12/istockphoto-475705160-612x612-1.jpg"       # Oceania scenic
-PH_AUS2      = f"{IMG}/2023/12/istockphoto-801269928-612x612-1.jpg"       # Oceania scenic
+# Verified real photos (confirmed present on universalrelocations.com)
+HERO_SHIP    = f"{IMG}/elementor/thumbs/aerial-view-cargo-ship-cargo-con-qu8uworsevesei6stqo3oclmmjfb79mjp6i5mxze54.jpg"  # ocean freight (verified)
+PH_SHIP2     = f"{IMG}/2026/03/ship-from-us-to-australia.jpg.jpeg"        # cargo ship (verified)
+HERO_LOGISTICS = f"{IMG}/elementor/thumbs/logistics-transportation-contain-qu8ux9g7remb6y9c6lug6xga6jre6wa4nqfd67viqk.jpg"  # (verified)
+PH_PRESIDENT = f"{IMG}/2024/03/President.jpeg"                            # founder / people (verified)
+PH_CONT1     = f"{IMG}/2023/12/40-High-cube-container.jpg"                # container (verified)
+PH_CONT2     = f"{IMG}/2023/12/20-dry-freight.jpg"                        # container (verified)
+PH_CONT3     = f"{IMG}/2023/12/20-open-top-container-1.jpg"               # container (verified)
+PH_CONT4     = f"{IMG}/2023/12/40-High-cube-Reefer-container.jpg"         # container (verified)
+# Aliases mapped onto verified images so no media row is ever broken
+HERO_SURVEY  = PH_PRESIDENT
+HERO_MOVE1   = PH_CONT1
+HERO_MOVE2   = PH_CONT2
+PH_STAFF1    = PH_PRESIDENT
+PH_STAFF2    = PH_CONT3
+PH_CANADA    = HERO_SHIP
+PH_AUS1      = PH_SHIP2
+PH_AUS2      = PH_CONT4
+HERO_USA     = HERO_SHIP
+HERO_UAE     = HERO_LOGISTICS
+HERO_INDIA   = PH_CONT4
+HERO_TRUCK   = HERO_LOGISTICS
 
 def page_hero(title, crumbs, hero_img=HERO_BRAND, subtitle="", ctas=""):
     # Clean, consistent gradient header (no stretched background photo) + route-arc motif.

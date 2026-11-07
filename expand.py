@@ -466,6 +466,7 @@ def build_services(g, SERVICES, SERVICE_ORDER, cta_block):
         full_faqs = faqs + EXTRA_FAQS
         sections = (
             isec(lead_split(lead_html, STATS))
+            + prompt_band(title=f"Get an instant {tclean.lower()} estimate")
             + prose_section(f"About our {tclean.lower()}", [over], "Overview")
             + isec(check_grid(bullets), alt=True,
                    head=sec_head("What’s included", f"Everything your {tclean.lower()} needs, handled end-to-end.", "What you get"))
@@ -532,6 +533,11 @@ def build_cities(g, cta_block):
                 f'<a class="btn btn-ghost" href="tel:{tel}" style="margin-left:8px">Call {tel}</a></p>')
             sections = (
                 isec(lead_split(lead_html, STATS))
+                + prompt_band(title=f"Get a moving estimate from {city}",
+                    chips=[(f"I want to move my 3 bedroom home from {city}", f"Move a home from {city}"),
+                           (f"I want to ship boxes from {city}", f"Ship boxes from {city}"),
+                           (f"I want to move my car from {city}", f"Move a car from {city}"),
+                           (f"How much to move from {city} overseas", f"Move overseas from {city}")])
                 + isec(svc_cards, alt=True, head=sec_head(f"Our moving services in {city}",
                        "One team for every kind of move, local or international.", "Services"))
                 + isec(media_row(g.get("HERO_MOVE1"), f"How your {city} move works",
@@ -886,9 +892,29 @@ def trust_logos(g, alt=True):
              ("PAIMA","05-paima"),("IPATA","06-ipata"),("ARA","07-ara"),("FIDI-PCG","08-fidi-pcg"),
              ("FMC","09-fmc"),("ISO 9001","10-iso-9001")]
     imgs = "".join(f'<img src="{IMG}/2026/10/{f}.png" alt="{n}" loading="lazy">' for n, f in logos)
-    return isec(f'<div class="trust-strip">{imgs}</div>', alt=alt,
+    # duplicate the set so the marquee loops seamlessly (translateX -50%)
+    return isec(f'<div class="trust-strip"><div class="trust-track">{imgs}{imgs}</div></div>', alt=alt,
         head=sec_head("Accredited, licensed and trusted",
             "Our work is held to the world’s leading moving and quality standards.", "Credentials"))
+
+def prompt_band(chips=None, title="Start your move in seconds",
+                sub="Tell us what you’re moving and where — our assistant builds your estimate instantly."):
+    if chips is None:
+        chips = [("I want to move my 3 bedroom apartment from New York to Delhi", "Move a 3-bedroom, New York → Delhi"),
+                 ("I want to ship 5 boxes of 25 kg each from Chennai to San Francisco", "Ship 5 boxes, Chennai → San Francisco"),
+                 ("I want to move my car from Dubai to Toronto", "Move a car, Dubai → Toronto"),
+                 ("How much will it cost to move 10 boxes from Dallas to Abu Dhabi", "10 boxes, Dallas → Abu Dhabi")]
+    chip_html = "".join(f'<button class="hs-chip" data-prompt="{p}">{l}</button>' for p, l in chips)
+    return (f'<section class="isec book-band"><div class="container"><div class="book-head">'
+            f'<div class="eyebrow">Instant estimate</div><h2>{title}</h2><p>{sub}</p></div>'
+            '<form class="hero-prompt" id="hero-prompt-form">'
+            '<input id="hero-prompt-input" type="text" autocomplete="off" placeholder="e.g. Move a 3-bedroom from New York to Delhi" aria-label="Describe your move">'
+            '<div class="hero-prompt-actions">'
+            '<button type="button" class="hp-icon" id="hp-mic" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0014 0M12 17v4"/></svg></button>'
+            '<button type="submit" class="hp-go" aria-label="Start"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'
+            '</div></form>'
+            f'<div class="hero-suggest"><span class="hs-label">Try:</span>{chip_html}</div>'
+            '</div></section>')
 
 ALLOWED = [
     "Household furniture, appliances and white goods", "Clothing, linens, books and personal effects",
