@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=afcc828f">
+  <link rel="stylesheet" href="/assets/styles.css?v=932f96d4">
 </head>
 <body>
 
@@ -48,8 +48,8 @@
 
 
 <section class="hello-hero">
-  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/assets/hero-bg.jpg?v=afcc828f">
-    <source src="/assets/hero.mp4?v=afcc828f" type="video/mp4">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/assets/hero-bg.jpg?v=932f96d4">
+    <source src="/assets/hero.mp4?v=932f96d4" type="video/mp4">
   </video>
   <div class="container hello-inner">
     <h1 class="hello-title" id="hero-rotate"><span class="hr-text">Hello,</span><span class="hr-cursor">|</span></h1>
@@ -101,23 +101,25 @@
 </section>
 
 <!-- Route finder -->
-<section class="section section-soft">
+<section class="section route-band">
   <div class="container text-center">
     <span class="eyebrow">Find Your Route</span>
-    <h2 class="section-title">Where are you moving?</h2>
+    <h2 class="section-title">Are you moving internationally?</h2>
     <p class="section-intro">Pick your origin and destination to see a dedicated moving guide, timelines and services for your exact route.</p>
-    <form id="route-form" class="route-finder">
-      <div class="route-field">
-        <label>Moving from</label>
-        <select id="route-from" required><option value="" disabled selected>Select country…</option><option value="india">India</option><option value="uk">United Kingdom</option><option value="usa">United States</option><option value="canada">Canada</option><option value="uae">UAE</option><option value="saudi-arabia">Saudi Arabia</option><option value="mexico">Mexico</option><option value="germany">Germany</option><option value="philippines">Philippines</option><option value="japan">Japan</option><option value="australia">Australia</option><option value="new-zealand">New Zealand</option><option value="france">France</option><option value="italy">Italy</option></select>
-      </div>
-      <span class="route-arrow" aria-hidden="true">→</span>
-      <div class="route-field">
-        <label>Moving to</label>
-        <select id="route-to" required><option value="" disabled selected>Select country…</option><option value="india">India</option><option value="uk">United Kingdom</option><option value="usa">United States</option><option value="canada">Canada</option><option value="uae">UAE</option><option value="saudi-arabia">Saudi Arabia</option><option value="mexico">Mexico</option><option value="germany">Germany</option><option value="philippines">Philippines</option><option value="japan">Japan</option><option value="australia">Australia</option><option value="new-zealand">New Zealand</option><option value="france">France</option><option value="italy">Italy</option></select>
-      </div>
-      <button type="submit" class="btn btn-primary">Find Your Route</button>
-    </form>
+    <div class="route-card">
+      <form id="route-form" class="route-finder">
+        <div class="route-field">
+          <label>Moving from</label>
+          <select id="route-from" required><option value="" disabled selected>Select country…</option><option value="india">India</option><option value="uk">United Kingdom</option><option value="usa">United States</option><option value="canada">Canada</option><option value="uae">UAE</option><option value="saudi-arabia">Saudi Arabia</option><option value="mexico">Mexico</option><option value="germany">Germany</option><option value="philippines">Philippines</option><option value="japan">Japan</option><option value="australia">Australia</option><option value="new-zealand">New Zealand</option><option value="france">France</option><option value="italy">Italy</option></select>
+        </div>
+        <span class="route-arrow" aria-hidden="true">→</span>
+        <div class="route-field">
+          <label>Moving to</label>
+          <select id="route-to" required><option value="" disabled selected>Select country…</option><option value="india">India</option><option value="uk">United Kingdom</option><option value="usa">United States</option><option value="canada">Canada</option><option value="uae">UAE</option><option value="saudi-arabia">Saudi Arabia</option><option value="mexico">Mexico</option><option value="germany">Germany</option><option value="philippines">Philippines</option><option value="japan">Japan</option><option value="australia">Australia</option><option value="new-zealand">New Zealand</option><option value="france">France</option><option value="italy">Italy</option></select>
+        </div>
+        <button type="submit" class="btn btn-primary">Find Your Route</button>
+      </form>
+    </div>
     <p id="route-error" class="route-error" hidden>Please choose two different countries.</p>
   </div>
 </section>
@@ -210,14 +212,14 @@
   </div>
 </section>
 
-<!-- Stats -->
-<section class="section section-navy" style="padding-top:0">
+<!-- Stats (owner-provided figures) -->
+<section class="os-band">
   <div class="container">
-    <div class="stats">
-      <div class="stat"><b data-count="28" data-suffix="+">0</b><span>Years of Experience</span></div>
-      <div class="stat"><b data-count="300" data-suffix="+">0</b><span>Professionals Worldwide</span></div>
-      <div class="stat"><b data-count="3">0</b><span>Global Hubs (USA · India · UAE)</span></div>
-      <div class="stat"><b data-count="2000" data-suffix="+">0</b><span>Customer Reviews</span></div>
+    <div class="os-grid">
+      <div class="os-cell"><div class="os-num">28+</div><div class="os-label">Years of Experience</div></div>
+      <div class="os-cell"><div class="os-num">100+</div><div class="os-label">Countries Covered</div></div>
+      <div class="os-cell"><div class="os-num">440k+</div><div class="os-label">Satisfied Clients</div></div>
+      <div class="os-cell"><div class="os-num">52MM+</div><div class="os-label">Tons Moved</div></div>
     </div>
   </div>
 </section>
@@ -383,8 +385,8 @@
     <button class="btn btn-primary" id="cookie-accept">Accept</button>
   </div>
 </div>
-<script src="/assets/script.js?v=afcc828f"></script>
-<script src="/assets/assistant.js?v=afcc828f" defer></script>
-<script src="/assets/calculator.js?v=afcc828f" defer></script>
+<script src="/assets/script.js?v=932f96d4"></script>
+<script src="/assets/assistant.js?v=932f96d4" defer></script>
+<script src="/assets/calculator.js?v=932f96d4" defer></script>
 </body>
 </html>

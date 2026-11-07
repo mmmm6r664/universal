@@ -409,23 +409,25 @@ HOME_BODY = f"""
 </section>
 
 <!-- Route finder -->
-<section class="section section-soft">
+<section class="section route-band">
   <div class="container text-center">
     <span class="eyebrow">Find Your Route</span>
-    <h2 class="section-title">Where are you moving?</h2>
+    <h2 class="section-title">Are you moving internationally?</h2>
     <p class="section-intro">Pick your origin and destination to see a dedicated moving guide, timelines and services for your exact route.</p>
-    <form id="route-form" class="route-finder">
-      <div class="route-field">
-        <label>Moving from</label>
-        <select id="route-from" required><option value="" disabled selected>Select country…</option>{ROUTE_OPTIONS}</select>
-      </div>
-      <span class="route-arrow" aria-hidden="true">→</span>
-      <div class="route-field">
-        <label>Moving to</label>
-        <select id="route-to" required><option value="" disabled selected>Select country…</option>{ROUTE_OPTIONS}</select>
-      </div>
-      <button type="submit" class="btn btn-primary">Find Your Route</button>
-    </form>
+    <div class="route-card">
+      <form id="route-form" class="route-finder">
+        <div class="route-field">
+          <label>Moving from</label>
+          <select id="route-from" required><option value="" disabled selected>Select country…</option>{ROUTE_OPTIONS}</select>
+        </div>
+        <span class="route-arrow" aria-hidden="true">→</span>
+        <div class="route-field">
+          <label>Moving to</label>
+          <select id="route-to" required><option value="" disabled selected>Select country…</option>{ROUTE_OPTIONS}</select>
+        </div>
+        <button type="submit" class="btn btn-primary">Find Your Route</button>
+      </form>
+    </div>
     <p id="route-error" class="route-error" hidden>Please choose two different countries.</p>
   </div>
 </section>
@@ -473,14 +475,14 @@ HOME_BODY = f"""
   </div>
 </section>
 
-<!-- Stats -->
-<section class="section section-navy" style="padding-top:0">
+<!-- Stats (owner-provided figures) -->
+<section class="os-band">
   <div class="container">
-    <div class="stats">
-      <div class="stat"><b data-count="28" data-suffix="+">0</b><span>Years of Experience</span></div>
-      <div class="stat"><b data-count="300" data-suffix="+">0</b><span>Professionals Worldwide</span></div>
-      <div class="stat"><b data-count="3">0</b><span>Global Hubs (USA · India · UAE)</span></div>
-      <div class="stat"><b data-count="2000" data-suffix="+">0</b><span>Customer Reviews</span></div>
+    <div class="os-grid">
+      <div class="os-cell"><div class="os-num">28+</div><div class="os-label">Years of Experience</div></div>
+      <div class="os-cell"><div class="os-num">100+</div><div class="os-label">Countries Covered</div></div>
+      <div class="os-cell"><div class="os-num">440k+</div><div class="os-label">Satisfied Clients</div></div>
+      <div class="os-cell"><div class="os-num">52MM+</div><div class="os-label">Tons Moved</div></div>
     </div>
   </div>
 </section>

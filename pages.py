@@ -200,6 +200,7 @@ def build(g):
             # Rich sectioned layout for destination & hub pages
             _dest_name = title.replace("Moving to ", "").replace(" Hub", "")
             sections = (X.isec(f'<div class="prose">{body}</div>')
+                        + X.orange_stats()
                         + X.prompt_band(title=f"Get an instant estimate for {_dest_name}")
                         + X.isec(mrow, alt=True)
                         + X.compare_table()
@@ -318,6 +319,7 @@ def build(g):
             + (f'<p>{hub_html}</p>' if hub_html else ''))
         sections = (
             X.isec(X.lead_split(lead_html, X.STATS))
+            + X.orange_stats()
             + X.isec(SVC_CARDS, alt=(not mode_sec),
                      head=X.sec_head(f"Services for your {fn} &rarr; {tn} move",
                            "One team for every part of the journey.", "What we do"))

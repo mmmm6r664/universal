@@ -977,3 +977,30 @@ a { transition: color .18s ease; }
 .rc-stars .half { opacity:.45; }
 .rc-count { color:var(--muted); font-size:.9rem; }
 .rc-cta { display:inline-block; margin-top:14px; color:var(--blue); font-weight:700; font-size:.92rem; }
+
+/* ===== Route finder — Shiprocket-style band ===== */
+.route-band { position:relative; overflow:hidden;
+  background:radial-gradient(1100px 380px at 85% -10%, rgba(39,49,201,.5), transparent 60%),
+             linear-gradient(118deg,#00103f 0%,#00056e 58%,#0a1f8c 100%); color:#fff; }
+.route-band::after { content:""; position:absolute; inset:0; z-index:0;
+  background:url('/assets/svg/hero-arcs.svg') center/cover no-repeat; pointer-events:none; }
+.route-band .container { position:relative; z-index:1; }
+.route-band .eyebrow { color:var(--accent); }
+.route-band .section-title { color:#fff; }
+.route-band .section-intro { color:#cdd8ec; }
+.route-card { max-width:960px; margin:30px auto 0; background:#fff; border-radius:22px; padding:30px 34px; box-shadow:0 30px 70px rgba(0,3,63,.45); }
+.route-card .route-finder { margin:0; }
+@media (max-width:680px){ .route-card { padding:22px 18px; } }
+
+/* ===== Orange 'by the numbers' band ===== */
+.os-band { position:relative; overflow:hidden; padding:50px 0;
+  background:linear-gradient(120deg,#ff9e0b 0%,#fea70e 50%,#f7b733 100%); }
+.os-band::before { content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(255,255,255,.08) 0 2px, transparent 2px 60px); pointer-events:none; }
+.os-grid { position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.os-cell { display:flex; flex-direction:column; align-items:center; text-align:center; padding:6px 14px; position:relative; }
+.os-cell:not(:last-child)::after { content:""; position:absolute; right:-10px; top:14%; height:72%; width:1px; background:rgba(255,255,255,.35); }
+.os-num { font-size:clamp(2.1rem,4vw,3rem); font-weight:800; color:#fff; line-height:1; text-shadow:0 2px 10px rgba(180,100,0,.25); }
+.os-label { color:#fff; font-weight:600; margin-top:10px; font-size:1.02rem; opacity:.97; }
+@media (max-width:760px){ .os-grid { grid-template-columns:1fr 1fr; gap:28px 10px; } .os-cell:nth-child(2)::after{display:none} }
+@media (max-width:420px){ .os-grid { grid-template-columns:1fr 1fr; } }

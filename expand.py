@@ -256,6 +256,7 @@ def build_modes(g, cta_block):
             step_pairs = [(f"Step {i+1}", s) for i, s in enumerate(m["how"])]
             sections = (
                 isec(lead_split(f'<p>{m["tag"]}</p><p>{overview}</p>', STATS))
+                + orange_stats()
                 + isec(step_cards(step_pairs), alt=True,
                        head=sec_head(f"{lbl}: {fn} &rarr; {tn}, step by step", "", "How it works"))
                 + isec(media_row(g.get(MODE_BODY.get(mk, "PH_SHIP2"), g["HERO_SHIP"]), "What’s included", _ul(m["included"]))
@@ -466,6 +467,7 @@ def build_services(g, SERVICES, SERVICE_ORDER, cta_block):
         full_faqs = faqs + EXTRA_FAQS
         sections = (
             isec(lead_split(lead_html, STATS))
+            + orange_stats()
             + prompt_band(title=f"Get an instant {tclean.lower()} estimate")
             + prose_section(f"About our {tclean.lower()}", [over], "Overview")
             + isec(check_grid(bullets), alt=True,
@@ -534,6 +536,7 @@ def build_cities(g, cta_block):
                 f'<a class="btn btn-ghost" href="tel:{tel}" style="margin-left:8px">Call {tel}</a></p>')
             sections = (
                 isec(lead_split(lead_html, STATS))
+                + orange_stats()
                 + prompt_band(title=f"Get a moving estimate from {city}",
                     chips=[(f"I want to move my 3 bedroom home from {city}", f"Move a home from {city}"),
                            (f"I want to ship boxes from {city}", f"Ship boxes from {city}"),
@@ -1051,3 +1054,13 @@ def build_checklist_page(g):
           hero_img=g["HERO_SURVEY"], extra_head=faq_schema(faqs),
           subtitle="Everything to do, week by week, so nothing is forgotten.", raw=True))
     print("Checklist page built.")
+
+
+# ---- Orange "by the numbers" band (figures provided by the site owner) ----
+BIG_STATS = [("28+", "Years of Experience"), ("100+", "Countries Covered"),
+             ("440k+", "Satisfied Clients"), ("52MM+", "Tons Moved")]
+def orange_stats():
+    cells = "".join(
+        f'<div class="os-cell"><div class="os-num">{n}</div>'
+        f'<div class="os-label">{l}</div></div>' for n, l in BIG_STATS)
+    return f'<section class="os-band"><div class="container"><div class="os-grid">{cells}</div></div></section>'
