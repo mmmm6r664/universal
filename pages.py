@@ -187,9 +187,8 @@ def build(g):
                 "shipping-worldwide": g["HERO_SHIP"], "usa": g["PH_STAFF1"],
                 "india": g["PH_STAFF2"], "uae": g["HERO_LOGISTICS"],
             }
-            DEST_ILLUS = {"usa":"global","india":"global","uae":"global","shipping-worldwide":"global"}
-            illus_key = DEST_ILLUS.get(slug, "ocean")
-            mrow = X.media_row(X.ILLUS[illus_key], f"Why move with Universal Relocations",
+            bphoto = REGION_PHOTO.get(slug, g["HERO_SHIP"])
+            mrow = X.media_row(bphoto, f"Why move with Universal Relocations",
                 '<p>One accredited team owns your move end-to-end — export-grade packing, ocean or air freight, '
                 'in-house customs clearance and door-to-door delivery — backed by 28+ years and our own hubs in the '
                 'USA, India and the UAE.</p>'
@@ -199,15 +198,18 @@ def build(g):
             # Rich sectioned layout for destination & hub pages
             sections = (X.isec(f'<div class="prose">{body}</div>')
                         + X.isec(mrow, alt=True)
-                        + X.why_us_band(alt=False)
+                        + X.compare_table()
+                        + X.docs_section(alt=False)
+                        + X.why_us_band(alt=True)
+                        + X.trust_logos(g, alt=False)
                         + X.isec(X.callout("Planning this move?",
                                  "Get a free, no-obligation quote and a clear plan from our move consultants.",
                                  "Get a free quote", "/contact-us/", "Estimate volume", "/moving-calculator/"))
-                        + X.faq_isec(faqs)
+                        + X.faq_isec(faqs + X.EXTRA_FAQS)
                         + X.cta_isec())
             write(slug, interior(title.replace("&", "&amp;"), crumbs, sections,
                   SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug),
-                  extra_head=X.faq_schema(faqs), raw=True))
+                  extra_head=X.faq_schema(faqs + X.EXTRA_FAQS), raw=True))
         else:
             inner = X.isec(f'<div class="prose">{body}</div>') + X.cta_isec()
             write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
@@ -294,16 +296,20 @@ def build(g):
                      head=X.sec_head(f"Services for your {fn} &rarr; {tn} move",
                            "One team for every part of the journey.", "What we do"))
             + mode_sec
-            + X.isec(X.media_row(X.ILLUS["global"], f"What to know about moving from {fn} to {tn}", know, illus=True))
+            + X.isec(X.media_row(g["PH_STAFF1"], f"What to know about moving from {fn} to {tn}", know))
+            + X.compare_table()
+            + X.cost_timeline_section(f"your {fn} to {tn} move")
+            + X.docs_section(alt=False)
             + X.why_us_band(alt=True)
-            + X.isec(f'<div class="related-routes">{rel}</div>',
+            + X.trust_logos(g, alt=False)
+            + X.isec(f'<div class="related-routes">{rel}</div>', alt=True,
                      head=X.sec_head("Related routes", "", "Explore"))
-            + X.faq_isec(faqs)
+            + X.faq_isec(faqs + X.EXTRA_FAQS)
             + X.cta_isec())
         write(f"moving/{fs}-to-{ts}", interior(f"Moving from {fn} to {tn}",
               [("Home", "/"), (f"{fn} &rarr; {tn}", "")], sections,
               f"Moving from {fn} to {tn} — international relocation, shipping and customs with Universal Relocations.",
-              hero_img=g["HERO_SHIP"], extra_head=X.faq_schema(faqs),
+              hero_img=g["HERO_SHIP"], extra_head=X.faq_schema(faqs + X.EXTRA_FAQS),
               subtitle=f"Seamless door-to-door relocation from {fn} to {tn}.", raw=True))
     rc = 0
     for fn, fs in COUNTRIES:

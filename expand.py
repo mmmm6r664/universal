@@ -258,14 +258,18 @@ def build_modes(g, cta_block):
                 isec(lead_split(f'<p>{m["tag"]}</p><p>{overview}</p>', STATS))
                 + isec(step_cards(step_pairs), alt=True,
                        head=sec_head(f"{lbl}: {fn} &rarr; {tn}, step by step", "", "How it works"))
-                + isec(media_row(ILLUS[MODE_ILLUS.get(mk, "ocean")], "What’s included", _ul(m["included"]), illus=True)
+                + isec(media_row(g.get(MODE_BODY.get(mk, "PH_SHIP2"), g["HERO_SHIP"]), "What’s included", _ul(m["included"]))
                        + (f'<div class="callout" style="margin-top:40px"><div class="co-txt"><h3>Is {lbl.lower()} right for you?</h3>'
                           f'<p><b>Best for:</b> {m["best_for"]}' + (f' {note}' if note else '') + '</p></div>'
                           f'<div><a class="btn btn-accent" href="/moving-calculator/">Estimate volume</a></div></div>'))
-                + isec(f'<div class="mode-chip-grid">{chips}</div>',
+                + cost_timeline_section(f"{lbl.lower()} on this route")
+                + compare_table()
+                + docs_section(alt=False)
+                + isec(f'<div class="mode-chip-grid">{chips}</div>', alt=True,
                        head=sec_head(f"Other ways to ship {fn} &rarr; {tn}", "Compare every option for this route.", "More options"))
-                + why_us_band(alt=True)
-                + faq_isec(faqs)
+                + why_us_band(alt=False)
+                + trust_logos(g, alt=True)
+                + faq_isec(faqs + EXTRA_FAQS)
                 + cta_isec())
             title = f"{lbl} from {fn} to {tn}"
             write(f"moving/{fs}-to-{ts}/{mk}",
@@ -274,7 +278,7 @@ def build_modes(g, cta_block):
                             (m["short"], "")],
                            sections,
                            f"{_strip(label)} from {fn} to {tn} — Universal Relocations. Door-to-door, insured, customs handled.",
-                           hero_img=hero, extra_head=faq_schema(faqs),
+                           hero_img=hero, extra_head=faq_schema(faqs + EXTRA_FAQS),
                            subtitle=m["tag"], raw=True))
             count += 1
     print(f"Mode pages built: {count}")
@@ -451,25 +455,36 @@ def build_services(g, SERVICES, SERVICE_ORDER, cta_block):
                     "baggage-shipping":"HERO_MOVE2","insurance":"PH_STAFF2","fine-art-relocations":"HERO_MOVE1",
                     "hospitality-relocations":"HERO_LOGISTICS","auto-shipping":"PH_SHIP2"}
         photo = g.get(SVC_BODY.get(slug, "PH_STAFF1"), g["HERO_SHIP"])
+        over = d.get("overview") or (
+            f"Our {tclean.lower()} service is built around one idea: that a move should feel handled, not endured. "
+            "From the first free survey to the final reassembled piece of furniture, a single dedicated coordinator "
+            "plans every stage — materials, timing, documentation, shipping and delivery — and stays reachable "
+            "throughout. We’ve refined this over 28+ years and hundreds of thousands of items moved, which is why "
+            "families, professionals and companies come back to us and recommend us to others.")
         lead_html = (f'<p>{lead}</p>'
                      + (f'<p><b>Who it’s for:</b> {d["who"]}</p>' if d.get("who") else ''))
+        full_faqs = faqs + EXTRA_FAQS
         sections = (
             isec(lead_split(lead_html, STATS))
+            + prose_section(f"About our {tclean.lower()}", [over], "Overview")
             + isec(check_grid(bullets), alt=True,
                    head=sec_head("What’s included", f"Everything your {tclean.lower()} needs, handled end-to-end.", "What you get"))
-            + isec(media_row(ILLUS[SVC_ILLUS.get(slug, "global")], f"How your {tclean.lower()} works",
+            + isec(media_row(photo, f"How your {tclean.lower()} works",
                    '<p>One dedicated coordinator owns your move from the first survey to the final box — planning, packing, shipping, customs and delivery.</p>'
-                   + _ul([t for _, t in GEN_STEPS]), illus=True))
-            + why_us_band(alt=True)
+                   + _ul([t for _, t in GEN_STEPS])))
+            + cost_timeline_section(f"your {tclean.lower()}")
+            + docs_section(alt=True)
+            + why_us_band(alt=False)
+            + trust_logos(g, alt=True)
             + isec(callout(f"Get a tailored {tclean.lower()} quote",
                    "Tell us about your move and we’ll send a firm, competitive quote — no obligation.",
                    "Get a free quote", "/contact-us/", "Estimate volume", "/moving-calculator/"))
-            + faq_isec(faqs)
+            + faq_isec(full_faqs)
             + cta_isec())
         write(f"services/{slug}", interior(title.replace("&amp;", "&"),
               [("Home", "/"), ("Services", "/services/"), (title, "")], sections,
               f"{title} from Universal Relocations — expert, insured and fully tracked.",
-              hero_img=hero, extra_head=(faq_schema(faqs) if faqs else ""),
+              hero_img=hero, extra_head=faq_schema(full_faqs),
               subtitle=_strip(lead)[:150] + "…", raw=True))
     print("Service pages built (enriched).")
 
@@ -519,20 +534,23 @@ def build_cities(g, cta_block):
                 isec(lead_split(lead_html, STATS))
                 + isec(svc_cards, alt=True, head=sec_head(f"Our moving services in {city}",
                        "One team for every kind of move, local or international.", "Services"))
-                + isec(media_row(ILLUS["packing"], f"How your {city} move works",
+                + isec(media_row(g.get("HERO_MOVE1"), f"How your {city} move works",
                        '<p>From first survey to final box, one dedicated coordinator keeps your move on track.</p>'
-                       + _ul([t for _, t in step_pairs]), illus=True))
-                + isec(f'<div class="related-routes">{dl}</div>',
+                       + _ul([t for _, t in step_pairs])))
+                + isec(f'<div class="related-routes">{dl}</div>', alt=True,
                        head=sec_head(f"Popular routes from {city}", "Dedicated guides for the moves we handle most.", "Where to"))
-                + why_us_band(alt=True)
-                + faq_isec(faqs)
+                + cost_timeline_section(f"your move from {city}", alt=False)
+                + docs_section(alt=True)
+                + why_us_band(alt=False)
+                + trust_logos(g, alt=True)
+                + faq_isec(faqs + EXTRA_FAQS)
                 + cta_isec())
             write(f"{hubslug}/locations/{slug}",
                   interior(f"Movers in {city}",
                            [("Home", "/"), (hub, f"/{hubslug}/"), (city, "")],
                            sections,
                            f"Professional movers in {city}, {hub}. International &amp; local relocation, packing, shipping and customs with Universal Relocations.",
-                           hero_img=hero, extra_head=faq_schema(faqs),
+                           hero_img=hero, extra_head=faq_schema(faqs + EXTRA_FAQS),
                            subtitle=f"Professional local &amp; international movers in {area}.", raw=True))
             count += 1
     print(f"City pages built: {count}")
@@ -722,6 +740,7 @@ SVC_ILLUS = {"international":"global","corporate-relocation":"road","pet-relocat
   "groupage-solution":"ocean","storage":"warehouse","intrastate":"road","baggage-shipping":"packing",
   "insurance":"global","fine-art-relocations":"packing","hospitality-relocations":"warehouse","auto-shipping":"road"}
 MODE_ILLUS = {"lcl":"ocean","fcl":"ocean","air-freight":"air","baggage":"packing","auto-shipping":"road","pet":"air"}
+MODE_BODY = {"lcl":"PH_SHIP2","fcl":"PH_SHIP2","air-freight":"HERO_LOGISTICS","baggage":"HERO_MOVE2","auto-shipping":"PH_SHIP2","pet":"HERO_SURVEY"}
 
 def lead_split(copy_html, stats):
     s = "".join(f'<div class="ls"><b>{n}</b><span>{l}</span></div>' for n, l in stats)
@@ -781,3 +800,105 @@ def cta_isec():
 SVC_ICON = {"international":"globe","corporate-relocation":"truck","pet-relocations":"paw",
   "groupage-solution":"ship","storage":"warehouse","intrastate":"home","baggage-shipping":"box",
   "insurance":"shield","fine-art-relocations":"star","hospitality-relocations":"cubes","auto-shipping":"car"}
+
+
+# ===========================================================================
+# Deep shared content blocks (to make every page comprehensive)
+# ===========================================================================
+COST_FACTORS = [
+    ("Volume or weight", "The single biggest factor. Sea freight (LCL) is priced on the cubic feet/metres your goods occupy; FCL on the container size; air freight on chargeable weight. The more you move, the more it costs — which is why a pre-move survey and decluttering pay off."),
+    ("Service level", "Full-pack (we pack everything), partial-pack, or you-pack change the labour and materials. Specialist crating for art, pianos or marble adds cost but protects irreplaceable items."),
+    ("Origin &amp; destination access", "Stairs, long carries, narrow streets, shuttle vehicles for large trucks, parking permits and high-floor deliveries all affect the quote. Tell us about access up front so there are no surprises."),
+    ("Shipping mode &amp; speed", "Air is fastest and dearest; sea is slower and cheapest; a split shipment (a little by air, the rest by sea) balances the two."),
+    ("Customs, duties &amp; TR", "Household goods often enter duty-free under Transfer of Residence rules if you qualify, but new items, vehicles and certain goods can attract duty. We confirm what applies before you ship."),
+    ("Insurance &amp; extras", "All-risk transit insurance, storage, handyman services and vehicle or pet shipping are optional add-ons priced on what you choose."),
+]
+MOVE_DOCS = [
+    "Valid passport (and visa or residence permit for the destination)",
+    "A detailed packing inventory / valued inventory for insurance",
+    "Transfer of Residence (TR) / returning-resident paperwork where you qualify",
+    "Proof of residence at origin and destination (lease, utility bill or similar)",
+    "For vehicles: title, registration and purchase documents",
+    "For pets: microchip, vaccination record, health certificate and import permit",
+]
+PROHIBITED = [
+    "Cash, jewellery, important documents and other irreplaceables (carry these yourself)",
+    "Flammables, aerosols, gas cylinders, paints and solvents",
+    "Firearms, ammunition and explosives", "Perishable food and open liquids",
+    "Plants, seeds and some foodstuffs (destination quarantine rules vary)",
+    "Illegal or restricted substances of any kind",
+]
+def prose_section(title, paras, eyebrow=""):
+    body = "".join(f"<p>{p}</p>" for p in paras)
+    return isec(f'<div class="prose">{body}</div>', head=sec_head(title, "", eyebrow))
+
+def cost_timeline_section(subject="your move", alt=True):
+    cards = feature_cards([("cubes", t, d) for t, d in COST_FACTORS[:3]] )
+    cards2 = feature_cards([("doc", t, d) for t, d in COST_FACTORS[3:]])
+    return isec(cards + '<div style="height:20px"></div>' + cards2, alt=alt,
+        head=sec_head(f"What affects the cost of {subject}",
+            "No two moves are the same — here's what shapes your quote, and why a free survey gives you a firm, honest price.", "Pricing"))
+
+def docs_section(alt=False):
+    return isec(
+        '<div class="prose" style="max-width:none"><h2>Documents &amp; customs</h2>'
+        '<p>We prepare and lodge the paperwork, but having these ready keeps your move on schedule. '
+        'Your coordinator sends an exact checklist for your route, including any Transfer of Residence or '
+        'duty-relief you qualify for.</p></div>'
+        + check_grid(MOVE_DOCS)
+        + '<div style="height:30px"></div>' + restrictions_block(),
+        alt=alt, head="")
+
+# Expanded FAQ banks (more comprehensive)
+EXTRA_FAQS = [
+    ("Will you disassemble and reassemble my furniture?", "Yes — our crews dismantle beds, wardrobes, tables and other large items for transit and reassemble them at delivery as part of a full-service move."),
+    ("Can I pack some things myself?", "Of course. Owner-packed cartons are fine; note that insurance on self-packed boxes may differ from professionally packed items, which your coordinator will explain."),
+    ("What happens on moving day?", "Our team arrives, protects floors and doorways, packs and wraps room by room, labels and inventories every item, and loads carefully. You get a copy of the inventory before we leave."),
+    ("Do you offer storage if my dates don’t line up?", "Yes — secure, climate-controlled storage for a few days or several months, with your inventory tracked and redelivery whenever you’re ready."),
+    ("How do you protect fragile and valuable items?", "Export-grade materials, double-wall cartons, custom crating for art and high-value pieces, and all-risk insurance so you’re covered door-to-door."),
+]
+
+
+# ===========================================================================
+# Competitor-grade polish modules: trust logos, comparison table, rules
+# ===========================================================================
+def trust_logos(g, alt=True):
+    IMG = g["IMG"]
+    logos = [("FIDI","01-fidi"),("FAIM","02-faim"),("IAM","03-iamx"),("IAM-DAB","04-iam-dab"),
+             ("PAIMA","05-paima"),("IPATA","06-ipata"),("ARA","07-ara"),("FIDI-PCG","08-fidi-pcg"),
+             ("FMC","09-fmc"),("ISO 9001","10-iso-9001")]
+    imgs = "".join(f'<img src="{IMG}/2026/10/{f}.png" alt="{n}" loading="lazy">' for n, f in logos)
+    return isec(f'<div class="trust-strip">{imgs}</div>', alt=alt,
+        head=sec_head("Accredited, licensed and trusted",
+            "Our work is held to the world’s leading moving and quality standards.", "Credentials"))
+
+ALLOWED = [
+    "Household furniture, appliances and white goods", "Clothing, linens, books and personal effects",
+    "Kitchenware, crockery and cookware", "Electronics and home-entertainment equipment",
+    "Children’s furniture, toys and sporting goods", "Tools, bicycles and hobby equipment",
+    "Artwork, antiques and instruments (with specialist packing)", "Vehicles (as a separate or combined shipment)",
+]
+def restrictions_block():
+    return (
+        '<div class="rules-cols">'
+        '<div class="rule-card allow"><h3>What you can ship <span class="tag ok">Allowed</span></h3>'
+        + "<ul>" + "".join(f"<li>{i}</li>" for i in ALLOWED) + "</ul></div>"
+        '<div class="rule-card deny"><h3>What not to ship <span class="tag no">Prohibited / restricted</span></h3>'
+        + "<ul>" + "".join(f"<li>{i}</li>" for i in PROHIBITED) + "</ul></div>"
+        '</div>')
+
+def compare_table():
+    rows = [
+        ("LCL (groupage)", "Studios &amp; 1-bed loads", '<span class="pill slow">Weeks (sea)</span>', "Lowest for small loads", "/services/groupage-solution/"),
+        ("FCL (full container)", "2-bed homes &amp; larger", '<span class="pill mid">Faster (sea)</span>', "Best value for full homes", "/services/international/"),
+        ("Air freight", "Urgent &amp; essential items", '<span class="pill fast">Days</span>', "Priced on weight", "/services/baggage-shipping/"),
+        ("Baggage / boxes", "A few boxes or bags", '<span class="pill mid">Air or sea</span>', "Per box, no excess fees", "/services/baggage-shipping/"),
+    ]
+    body = "".join(
+        f'<tr><td>{n}</td><td>{b}</td><td>{t}</td><td>{c}</td><td><a class="more" style="color:var(--blue);font-weight:600" href="{h}">Learn more &rarr;</a></td></tr>'
+        for n, b, t, c, h in rows)
+    return isec('<div class="cmp-wrap"><table class="cmp">'
+        '<thead><tr><th>Shipping option</th><th>Best for</th><th>Transit time</th><th>Cost</th><th></th></tr></thead>'
+        f'<tbody>{body}</tbody></table></div>', alt=True,
+        head=sec_head("Which shipping option is right for you?",
+            "LCL, FCL, air or baggage — compare at a glance, then we’ll confirm the best fit for your volume and timeline.", "Compare"))
