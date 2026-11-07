@@ -404,8 +404,9 @@ h1, h2, h3, h4, h5, h6 {
    Page hero (interior pages)
    ========================================================================== */
 .page-hero {
-  background: linear-gradient(115deg, var(--navy-deep), var(--blue));
-  color: #fff; padding: 92px 0 72px; text-align: center; position: relative;
+  background: radial-gradient(1200px 400px at 80% -10%, rgba(39,49,201,.55), transparent 60%),
+              linear-gradient(118deg, #00103f 0%, #00056e 55%, #0a1f8c 100%);
+  color: #fff; padding: 92px 0 76px; text-align: center; position: relative; overflow: hidden;
 }
 .page-hero.has-img {
   background-size: cover; background-position: center;

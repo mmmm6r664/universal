@@ -550,9 +550,10 @@ PH_AUS1      = f"{IMG}/2023/12/istockphoto-475705160-612x612-1.jpg"       # Ocea
 PH_AUS2      = f"{IMG}/2023/12/istockphoto-801269928-612x612-1.jpg"       # Oceania scenic
 
 def page_hero(title, crumbs, hero_img=HERO_BRAND, subtitle="", ctas=""):
+    # Clean, consistent gradient header (no stretched background photo) + route-arc motif.
     trail = ' / '.join(f'<a href="{h}">{l}</a>' if h else f'<span>{l}</span>' for l, h in crumbs)
-    style = f' style="background-image:linear-gradient(118deg,rgba(0,5,110,.78),rgba(0,5,110,.50) 52%,rgba(39,49,201,.42)),url(\'{hero_img}\')"' if hero_img else ''
-    cls = "page-hero has-img" if hero_img else "page-hero"
+    style = ''
+    cls = "page-hero"
     sub = f'<p class="ph-sub">{subtitle}</p>' if subtitle else ''
     cta = f'<div class="ph-cta">{ctas}</div>' if ctas else ''
     return f"""<section class="{cls}"{style}><div class="container">
