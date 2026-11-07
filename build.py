@@ -301,16 +301,74 @@ def page(title, body, desc="", canonical="", extra_head=""):
 </html>
 """
 
+BASE_URL = "https://ur.macrohype.com"   # switch to https://www.universalrelocations.com at launch
+_SITEMAP = []
+import re as _re, html as _html
+
+_ORG_LD = _html.escape("")  # placeholder
+
+def _seo_head(url, html_str):
+    import json
+    m_t = _re.search(r"<title>(.*?)</title>", html_str, _re.S)
+    m_d = _re.search(r'<meta name="description" content="(.*?)">', html_str, _re.S)
+    title = (m_t.group(1).strip() if m_t else "Universal Relocations")
+    desc = (m_d.group(1).strip() if m_d else "")
+    ogimg = f"{BASE_URL}/assets/hero-bg.jpg"
+    og = (
+        f'<link rel="canonical" href="{url}">'
+        f'<meta property="og:type" content="website">'
+        f'<meta property="og:site_name" content="Universal Relocations">'
+        f'<meta property="og:title" content="{title}">'
+        f'<meta property="og:description" content="{desc}">'
+        f'<meta property="og:url" content="{url}">'
+        f'<meta property="og:image" content="{ogimg}">'
+        f'<meta name="twitter:card" content="summary_large_image">'
+        f'<meta name="twitter:title" content="{title}">'
+        f'<meta name="twitter:description" content="{desc}">'
+        f'<meta name="twitter:image" content="{ogimg}">')
+    org = {
+        "@context": "https://schema.org", "@type": "MovingCompany",
+        "name": "Universal Relocations", "url": BASE_URL,
+        "logo": f"{IMG}/2023/12/Universal-Logo-BLUE.png",
+        "image": ogimg,
+        "description": "A one-stop international, interstate and intrastate relocation and logistics company with hubs in the USA, India and the UAE.",
+        "foundingDate": "1998",
+        "telephone": "+1-888-323-7356",
+        "email": "contact@universalrelocations.com",
+        "areaServed": "Worldwide",
+        "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.5", "reviewCount": "2000", "bestRating": "5"},
+        "sameAs": ["https://www.trustpilot.com/review/universalrelocations.com"],
+    }
+    org_ld = f'<script type="application/ld+json">{json.dumps(org)}</script>'
+    return og + org_ld
+
 def write(path, html):
     """path like 'index' or 'company/index' -> writes <path>.html style dir/index.html"""
     if path == "index":
-        out = ROOT / "index.html"
+        out = ROOT / "index.html"; url = BASE_URL + "/"
     else:
         d = ROOT / path
         d.mkdir(parents=True, exist_ok=True)
-        out = d / "index.html"
+        out = d / "index.html"; url = f"{BASE_URL}/{path}/"
+    # inject SEO head (canonical, OG, Twitter, Organization schema) unless already present
+    if "<title>" in html and 'property="og:title"' not in html:
+        html = html.replace("</head>", _seo_head(url, html) + "</head>", 1)
     out.write_text(html, encoding="utf-8")
-    print("wrote", out.relative_to(ROOT))
+    _SITEMAP.append(url)
+
+def write_sitemap():
+    from datetime import date
+    today = date.today().isoformat()
+    urls = "".join(
+        f"<url><loc>{u}</loc><lastmod>{today}</lastmod>"
+        f"<changefreq>{'weekly' if u.rstrip('/').endswith(BASE_URL) else 'monthly'}</changefreq>"
+        f"<priority>{'1.0' if u==BASE_URL+'/' else '0.7'}</priority></url>"
+        for u in sorted(set(_SITEMAP)))
+    sm = ('<?xml version="1.0" encoding="UTF-8"?>'
+          '<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">'.replace("sitemap.org","sitemaps.org")
+          + urls + "</urlset>")
+    (ROOT / "sitemap.xml").write_text(sm, encoding="utf-8")
+    print(f"Sitemap written: {len(set(_SITEMAP))} URLs")
 
 # ---------------------------------------------------------------------------
 # HOMEPAGE
@@ -648,4 +706,5 @@ if __name__ == "__main__":
         "https://www.universalrelocations.com",
     ))
     pages.build(globals())
+    write_sitemap()
     print("\\nDone.")
