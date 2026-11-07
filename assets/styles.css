@@ -874,8 +874,8 @@ a { transition: color .18s ease; }
 
 /* ===== Trust logos strip ===== */
 .trust-strip { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:34px 46px; }
-.trust-strip img { height:52px; width:auto; filter:grayscale(1); opacity:.72; transition:filter .25s, opacity .25s; }
-.trust-strip img:hover { filter:grayscale(0); opacity:1; }
+.trust-strip img { height:56px; width:auto; opacity:1; transition:transform .2s; }
+.trust-strip img:hover { transform:translateY(-3px); }
 @media (max-width:600px){ .trust-strip { gap:22px 30px; } .trust-strip img { height:40px; } }
 
 /* ===== Comparison table ===== */
