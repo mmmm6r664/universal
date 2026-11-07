@@ -258,7 +258,7 @@ def build_modes(g, cta_block):
                 isec(lead_split(f'<p>{m["tag"]}</p><p>{overview}</p>', STATS))
                 + isec(step_cards(step_pairs), alt=True,
                        head=sec_head(f"{lbl}: {fn} &rarr; {tn}, step by step", "", "How it works"))
-                + isec(media_row(hero, "What’s included", _ul(m["included"]))
+                + isec(media_row(ILLUS[MODE_ILLUS.get(mk, "ocean")], "What’s included", _ul(m["included"]), illus=True)
                        + (f'<div class="callout" style="margin-top:40px"><div class="co-txt"><h3>Is {lbl.lower()} right for you?</h3>'
                           f'<p><b>Best for:</b> {m["best_for"]}' + (f' {note}' if note else '') + '</p></div>'
                           f'<div><a class="btn btn-accent" href="/moving-calculator/">Estimate volume</a></div></div>'))
@@ -457,9 +457,9 @@ def build_services(g, SERVICES, SERVICE_ORDER, cta_block):
             isec(lead_split(lead_html, STATS))
             + isec(check_grid(bullets), alt=True,
                    head=sec_head("What’s included", f"Everything your {tclean.lower()} needs, handled end-to-end.", "What you get"))
-            + isec(media_row(photo, f"How your {tclean.lower()} works",
+            + isec(media_row(ILLUS[SVC_ILLUS.get(slug, "global")], f"How your {tclean.lower()} works",
                    '<p>One dedicated coordinator owns your move from the first survey to the final box — planning, packing, shipping, customs and delivery.</p>'
-                   + _ul([t for _, t in GEN_STEPS])))
+                   + _ul([t for _, t in GEN_STEPS]), illus=True))
             + why_us_band(alt=True)
             + isec(callout(f"Get a tailored {tclean.lower()} quote",
                    "Tell us about your move and we’ll send a firm, competitive quote — no obligation.",
@@ -519,9 +519,9 @@ def build_cities(g, cta_block):
                 isec(lead_split(lead_html, STATS))
                 + isec(svc_cards, alt=True, head=sec_head(f"Our moving services in {city}",
                        "One team for every kind of move, local or international.", "Services"))
-                + isec(media_row(g.get("HERO_MOVE1", hero), f"How your {city} move works",
+                + isec(media_row(ILLUS["packing"], f"How your {city} move works",
                        '<p>From first survey to final box, one dedicated coordinator keeps your move on track.</p>'
-                       + _ul([t for _, t in step_pairs])))
+                       + _ul([t for _, t in step_pairs]), illus=True))
                 + isec(f'<div class="related-routes">{dl}</div>',
                        head=sec_head(f"Popular routes from {city}", "Dedicated guides for the moves we handle most.", "Where to"))
                 + why_us_band(alt=True)
@@ -709,10 +709,19 @@ def feature_cards(items, cols=""):
         for ic, t, d in items)
     return f'<div class="feature-grid {cols}">{cards}</div>'
 
-def media_row(img, title, body_html, reverse=False):
+def media_row(img, title, body_html, reverse=False, illus=False):
     cls = "media-row reverse" if reverse else "media-row"
+    imgcls = "mr-img illus" if illus else "mr-img"
     return (f'<div class="{cls}"><div class="mr-txt"><h2>{title}</h2>{body_html}</div>'
-            f'<div class="mr-img"><img src="{img}" alt="{title}" loading="lazy"></div></div>')
+            f'<div class="{imgcls}"><img src="{img}" alt="{title}" loading="lazy"></div></div>')
+
+# Themed illustration paths (always render, on-brand)
+ILLUS = {k: f"/assets/svg/illus-{k}.svg" for k in
+         ("ocean", "air", "global", "packing", "road", "warehouse")}
+SVC_ILLUS = {"international":"global","corporate-relocation":"road","pet-relocations":"air",
+  "groupage-solution":"ocean","storage":"warehouse","intrastate":"road","baggage-shipping":"packing",
+  "insurance":"global","fine-art-relocations":"packing","hospitality-relocations":"warehouse","auto-shipping":"road"}
+MODE_ILLUS = {"lcl":"ocean","fcl":"ocean","air-freight":"air","baggage":"packing","auto-shipping":"road","pet":"air"}
 
 def lead_split(copy_html, stats):
     s = "".join(f'<div class="ls"><b>{n}</b><span>{l}</span></div>' for n, l in stats)

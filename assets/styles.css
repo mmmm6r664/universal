@@ -863,3 +863,11 @@ a { transition: color .18s ease; }
 .mode-chip-grid a svg { width:26px; height:26px; color:var(--blue); }
 @media (max-width:780px){ .mode-chip-grid { grid-template-columns:1fr 1fr; } }
 @media (max-width:480px){ .mode-chip-grid { grid-template-columns:1fr; } }
+
+/* Hero route-arc motif layer (always renders, over photo/gradient) */
+.page-hero::after { content:""; position:absolute; inset:0; z-index:0;
+  background:url('/assets/svg/hero-arcs.svg') center/cover no-repeat; pointer-events:none; }
+.page-hero .container { position:relative; z-index:1; }
+/* media-row illustrations sit on a soft branded panel */
+.media-row .mr-img.illus { background:linear-gradient(135deg,#eef1ff,#dbe4ff); display:flex; align-items:center; justify-content:center; padding:0; box-shadow:var(--shadow-sm); }
+.media-row .mr-img.illus img { object-fit:contain; }

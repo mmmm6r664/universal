@@ -187,15 +187,15 @@ def build(g):
                 "shipping-worldwide": g["HERO_SHIP"], "usa": g["PH_STAFF1"],
                 "india": g["PH_STAFF2"], "uae": g["HERO_LOGISTICS"],
             }
-            bphoto = REGION_PHOTO.get(slug, g["HERO_SHIP"])
-            where = title.replace("Moving to ", "").replace(" Hub", "")
-            mrow = X.media_row(bphoto, f"Why move with Universal Relocations",
+            DEST_ILLUS = {"usa":"global","india":"global","uae":"global","shipping-worldwide":"global"}
+            illus_key = DEST_ILLUS.get(slug, "ocean")
+            mrow = X.media_row(X.ILLUS[illus_key], f"Why move with Universal Relocations",
                 '<p>One accredited team owns your move end-to-end — export-grade packing, ocean or air freight, '
                 'in-house customs clearance and door-to-door delivery — backed by 28+ years and our own hubs in the '
                 'USA, India and the UAE.</p>'
                 + X._ul(["Door-to-door LCL, FCL &amp; air freight", "In-house customs &amp; Transfer of Residence",
                          "All-risk transit insurance &amp; live tracking", "One dedicated move coordinator"]),
-                reverse=True)
+                reverse=True, illus=True)
             # Rich sectioned layout for destination & hub pages
             sections = (X.isec(f'<div class="prose">{body}</div>')
                         + X.isec(mrow, alt=True)
@@ -294,7 +294,7 @@ def build(g):
                      head=X.sec_head(f"Services for your {fn} &rarr; {tn} move",
                            "One team for every part of the journey.", "What we do"))
             + mode_sec
-            + X.isec(X.media_row(g["PH_STAFF1"], f"What to know about moving from {fn} to {tn}", know))
+            + X.isec(X.media_row(X.ILLUS["global"], f"What to know about moving from {fn} to {tn}", know, illus=True))
             + X.why_us_band(alt=True)
             + X.isec(f'<div class="related-routes">{rel}</div>',
                      head=X.sec_head("Related routes", "", "Explore"))

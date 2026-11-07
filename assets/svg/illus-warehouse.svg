@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" fill="none" role="img" aria-label="Storage and warehousing">
+<rect width="640" height="480" rx="28" fill="#eef1ff"/>
+<!-- building -->
+<path d="M70 150 L320 70 L570 150 L570 400 L70 400 Z" fill="#f4f6ff" stroke="#c3cdf2" stroke-width="2"/>
+<path d="M70 150 L320 70 L570 150 Z" fill="#2731c9"/>
+<rect x="70" y="150" width="500" height="18" fill="#fea70e"/>
+<!-- shelves -->
+<g stroke="#00056e" stroke-width="5">
+<path d="M150 230 H490 M150 310 H490 M180 200 V390 M330 200 V390 M460 200 V390"/>
+</g>
+<!-- boxes on shelves -->
+<g>
+<rect x="195" y="196" width="50" height="34" fill="#e8a765"/><rect x="255" y="196" width="50" height="34" fill="#cf8f4f"/>
+<rect x="355" y="196" width="50" height="34" fill="#cf8f4f"/>
+<rect x="195" y="276" width="50" height="34" fill="#cf8f4f"/><rect x="355" y="276" width="50" height="34" fill="#e8a765"/><rect x="415" y="276" width="50" height="34" fill="#cf8f4f"/>
+<rect x="255" y="356" width="50" height="34" fill="#e8a765"/><rect x="355" y="356" width="50" height="34" fill="#cf8f4f"/>
+</g>
+<!-- forklift -->
+<g transform="translate(90 330)">
+<rect x="0" y="10" width="44" height="40" rx="5" fill="#fea70e"/>
+<rect x="8" y="-18" width="22" height="30" fill="#00056e"/>
+<rect x="44" y="0" width="6" height="60" fill="#00056e"/><rect x="44" y="52" width="30" height="6" fill="#00056e"/>
+<circle cx="12" cy="56" r="12" fill="#0a1570"/><circle cx="36" cy="56" r="12" fill="#0a1570"/>
+</g>
+</svg>

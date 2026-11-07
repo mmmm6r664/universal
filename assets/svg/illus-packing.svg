@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" fill="none" role="img" aria-label="Packing and moving boxes">
+<rect width="640" height="480" rx="28" fill="#eef1ff"/>
+<circle cx="520" cy="130" r="70" fill="#dbe4ff"/>
+<path d="M60 380 H600" stroke="#c3cdf2" stroke-width="4"/>
+<!-- big box -->
+<g>
+<path d="M210 230 L330 230 L330 380 L210 380 Z" fill="#e8a765"/>
+<path d="M330 230 L400 200 L400 350 L330 380 Z" fill="#cf8f4f"/>
+<path d="M210 230 L280 200 L400 200 L330 230 Z" fill="#f2b974"/>
+<path d="M270 230 L270 380" stroke="#cf8f4f" stroke-width="3"/>
+<rect x="250" y="226" width="40" height="10" fill="#fff" opacity=".7"/>
+</g>
+<!-- small box -->
+<g>
+<path d="M120 300 L210 300 L210 380 L120 380 Z" fill="#e8a765"/>
+<path d="M210 300 L255 282 L255 362 L210 380 Z" fill="#cf8f4f"/>
+<path d="M120 300 L165 282 L255 282 L210 300 Z" fill="#f2b974"/>
+</g>
+<!-- lamp -->
+<g transform="translate(445 250)">
+<path d="M0 130 L50 130 L40 130 Z" fill="#00056e"/>
+<rect x="18" y="40" width="6" height="92" fill="#2731c9"/>
+<path d="M-8 40 L48 40 L34 2 L6 2 Z" fill="#fea70e"/>
+<rect x="6" y="128" width="30" height="8" rx="3" fill="#00056e"/>
+</g>
+<!-- tape roll -->
+<g transform="translate(140 250)"><circle r="26" fill="#2731c9"/><circle r="11" fill="#eef1ff"/></g>
+<ellipse cx="300" cy="388" rx="210" ry="12" fill="#000" opacity=".06"/>
+</svg>

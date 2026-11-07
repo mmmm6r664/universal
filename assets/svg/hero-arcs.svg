@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 560" fill="none" preserveAspectRatio="xMidYMid slice">
+<g fill="#ffffff" opacity="0.10">
+<circle cx="120" cy="120" r="3"/><circle cx="160" cy="140" r="3"/><circle cx="200" cy="120" r="3"/><circle cx="240" cy="150" r="3"/><circle cx="140" cy="180" r="3"/><circle cx="190" cy="190" r="3"/>
+<circle cx="1100" cy="120" r="3"/><circle cx="1140" cy="140" r="3"/><circle cx="1180" cy="120" r="3"/><circle cx="1220" cy="150" r="3"/><circle cx="1120" cy="180" r="3"/><circle cx="1170" cy="190" r="3"/>
+<circle cx="620" cy="340" r="3"/><circle cx="660" cy="360" r="3"/><circle cx="700" cy="340" r="3"/><circle cx="740" cy="370" r="3"/><circle cx="800" cy="350" r="3"/><circle cx="860" cy="360" r="3"/>
+</g>
+<path d="M180 150 Q700 -40 1160 150" stroke="#fea70e" stroke-width="2.5" stroke-dasharray="1 12" stroke-linecap="round" opacity="0.5" fill="none"/>
+<path d="M180 150 Q400 420 700 350" stroke="#ffffff" stroke-width="2" stroke-dasharray="1 12" stroke-linecap="round" opacity="0.25" fill="none"/>
+<path d="M1160 150 Q980 420 700 350" stroke="#ffffff" stroke-width="2" stroke-dasharray="1 12" stroke-linecap="round" opacity="0.25" fill="none"/>
+<g fill="#fea70e" opacity="0.8"><circle cx="180" cy="150" r="7"/><circle cx="1160" cy="150" r="7"/><circle cx="700" cy="350" r="7"/></g>
+</svg>

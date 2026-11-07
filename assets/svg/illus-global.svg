@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" fill="none" role="img" aria-label="Global moving network">
+<defs><radialGradient id="gG" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#2731c9"/><stop offset="1" stop-color="#00056e"/></radialGradient></defs>
+<rect width="640" height="480" rx="28" fill="#eef1ff"/>
+<circle cx="320" cy="230" r="170" fill="url(#gG)"/>
+<g fill="#5664e8" opacity=".9">
+<circle cx="250" cy="150" r="4"/><circle cx="270" cy="160" r="4"/><circle cx="290" cy="150" r="4"/><circle cx="310" cy="165" r="4"/><circle cx="240" cy="175" r="4"/><circle cx="265" cy="185" r="4"/><circle cx="300" cy="188" r="4"/>
+<circle cx="360" cy="150" r="4"/><circle cx="385" cy="162" r="4"/><circle cx="405" cy="150" r="4"/><circle cx="375" cy="180" r="4"/><circle cx="400" cy="185" r="4"/><circle cx="350" cy="175" r="4"/>
+<circle cx="300" cy="235" r="4"/><circle cx="325" cy="245" r="4"/><circle cx="350" cy="235" r="4"/><circle cx="285" cy="258" r="4"/><circle cx="330" cy="268" r="4"/><circle cx="370" cy="258" r="4"/><circle cx="310" cy="280" r="4"/>
+<circle cx="260" cy="300" r="4"/><circle cx="355" cy="300" r="4"/><circle cx="320" cy="300" r="4"/>
+</g>
+<!-- route arcs -->
+<path d="M235 180 Q320 90 405 190" stroke="#fea70e" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" fill="none"/>
+<path d="M405 190 Q470 300 330 340" stroke="#fea70e" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" fill="none"/>
+<path d="M235 180 Q180 300 330 340" stroke="#ffd48a" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" fill="none"/>
+<!-- hub pins -->
+<g>
+<g transform="translate(235 180)"><circle r="13" fill="#fea70e"/><circle r="5" fill="#00056e"/></g>
+<g transform="translate(405 190)"><circle r="13" fill="#fea70e"/><circle r="5" fill="#00056e"/></g>
+<g transform="translate(330 340)"><circle r="13" fill="#fea70e"/><circle r="5" fill="#00056e"/></g>
+</g>
+<text x="235" y="150" text-anchor="middle" font-family="Poppins,sans-serif" font-size="15" font-weight="700" fill="#00056e">USA</text>
+<text x="420" y="162" text-anchor="middle" font-family="Poppins,sans-serif" font-size="15" font-weight="700" fill="#00056e">India</text>
+<text x="330" y="372" text-anchor="middle" font-family="Poppins,sans-serif" font-size="15" font-weight="700" fill="#00056e">UAE</text>
+</svg>

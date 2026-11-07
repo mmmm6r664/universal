@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" fill="none" role="img" aria-label="Moving truck delivery">
+<rect width="640" height="480" rx="28" fill="#eaf0ff"/>
+<circle cx="140" cy="120" r="46" fill="#fea70e" opacity=".9"/>
+<!-- house -->
+<g transform="translate(400 150)">
+<rect x="0" y="60" width="150" height="150" fill="#f4f6ff"/>
+<path d="M-16 60 L75 -6 L166 60 Z" fill="#2731c9"/>
+<rect x="56" y="130" width="40" height="80" fill="#00056e"/>
+<rect x="18" y="90" width="34" height="34" fill="#cdd8ff"/><rect x="100" y="90" width="34" height="34" fill="#cdd8ff"/>
+</g>
+<!-- road -->
+<rect x="0" y="360" width="640" height="60" fill="#0a1570"/>
+<path d="M30 390 H110 M170 390 H250 M310 390 H390 M450 390 H530 M590 390 H640" stroke="#fea70e" stroke-width="6" stroke-linecap="round"/>
+<!-- truck -->
+<g transform="translate(70 250)">
+<rect x="0" y="0" width="190" height="110" rx="8" fill="#f4f6ff"/>
+<rect x="0" y="0" width="190" height="110" rx="8" fill="none" stroke="#c3cdf2" stroke-width="2"/>
+<path d="M12 22 H178 M12 50 H178 M12 78 H178" stroke="#dbe4ff" stroke-width="3"/>
+<rect x="0" y="-6" width="190" height="12" rx="4" fill="#fea70e"/>
+<path d="M190 30 L250 30 L278 66 L278 110 L190 110 Z" fill="#2731c9"/>
+<rect x="206" y="40" width="40" height="30" rx="4" fill="#bcd0ff"/>
+<circle cx="52" cy="120" r="24" fill="#00056e"/><circle cx="52" cy="120" r="10" fill="#cdd8ff"/>
+<circle cx="232" cy="120" r="24" fill="#00056e"/><circle cx="232" cy="120" r="10" fill="#cdd8ff"/>
+</g>
+</svg>
