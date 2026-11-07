@@ -107,23 +107,12 @@ def build(g):
           <h3 style="margin-bottom:10px">Ready to plan your move?</h3>
           <p style="margin-bottom:20px">Get a free, no-obligation quote from our move consultants.</p>
           <a class="btn btn-primary" href="/contact-us/">Get a Quote</a>
-          <a class="btn btn-ghost" href="https://portal.universalrelocations.com/moving-calculator/" style="margin-left:10px">Moving Calculator</a>
+          <a class="btn btn-ghost" href="/moving-calculator/" style="margin-left:10px">Moving Calculator</a>
         </div>"""
 
-    # ---- Service detail pages ----
-    for slug in SERVICE_ORDER:
-        title, lead, bullets = SERVICES[slug]
-        bl = "".join(f"<li>{b}</li>" for b in bullets)
-        inner = f"""<div class="prose">
-          <p style="font-size:1.1rem">{lead}</p>
-          <h2>What's included</h2>
-          <ul>{bl}</ul>
-          <h2>Why Universal Relocations</h2>
-          <p>With 28 years of experience, a global hub network across the USA, India and the UAE, and full FMC licensing, we deliver this service with the precision, tracking and personal support that have earned us 4.5 stars from thousands of customers.</p>
-        </div>{cta_block()}"""
-        write(f"services/{slug}", interior(title.replace("&amp;", "&"),
-              [("Home", "/"), ("Services", "/services/"), (title, "")], inner,
-              f"{title} services from Universal Relocations — expert, insured and tracked."))
+    import expand as X
+    # ---- Service detail pages (enriched: process, who-for, FAQs, hero image) ----
+    X.build_services(g, SERVICES, SERVICE_ORDER, cta_block)
 
     # ---- Services index ----
     cards = ""
@@ -173,33 +162,49 @@ def build(g):
     write("faq", interior("Frequently Asked Questions", [("Home", "/"), ("FAQ", "")], faq_inner,
           "Answers to common questions about moving with Universal Relocations."))
 
-    # ---- Rich reconstructed pages (real content pulled from live site) ----
+    # ---- Rich reconstructed pages (real content) + hero image + FAQs ----
     import content as C
+    def _region_of(slug):
+        r = slug.replace("moving-to-", "").replace("-", " ").title()
+        return r
     for slug, (title_override, body) in C.RICH.items():
         title = title_override or SIMPLE[slug][0]
         crumbs = [("Home", "/"), (title.replace("&", "&amp;"), "")]
-        inner = f'<div class="prose">{body}</div>{cta_block()}'
+        faq_html = ""; faq_head = ""
+        if slug.startswith("moving-to-"):
+            f = X.dest_faqs(_region_of(slug)); faq_html = X.faq_block(f); faq_head = X.faq_schema(f)
+        elif slug in ("usa", "india", "uae"):
+            f = X.hub_faqs(X.HUB_NAME[slug]); faq_html = X.faq_block(f); faq_head = X.faq_schema(f)
+        elif slug == "shipping-worldwide":
+            f = X.dest_faqs("destinations worldwide"); faq_html = X.faq_block(f); faq_head = X.faq_schema(f)
+        inner = f'<div class="prose">{body}</div>{faq_html}{cta_block()}'
         write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
-              SIMPLE[slug][1][:155]))
+              SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug), extra_head=faq_head))
 
-    # ---- Simple route pages (skip any now handled by rich content) ----
+    # ---- Functional + simple pages (enriched where we have real content) ----
+    FUNC = X.functional_pages()
     for slug, (title, lead) in SIMPLE.items():
         if slug in C.RICH:
             continue
         crumbs = [("Home", "/"), (title.replace("&", "&amp;"), "")]
-        inner = f'<div class="prose"><p style="font-size:1.1rem">{lead}</p></div>{cta_block()}'
-        write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
-              f"{title} — Universal Relocations."))
+        if slug in FUNC:
+            ftitle, body, faqs = FUNC[slug]
+            inner = (f'<div class="prose">{body}</div>'
+                     + (X.faq_block(faqs) if faqs else "") + cta_block())
+            write(slug, interior(ftitle, crumbs, inner,
+                  SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug),
+                  extra_head=(X.faq_schema(faqs) if faqs else "")))
+        else:
+            inner = f'<div class="prose"><p style="font-size:1.1rem">{lead}</p></div>{cta_block()}'
+            write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
+                  f"{title} — Universal Relocations.", hero_img=X.hero_for(g, slug)))
 
-    # ---- Location pages ----
-    for hub, cities in LOCATIONS.items():
-        for city in cities:
-            name = city.replace("-", " ").title()
-            title = f"{name} — {hub.upper()}"
-            inner = f"""<div class="prose"><p style="font-size:1.1rem">Universal Relocations provides trusted moving and relocation services in {name}. Whether you're moving across town, across the country or across the world, our local team delivers the precision, tracking and personal support we're known for.</p></div>{cta_block()}"""
-            write(f"{hub}/locations/{city}", interior(title,
-                  [("Home", "/"), (hub.upper(), f"/{hub}/"), (name, "")], inner,
-                  f"Moving and relocation services in {name}."))
+    # ---- Major-city pages for the three hubs ----
+    X.build_cities(g, cta_block)
+
+    # ---- Dedicated mode pages (LCL/FCL/air/baggage/auto/pet) for hub corridors ----
+    X.build_modes(g, cta_block)
+    CORRIDOR_SET = {(fs, ts) for _, fs, _, ts in X.CORRIDORS}
 
     # ---- Route-pair pages: Moving from X to Y (all ordered pairs) ----
     from urllib.parse import quote
@@ -217,23 +222,37 @@ def build(g):
         if ts in HUBS_C:
             bits.append(f"With our own hub in {tn}, customs clearance and final door-to-door delivery are managed end-to-end by our local team.")
         hub_html = ("<p>" + " ".join(bits) + "</p>") if bits else ""
+        # Dedicated mode links for the flagship hub corridors
+        mode_html = ""
+        if (fs, ts) in CORRIDOR_SET:
+            links = "".join(
+                f'<a href="/moving/{fs}-to-{ts}/{mk}/">{X._strip(X.MODES[mk]["label"])}</a>'
+                for mk in X.MODE_ORDER)
+            mode_html = (f'<h2>Shipping options for {fn} &rarr; {tn}</h2>'
+                         f'<p>Explore a dedicated guide for each way to ship on this route:</p>'
+                         f'<div class="related-routes">{links}</div>')
         others = [(n, s) for n, s in COUNTRIES if s not in (fs, ts)][:6]
         rel = f'<a href="/moving/{ts}-to-{fs}/">{tn} &rarr; {fn}</a>' + "".join(
             f'<a href="/moving/{fs}-to-{s}/">{fn} &rarr; {n}</a>' for n, s in others)
+        faqs = X.route_faqs(fn, tn)
         inner = (
             '<div class="prose">'
-            f'<p style="font-size:1.1rem">Planning a move from <b>{fn}</b> to <b>{tn}</b>? Universal Relocations makes your international relocation from {fn} to {tn} seamless — from export-grade packing and ocean or air freight to customs clearance and door-to-door delivery. With 28+ years of experience and full FMC licensing, we move households, professionals and businesses on this route with precision and care.</p>'
+            f'<p style="font-size:1.12rem">Planning a move from <b>{fn}</b> to <b>{tn}</b>? Universal Relocations makes your international relocation from {fn} to {tn} seamless — from export-grade packing and ocean or air freight to customs clearance and door-to-door delivery. With 28+ years of experience and full FMC licensing, we move households, professionals and businesses on this route with precision and care.</p>'
             f'<h2>How your {fn} &rarr; {tn} move works</h2>' + C.PROCESS +
             f'<h2>Services for your {fn} &rarr; {tn} move</h2>' + SVC_LIST +
+            mode_html +
             f'<h2>What to know about moving from {fn} to {tn}</h2>'
             f'<p>Most {fn}-to-{tn} household moves travel by sea freight, with air freight available for urgent or smaller shipments. Our team prepares all export and import documentation and handles customs clearance — including any transfer-of-residence or duty-relief paperwork — at both ends. Transit times vary by season and port; your dedicated move manager confirms exact timing and the most cost-effective option for your volume.</p>'
             + hub_html +
-            f'<div style="margin:22px 0"><a class="btn btn-primary" href="/assistant/?q={quote("I want to move from " + fn + " to " + tn)}">Get an instant {fn} &rarr; {tn} estimate</a></div>'
+            f'<div style="margin:22px 0"><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
+            f'<a class="btn btn-ghost" href="/assistant/?q={quote("I want to move from " + fn + " to " + tn)}" style="margin-left:8px">Instant {fn} &rarr; {tn} estimate</a></div>'
             f'<h2>Related routes</h2><div class="related-routes">{rel}</div>'
-            '</div>')
+            '</div>'
+            + X.faq_block(faqs))
         write(f"moving/{fs}-to-{ts}", interior(f"Moving from {fn} to {tn}",
               [("Home", "/"), (f"{fn} &rarr; {tn}", "")], inner,
-              f"Moving from {fn} to {tn} — international relocation, shipping and customs with Universal Relocations."))
+              f"Moving from {fn} to {tn} — international relocation, shipping and customs with Universal Relocations.",
+              hero_img=g["HERO_SHIP"], extra_head=X.faq_schema(faqs)))
     rc = 0
     for fn, fs in COUNTRIES:
         for tn, ts in COUNTRIES:

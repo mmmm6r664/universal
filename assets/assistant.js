@@ -273,7 +273,7 @@
             botSeq([
               "🎉 All set, " + firstName(data.name) + " — thank you for choosing Universal Relocations! Your request is in, and a dedicated move manager will reach out very soon with your detailed quote and the exact next steps for your route.",
               summary,
-              "Need us sooner? Call <b>1-888-323-7356</b> (USA), <b>1-800-103-7356</b> (India) or <b>800-13-7356</b> (UAE), or <a href='https://portal.universalrelocations.com/moving-calculator/' target='_blank' style='color:#2731c9'>use the full moving calculator</a>. We can't wait to help you move with ease. 🌍"
+              "Need us sooner? Call <b>1-888-323-7356</b> (USA), <b>1-800-103-7356</b> (India) or <b>800-13-7356</b> (UAE), or <a href='/moving-calculator/' target='_blank' style='color:#2731c9'>use the full moving calculator</a>. We can't wait to help you move with ease. 🌍"
             ], finish);
           });
       });

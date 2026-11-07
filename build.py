@@ -53,7 +53,7 @@ TOPBAR = f"""
         <span class="phone"><img src="{IMG}/2024/02/india-flag-icon-1.png" alt="India"><a href="tel:+18001037356">1-800-103-7356</a></span>
         <span class="phone"><img src="{IMG}/2024/06/images-1.png" alt="UAE"><a href="tel:+8001137356">800-13-7356</a></span>
         <span class="socials">
-          <a href="https://portal.universalrelocations.com/moving-calculator/">Moving Calculator</a>
+          <a href="/moving-calculator/">Moving Calculator</a>
           <a href="/faq/">FAQ</a>
           <a href="/blogs/">Blogs</a>
         </span>
@@ -257,7 +257,7 @@ FOOTER = f"""
 # ---------------------------------------------------------------------------
 # Page wrapper
 # ---------------------------------------------------------------------------
-def page(title, body, desc="", canonical=""):
+def page(title, body, desc="", canonical="", extra_head=""):
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -267,6 +267,7 @@ def page(title, body, desc="", canonical=""):
   <title>{title}</title>
   <meta name="description" content="{desc}">
   {f'<link rel="canonical" href="{canonical}">' if canonical else ''}
+  {extra_head}
   <link rel="icon" href="{IMG}/2024/01/Universal-Round-Logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -287,6 +288,7 @@ def page(title, body, desc="", canonical=""):
 </div>
 <script src="/assets/script.js?v={ASSET_VER}"></script>
 <script src="/assets/assistant.js?v={ASSET_VER}" defer></script>
+<script src="/assets/calculator.js?v={ASSET_VER}" defer></script>
 </body>
 </html>
 """
@@ -464,7 +466,7 @@ HOME_BODY = f"""
 <section class="section section-navy">
   <div class="container">
     <div class="promise">
-      <div class="p"><div class="p-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h0M8 14h2M12 14h2M16 14h0M8 18h2M12 18h2M16 18h0"/></svg></div><h4>Moving Calculator</h4><p>Calculate the volume of your items &amp; get an instant quote.</p><a class="btn btn-primary" style="margin-top:14px" href="https://portal.universalrelocations.com/moving-calculator/">Calculate Now</a></div>
+      <div class="p"><div class="p-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h0M8 14h2M12 14h2M16 14h0M8 18h2M12 18h2M16 18h0"/></svg></div><h4>Moving Calculator</h4><p>Calculate the volume of your items &amp; get an instant quote.</p><a class="btn btn-primary" style="margin-top:14px" href="/moving-calculator/">Calculate Now</a></div>
       <div class="p"><div class="p-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.8L3 20l1-4a8.4 8.4 0 0 1-.8-3.6A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg></div><h4>Talk to a Move Manager</h4><p>Get in touch with our move consultants for personal guidance.</p><a class="btn btn-ghost" style="margin-top:14px" href="/contact-us/">Contact Us</a></div>
       <div class="p"><div class="p-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg></div><h4>Video Pre-Move Survey</h4><p>Pick a day and time to join our surveyor on a video call for a complimentary estimate.</p><a class="btn btn-ghost" style="margin-top:14px" href="https://calendly.com/UniversalrelocationsOfficial">Schedule a Call</a></div>
     </div>
@@ -528,14 +530,27 @@ HOME_BODY = f"""
 # ---------------------------------------------------------------------------
 # Interior page helpers
 # ---------------------------------------------------------------------------
-def page_hero(title, crumbs):
-    trail = ' / '.join(f'<a href="{h}">{l}</a>' if h else l for l, h in crumbs)
-    return f"""<section class="page-hero"><div class="container">
-      <h1>{title}</h1><div class="crumbs">{trail}</div></div></section>"""
+# ---- Real photographic images (from universalrelocations.com media library) ----
+HERO_BRAND   = f"{IMG}/2024/01/01.png"                                   # site-wide brand banner
+HERO_SHIP    = f"{IMG}/2024/01/aerial-view-cargo-ship-cargo-con.jpg"     # ocean freight
+HERO_SURVEY  = f"{IMG}/2024/02/medium-shot-man-holding-clipboar.jpg"     # survey / coordinator
+HERO_MOVE1   = f"{IMG}/2023/12/istockphoto-624394918-612x612-1.jpg"      # packing / household
+HERO_MOVE2   = f"{IMG}/2023/12/istockphoto-506433734-612x612-1.jpg"      # moving boxes
+HERO_USA     = f"{IMG}/2026/08/usa-hub.png"
+HERO_UAE     = f"{IMG}/2026/08/UAE-Hub-Page.png"
+HERO_INDIA   = f"{IMG}/2026/08/India-Taj-Mahal-1.jpg.jpeg"
+HERO_TRUCK   = f"{IMG}/2023/12/truck-and-flight-1.png"
 
-def interior(title, crumbs, inner, desc=""):
-    body = page_hero(title, crumbs) + f'<section class="section"><div class="container">{inner}</div></section>'
-    return page(f"{title} | Universal Relocations", body, desc)
+def page_hero(title, crumbs, hero_img=HERO_BRAND):
+    trail = ' / '.join(f'<a href="{h}">{l}</a>' if h else f'<span>{l}</span>' for l, h in crumbs)
+    style = f' style="background-image:linear-gradient(120deg,rgba(0,5,110,.86),rgba(0,5,110,.60) 55%,rgba(39,49,201,.52)),url(\'{hero_img}\')"' if hero_img else ''
+    cls = "page-hero has-img" if hero_img else "page-hero"
+    return f"""<section class="{cls}"{style}><div class="container">
+      <div class="crumbs">{trail}</div><h1>{title}</h1></div></section>"""
+
+def interior(title, crumbs, inner, desc="", hero_img=HERO_BRAND, extra_head=""):
+    body = page_hero(title, crumbs, hero_img) + f'<section class="section"><div class="container">{inner}</div></section>'
+    return page(f"{title} | Universal Relocations", body, desc, extra_head=extra_head)
 
 ASSISTANT_BODY = """
 <section class="chat-page">
@@ -550,8 +565,23 @@ ASSISTANT_BODY = """
 </section>
 """
 
+CALC_INTRO = (
+    '<p style="font-size:1.12rem">Estimate the volume and weight of your move in minutes. '
+    'Pick a room, add your items, and watch your total cubic feet update live — then send it to us '
+    'for a firm, competitive quote. The estimate is for unpacked items; your final price is based on the '
+    'actual packed volume, which is often lower thanks to our professional packing.</p>'
+    '<div id="calc-root"></div>')
+
+def _calc_page():
+    inner = f'<div class="calc-wrap">{CALC_INTRO}</div>'
+    return interior("Moving Calculator",
+                    [("Home", "/"), ("Moving Calculator", "")], inner,
+                    "Estimate your moving volume and weight with the Universal Relocations Moving Calculator, then get a free quote.",
+                    hero_img=HERO_SHIP)
+
 if __name__ == "__main__":
     import pages  # the rest of the content pages
+    write("moving-calculator", _calc_page())
     write("assistant", page(
         "Move Assistant | Universal Relocations",
         ASSISTANT_BODY,
