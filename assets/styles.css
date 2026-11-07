@@ -923,3 +923,16 @@ a { transition: color .18s ease; }
 .ws-card p { color:#b9c4e6; font-size:.92rem; line-height:1.6; margin:0; }
 @media (max-width:900px){ .ws-grid { grid-template-columns:repeat(2,1fr); } }
 @media (max-width:520px){ .ws-grid { grid-template-columns:1fr; } }
+
+/* ===== Checklist / countdown timeline ===== */
+.timeline { max-width:860px; margin:0 auto; position:relative; }
+.timeline::before { content:""; position:absolute; left:19px; top:8px; bottom:8px; width:2px; background:linear-gradient(var(--blue),var(--line)); }
+.tl-item { display:flex; gap:20px; position:relative; margin-bottom:22px; }
+.tl-dot { flex-shrink:0; width:40px; height:40px; border-radius:50%; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; z-index:1; box-shadow:0 4px 12px rgba(39,49,201,.3); }
+.tl-card { flex:1; background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px 24px; box-shadow:var(--shadow-sm); }
+.tl-card h3 { color:var(--navy); font-size:1.12rem; margin-bottom:12px; }
+.tl-card ul { list-style:none; margin:0; padding:0; }
+.tl-card li { position:relative; padding:7px 0 7px 28px; color:var(--text); border-bottom:1px solid var(--bg-soft); font-size:.95rem; }
+.tl-card li:last-child { border-bottom:0; }
+.tl-card li::before { content:"\2713"; position:absolute; left:0; top:7px; color:var(--accent); font-weight:800; }
+@media (max-width:560px){ .tl-card { padding:16px 18px; } .tl-item { gap:14px; } }

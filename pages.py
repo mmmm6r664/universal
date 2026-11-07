@@ -167,8 +167,10 @@ def build(g):
     def _region_of(slug):
         r = slug.replace("moving-to-", "").replace("-", " ").title()
         return r
-    RICH_SECTIONED = set()
+    X.build_checklist_page(g)   # custom designed timeline page
     for slug, (title_override, body) in C.RICH.items():
+        if slug == "moving-check-list":
+            continue
         title = title_override or SIMPLE[slug][0]
         crumbs = [("Home", "/"), (title.replace("&", "&amp;"), "")]
         faqs = None
@@ -194,7 +196,7 @@ def build(g):
                 'USA, India and the UAE.</p>'
                 + X._ul(["Door-to-door LCL, FCL &amp; air freight", "In-house customs &amp; Transfer of Residence",
                          "All-risk transit insurance &amp; live tracking", "One dedicated move coordinator"]),
-                reverse=True, illus=True)
+                reverse=True)
             # Rich sectioned layout for destination & hub pages
             sections = (X.isec(f'<div class="prose">{body}</div>')
                         + X.isec(mrow, alt=True)
@@ -211,8 +213,20 @@ def build(g):
                   SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug),
                   extra_head=X.faq_schema(faqs + X.EXTRA_FAQS), raw=True))
         else:
-            inner = X.isec(f'<div class="prose">{body}</div>') + X.cta_isec()
-            write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
+            sections = X.isec(f'<div class="prose">{body}</div>')
+            GUIDE_IMG = {"packing-tips": g["HERO_MOVE2"], "moving-terms": g["PH_STAFF1"],
+                         "shipping-terms": g["PH_SHIP2"], "about-us": g["PH_STAFF1"],
+                         "company": g["PH_STAFF2"], "corporate-social-responsibility": g["HERO_SURVEY"],
+                         "shipping-worldwide": g["HERO_SHIP"]}
+            if slug in GUIDE_IMG:
+                sections += X.isec(X.media_row(GUIDE_IMG[slug], "The Universal Relocations difference",
+                    '<p>Behind every move is an accredited, FMC-licensed team with our own hubs in the USA, India '
+                    'and the UAE — and one coordinator who owns your move from first survey to final box.</p>'
+                    + X._ul(["Export-grade packing &amp; crating", "Ocean, air &amp; baggage shipping",
+                             "In-house customs &amp; Transfer of Residence", "All-risk insurance &amp; door-to-door tracking"]),
+                    reverse=True), alt=True)
+            sections += X.why_us_band() + X.trust_logos(g, alt=(slug not in GUIDE_IMG)) + X.cta_isec()
+            write(slug, interior(title.replace("&", "&amp;"), crumbs, sections,
                   SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug), raw=True))
 
     # ---- Functional + simple pages (enriched where we have real content) ----
@@ -223,14 +237,23 @@ def build(g):
         crumbs = [("Home", "/"), (title.replace("&", "&amp;"), "")]
         if slug in FUNC:
             ftitle, body, faqs = FUNC[slug]
-            sections = (X.isec(f'<div class="prose">{body}</div>')
-                        + (X.why_us_band(alt=True) if slug in ("career", "referral", "resources") else "")
-                        + X.faq_isec(faqs) + X.cta_isec())
+            FUNC_IMG = {"career": g["PH_STAFF1"], "referral": g["HERO_SURVEY"],
+                        "file-a-claim": g["HERO_LOGISTICS"], "resources": g["HERO_MOVE1"],
+                        "company-news": g["PH_STAFF2"]}
+            sections = X.isec(f'<div class="prose">{body}</div>')
+            if slug in FUNC_IMG:
+                sections += X.isec(X.media_row(FUNC_IMG[slug], "One team, 28+ years, three hubs",
+                    '<p>Universal Relocations is an accredited, FMC-licensed mover with our own offices, crews and '
+                    'in-house customs brokers in the USA, India and the UAE — and a dedicated coordinator on every move.</p>'
+                    + X._ul(["International, interstate &amp; intrastate moving", "Packing, crating, storage &amp; insurance",
+                             "Vehicle &amp; pet relocation", "Door-to-door tracking"]), reverse=True), alt=True)
+            sections += X.why_us_band() + X.trust_logos(g, alt=(slug not in FUNC_IMG)) + X.faq_isec(faqs) + X.cta_isec()
             write(slug, interior(ftitle, crumbs, sections,
                   SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug),
                   extra_head=(X.faq_schema(faqs) if faqs else ""), raw=True))
         else:
-            inner = X.isec(f'<div class="prose"><p style="font-size:1.1rem">{lead}</p></div>') + X.cta_isec()
+            inner = (X.isec(f'<div class="prose"><p style="font-size:1.1rem">{lead}</p></div>')
+                     + X.why_us_band() + X.trust_logos(g, alt=True) + X.cta_isec())
             write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
                   f"{title} — Universal Relocations.", hero_img=X.hero_for(g, slug), raw=True))
 

@@ -920,3 +920,89 @@ def compare_table():
         f'<tbody>{body}</tbody></table></div>', alt=True,
         head=sec_head("Which shipping option is right for you?",
             "LCL, FCL, air or baggage — compare at a glance, then we’ll confirm the best fit for your volume and timeline.", "Compare"))
+
+
+# ===========================================================================
+# Moving checklist — full week-by-week timeline (content from universalrelocations.com)
+# ===========================================================================
+CHECKLIST = [
+    ("8 Weeks Before", [
+        "Inventory your belongings and clear out the attic, basement and storage shed",
+        "Use up items you can’t move, such as frozen food and cleaning supplies",
+        "Research your new community through the local Chamber of Commerce or tourism bureau",
+        "Contact Universal Relocations to arrange your moving day and review insurance coverage"]),
+    ("6 Weeks Before", [
+        "If your employer is paying, confirm its expense and responsibility terms",
+        "Check with the IRS or an accountant about tax-deductible moving expenses",
+        "Decide what to sell or donate, and list who needs to be notified of your move",
+        "Subscribe to a local paper in your new area; locate vehicle registration and licensing documents",
+        "Arrange storage if needed; collect records from schools, doctors, dentists, lawyers and accountants"]),
+    ("4 Weeks Before", [
+        "Submit a change of address to the post office",
+        "Arrange pet relocation if needed",
+        "Schedule utility disconnections — but keep phone and utilities on until moving day",
+        "Arrange insurance (auto, home, medical, life) for your new home",
+        "If packing yourself, buy boxes and start packing items you won’t need"]),
+    ("3 Weeks Before", [
+        "Book travel, but avoid flights on moving day — closings and delays are common",
+        "Gather important papers: insurance policies, wills, deeds and stock certificates",
+        "Close local bank accounts and open accounts in your new location"]),
+    ("2 Weeks Before", [
+        "Have your car serviced and prepared for the weather on your route",
+        "Schedule elevator use with building management if applicable",
+        "Confirm all arrangements with your relocation consultant"]),
+    ("1 Week Before", [
+        "Settle outstanding bills with local merchants",
+        "Empty your safe deposit box; pick up dry cleaning; return library books and rentals",
+        "Take pets for needed immunizations and obtain their veterinary records",
+        "Drain fuel and oil from power equipment; give away plants that won’t be moving",
+        "Prepare directions, an itinerary and emergency numbers for the moving company"]),
+    ("2–3 Days Before", [
+        "Defrost the freezer and refrigerator; block open doors to keep pets and children safe",
+        "Have major appliances disconnected and prepared",
+        "Pack a box of immediately needed items to load last or carry with you",
+        "Separate the items you’re taking yourself and confirm the moving van’s arrival time"]),
+    ("Moving Day", [
+        "Have someone at home to answer the van foreman’s questions",
+        "Record utility meter readings for gas, electric and water",
+        "Read the bill of lading and inventory carefully before signing",
+        "Keep your paperwork until all charges are paid and any claims are settled"]),
+]
+def checklist_timeline():
+    cards = ""
+    for i, (when, items) in enumerate(CHECKLIST):
+        lis = "".join(f"<li>{x}</li>" for x in items)
+        cards += (f'<div class="tl-item"><div class="tl-dot">{i+1}</div>'
+                  f'<div class="tl-card"><h3>{when}</h3><ul>{lis}</ul></div></div>')
+    return f'<div class="timeline">{cards}</div>'
+
+def build_checklist_page(g):
+    interior = g["interior"]; write = g["write"]
+    faqs = [
+        ("When should I start planning my move?", "Start about eight weeks out for an international or long-distance move — inventorying, decluttering and booking your survey early gives you the most options and the smoothest move."),
+        ("Do I need to be home on moving day?", "Yes — have someone at home to answer the crew’s questions, record utility meter readings, and check and sign the inventory and bill of lading before the van leaves."),
+        ("What should I carry myself rather than ship?", "Cash, jewellery, important documents, medication and a box of immediately needed items. Keep these with you rather than in the shipment."),
+        ("Can Universal Relocations handle the packing for me?", "Absolutely — full and partial packing, materials and specialist crating are all available, so you can hand over as much of this checklist as you like."),
+    ]
+    inner = (
+        isec('<div class="prose" style="max-width:820px;margin:0 auto;text-align:center">'
+             '<p style="font-size:1.12rem">A great move is a planned move. This week-by-week checklist — refined over '
+             '28+ years of international and domestic relocations — keeps every task on track so nothing is forgotten. '
+             'Print it, work down it, and lean on your Universal Relocations coordinator for anything on the list.</p></div>')
+        + isec(checklist_timeline(), alt=True, head=sec_head("Your week-by-week moving timeline",
+               "From eight weeks out to moving day.", "Countdown"))
+        + isec(media_row(g["HERO_MOVE1"], "Let us take the heavy items off your list",
+               '<p>Every task on this checklist that involves packing, shipping, customs or delivery, we can handle for you '
+               '— so your move is organised, insured and tracked from the first box to the last.</p>'
+               + _ul(["Export-grade packing &amp; crating", "Ocean &amp; air freight with customs handled",
+                      "Storage if your dates don’t line up", "All-risk transit insurance"])))
+        + why_us_band()
+        + trust_logos(g, alt=True)
+        + faq_isec(faqs)
+        + cta_isec())
+    write("moving-check-list", interior("Moving Checklist",
+          [("Home", "/"), ("Resources", "/resources/"), ("Moving Checklist", "")], inner,
+          "A complete week-by-week moving checklist from Universal Relocations — plan your move so nothing is forgotten.",
+          hero_img=g["HERO_SURVEY"], extra_head=faq_schema(faqs),
+          subtitle="Everything to do, week by week, so nothing is forgotten.", raw=True))
+    print("Checklist page built.")
