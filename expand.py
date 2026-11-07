@@ -246,37 +246,36 @@ def build_modes(g, cta_block):
             hero = heroes.get(m["hero"], g["HERO_SHIP"])
             note = CORRIDOR_NOTE.get((fs, ts), "")
             faqs = _corridor_faqs(fn, fs, tn, ts, mk)
-            # related: other modes on this route
-            others = "".join(
-                f'<a href="/moving/{fs}-to-{ts}/{o}/">{_strip(MODES[o]["label"])}</a>'
+            lbl = _strip(label).split("(")[0].strip()
+            overview = m["overview"].replace("{fn}", fn).replace("{tn}", tn)
+            # other modes as icon chips
+            MICON = {"lcl":"ship","fcl":"cubes","air-freight":"plane","baggage":"box","auto-shipping":"car","pet":"paw"}
+            chips = "".join(
+                f'<a href="/moving/{fs}-to-{ts}/{o}/">{icon(MICON.get(o,"ship"))}<span>{_strip(MODES[o]["label"]).split("(")[0].strip()}</span></a>'
                 for o in MODE_ORDER if o != mk)
-            rev = f'<a href="/moving/{ts}-to-{fs}/{mk}/">{_strip(label)}: {tn} &rarr; {fn}</a>'
-            inner = (
-                '<div class="prose">'
-                f'<p style="font-size:1.12rem">{m["tag"]}</p>'
-                f'<p>{m["overview"].replace("{fn}", fn).replace("{tn}", tn)}</p>'
-                f'<h2>{_strip(label)}: {fn} &rarr; {tn}, step by step</h2>' + _steps(m["how"]) +
-                "<h2>What's included</h2>" + _ul(m["included"]) +
-                f'<h2>Is {_strip(label).split("(")[0].strip().lower()} right for you?</h2>'
-                f'<p><b>Best for:</b> {m["best_for"]}</p>'
-                + (f"<p>{note}</p>" if note else "") +
-                f'<div style="margin:24px 0"><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume &amp; get a quote</a> '
-                f'<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Talk to a move manager</a></div>'
-                f'<h2>Other shipping options: {fn} &rarr; {tn}</h2>'
-                f'<div class="related-routes">{others}</div>'
-                f'<h2>Moving the other way?</h2><div class="related-routes">{rev}</div>'
-                '</div>'
-                + faq_block(faqs)
-                + cta_block())
-            title = f"{_strip(label).split('(')[0].strip()} from {fn} to {tn}"
+            step_pairs = [(f"Step {i+1}", s) for i, s in enumerate(m["how"])]
+            sections = (
+                isec(lead_split(f'<p>{m["tag"]}</p><p>{overview}</p>', STATS))
+                + isec(step_cards(step_pairs), alt=True,
+                       head=sec_head(f"{lbl}: {fn} &rarr; {tn}, step by step", "", "How it works"))
+                + isec(media_row(hero, "What’s included", _ul(m["included"]))
+                       + (f'<div class="callout" style="margin-top:40px"><div class="co-txt"><h3>Is {lbl.lower()} right for you?</h3>'
+                          f'<p><b>Best for:</b> {m["best_for"]}' + (f' {note}' if note else '') + '</p></div>'
+                          f'<div><a class="btn btn-accent" href="/moving-calculator/">Estimate volume</a></div></div>'))
+                + isec(f'<div class="mode-chip-grid">{chips}</div>',
+                       head=sec_head(f"Other ways to ship {fn} &rarr; {tn}", "Compare every option for this route.", "More options"))
+                + why_us_band(alt=True)
+                + faq_isec(faqs)
+                + cta_isec())
+            title = f"{lbl} from {fn} to {tn}"
             write(f"moving/{fs}-to-{ts}/{mk}",
                   interior(title,
                            [("Home", "/"), (f"{fn} &rarr; {tn}", f"/moving/{fs}-to-{ts}/"),
                             (m["short"], "")],
-                           inner,
+                           sections,
                            f"{_strip(label)} from {fn} to {tn} — Universal Relocations. Door-to-door, insured, customs handled.",
-                           hero_img=hero,
-                           extra_head=faq_schema(faqs)))
+                           hero_img=hero, extra_head=faq_schema(faqs),
+                           subtitle=m["tag"], raw=True))
             count += 1
     print(f"Mode pages built: {count}")
     return count
@@ -446,24 +445,28 @@ def build_services(g, SERVICES, SERVICE_ORDER, cta_block):
         d = SERVICE_DETAIL.get(slug, {})
         hero = heroes.get(d.get("hero", "HERO_SHIP"), g["HERO_SHIP"])
         faqs = d.get("faqs", [])
-        inner = (
-            '<div class="prose">'
-            f'<p style="font-size:1.12rem">{lead}</p>'
-            "<h2>How it works</h2>" + _steps(_GEN_PROCESS) +
-            "<h2>What's included</h2>" + _ul(bullets) +
-            (f'<h2>Who it’s for</h2><p>{d["who"]}</p>' if d.get("who") else "") +
-            "<h2>Why Universal Relocations</h2>"
-            "<p>With 28+ years of experience, our own hub network across the USA, India and the UAE, "
-            "full FMC licensing and FIDI/FAIM-accredited quality, we deliver this service with the "
-            "precision, tracking and personal support that have earned us 4.5 stars from thousands of "
-            "customers. One dedicated coordinator owns your move from first survey to final box.</p>"
-            '</div>'
-            + (faq_block(faqs) if faqs else "")
-            + cta_block())
+        tclean = _strip(title)
+        photo = heroes.get("HERO_SURVEY") if slug in ("corporate-relocation","pet-relocations") else hero
+        lead_html = (f'<p>{lead}</p>'
+                     + (f'<p><b>Who it’s for:</b> {d["who"]}</p>' if d.get("who") else ''))
+        sections = (
+            isec(lead_split(lead_html, STATS))
+            + isec(check_grid(bullets), alt=True,
+                   head=sec_head("What’s included", f"Everything your {tclean.lower()} needs, handled end-to-end.", "What you get"))
+            + isec(media_row(photo, f"How your {tclean.lower()} works",
+                   '<p>One dedicated coordinator owns your move from the first survey to the final box — planning, packing, shipping, customs and delivery.</p>'
+                   + _ul([t for _, t in GEN_STEPS])))
+            + why_us_band(alt=True)
+            + isec(callout(f"Get a tailored {tclean.lower()} quote",
+                   "Tell us about your move and we’ll send a firm, competitive quote — no obligation.",
+                   "Get a free quote", "/contact-us/", "Estimate volume", "/moving-calculator/"))
+            + faq_isec(faqs)
+            + cta_isec())
         write(f"services/{slug}", interior(title.replace("&amp;", "&"),
-              [("Home", "/"), ("Services", "/services/"), (title, "")], inner,
+              [("Home", "/"), ("Services", "/services/"), (title, "")], sections,
               f"{title} from Universal Relocations — expert, insured and fully tracked.",
-              hero_img=hero, extra_head=(faq_schema(faqs) if faqs else "")))
+              hero_img=hero, extra_head=(faq_schema(faqs) if faqs else ""),
+              subtitle=_strip(lead)[:150] + "…", raw=True))
     print("Service pages built (enriched).")
 
 
@@ -489,39 +492,44 @@ def build_cities(g, cta_block):
                 dests = [("India", "/moving/uae-to-india/"), ("the USA", "/moving/uae-to-usa/"),
                          ("Canada", "/moving/uae-to-canada/"), ("the UK", "/moving/uae-to-uk/")]
             dl = "".join(f'<a href="{h}">{city} &rarr; {n}</a>' for n, h in dests)
-            inner = (
-                '<div class="prose">'
-                f'<p style="font-size:1.12rem">Universal Relocations provides trusted local and international moving services in {area}. '
-                f'Whether you’re relocating across {city}, to another part of {hub}, or overseas, our local crews deliver the export-grade packing, customs expertise, tracking and personal support we’ve built over 28+ years.</p>'
-                f'<h2>Our moving services in {city}</h2>'
-                + _ul([
-                    "International relocation — LCL &amp; FCL ocean freight and air freight",
-                    "Baggage &amp; box shipping (no airline excess fees)",
-                    "Local &amp; domestic home and office moves",
-                    "Vehicle / auto shipping", "Pet relocation",
-                    "Storage &amp; warehousing", "Transit insurance",
-                    "Fine-art &amp; specialist crating",
-                ]) +
-                f'<h2>How your {city} move works</h2>' +
-                _steps([
-                    f"Free video or in-home survey anywhere in {area}.",
-                    "A firm, itemised quote — no hidden charges.",
-                    "Export-grade packing and a full inventory at your door.",
-                    "Shipping by sea or air, with customs handled at both ends.",
-                    "Delivery, unpacking and reassembly at your new home.",
-                ]) +
-                f'<h2>Popular routes from {city}</h2><div class="related-routes">{dl}</div>'
-                f'<div style="margin:22px 0"><a class="btn btn-primary" href="/moving-calculator/">Get an estimate</a> '
-                f'<a class="btn btn-ghost" href="tel:{tel}" style="margin-left:8px">Call {tel}</a></div>'
-                '</div>'
-                + faq_block(faqs)
-                + cta_block())
+            svc_cards = feature_cards([
+                ("globe", "International relocation", "LCL &amp; FCL ocean freight and air freight to any destination."),
+                ("box", "Baggage &amp; box shipping", "Send boxes and excess luggage with no airline excess fees."),
+                ("home", "Local &amp; domestic moves", "Home and office moves across the city and the country."),
+                ("car", "Vehicle shipping", "Cars and motorcycles by container or RoRo, documents handled."),
+                ("warehouse", "Storage &amp; warehousing", "Secure, climate-controlled short and long-term storage."),
+                ("shield", "Insurance &amp; crating", "All-risk transit cover and specialist crating for fragile pieces."),
+            ])
+            step_pairs = [
+                ("Free survey", f"Video or in-home survey anywhere in {area}, then a firm, itemised quote."),
+                ("Pack &amp; inventory", "Export-grade packing and a full inventory at your door."),
+                ("Ship &amp; clear", "Shipping by sea or air, with customs handled at both ends."),
+                ("Deliver", "Delivery, unpacking and reassembly at your new home."),
+            ]
+            lead_html = (f'<p>Universal Relocations provides trusted local and international moving services in {area}. '
+                f'Whether you’re relocating across {city}, to another part of {hub}, or overseas, our local crews deliver the '
+                f'export-grade packing, customs expertise, tracking and personal support we’ve built over 28+ years.</p>'
+                f'<p><a class="btn btn-primary" href="/moving-calculator/">Get an estimate</a> '
+                f'<a class="btn btn-ghost" href="tel:{tel}" style="margin-left:8px">Call {tel}</a></p>')
+            sections = (
+                isec(lead_split(lead_html, STATS))
+                + isec(svc_cards, alt=True, head=sec_head(f"Our moving services in {city}",
+                       "One team for every kind of move, local or international.", "Services"))
+                + isec(media_row(hero, f"How your {city} move works",
+                       '<p>From first survey to final box, one dedicated coordinator keeps your move on track.</p>'
+                       + _ul([t for _, t in step_pairs])))
+                + isec(f'<div class="related-routes">{dl}</div>',
+                       head=sec_head(f"Popular routes from {city}", "Dedicated guides for the moves we handle most.", "Where to"))
+                + why_us_band(alt=True)
+                + faq_isec(faqs)
+                + cta_isec())
             write(f"{hubslug}/locations/{slug}",
                   interior(f"Movers in {city}",
                            [("Home", "/"), (hub, f"/{hubslug}/"), (city, "")],
-                           inner,
+                           sections,
                            f"Professional movers in {city}, {hub}. International &amp; local relocation, packing, shipping and customs with Universal Relocations.",
-                           hero_img=hero, extra_head=faq_schema(faqs)))
+                           hero_img=hero, extra_head=faq_schema(faqs),
+                           subtitle=f"Professional local &amp; international movers in {area}.", raw=True))
             count += 1
     print(f"City pages built: {count}")
     return count
@@ -655,3 +663,108 @@ def functional_pages():
              ("How do I make a media enquiry?", "Email contact@universalrelocations.com and our team will respond promptly."),
              ("What accreditations do you hold?", "We’re FIDI/FAIM accredited, FMC-licensed, IAM and IPATA members, and ISO 9001 certified.")]),
     }
+
+
+# ===========================================================================
+# Interior design-system components (v2)
+# ===========================================================================
+_ICONS = {
+  "box":'<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>',
+  "ship":'<path d="M3 14l1.6 6h14.8L21 14M5 14V7l7-3 7 3v7M9 9h6M12 3v4"/>',
+  "plane":'<path d="M21 15l-8-4V4a1.5 1.5 0 0 0-3 0v7l-8 4v2l8-2v4l-2 1.5V22l3-1 3 1v-1.5L12 19v-4l8 2z"/>',
+  "truck":'<path d="M1 4h14v11H1zM15 8h4l3 3v4h-7M5.5 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM18.5 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>',
+  "shield":'<path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/>',
+  "clock":'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  "globe":'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>',
+  "home":'<path d="M3 11l9-8 9 8M5 10v10h14V10M9 20v-6h6v6"/>',
+  "paw":'<circle cx="7" cy="9" r="1.6"/><circle cx="12" cy="7.5" r="1.6"/><circle cx="17" cy="9" r="1.6"/><path d="M12 12c-3 0-5 2.2-5 4.5C7 18.4 8.6 19 12 19s5-.6 5-2.5C17 14.2 15 12 12 12z"/>',
+  "car":'<path d="M3 13l2-5h14l2 5v5h-3v-2H6v2H3zM6 13h12"/><circle cx="7.5" cy="16.5" r="1.3"/><circle cx="16.5" cy="16.5" r="1.3"/>',
+  "warehouse":'<path d="M3 21V8l9-4 9 4v13M7 21v-7h10v7"/>',
+  "doc":'<path d="M6 2h8l4 4v16H6zM14 2v4h4M9 13h6M9 17h6"/>',
+  "pin":'<path d="M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+  "star":'<path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8L6.6 19.6l1-6L3.3 9.4l6-.9z"/>',
+  "headset":'<path d="M4 13v-1a8 8 0 0 1 16 0v1M4 13a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1v-6zM20 13a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1v-6M19 19a4 4 0 0 1-4 3h-3"/>',
+  "award":'<circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/>',
+  "check":'<circle cx="12" cy="12" r="9"/><path d="M8 12l2.5 2.5L16 9"/>',
+  "leaf":'<path d="M4 20C4 10 12 4 20 4c0 10-6 16-16 16zM4 20c3-5 7-8 11-9"/>',
+  "cubes":'<path d="M12 2l5 3v6l-5 3-5-3V5zM7 11v6l5 3 5-3v-6"/>',
+  "cal":'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>',
+}
+def icon(n):
+    return (f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '
+            f'stroke-linecap="round" stroke-linejoin="round">{_ICONS.get(n, _ICONS["check"])}</svg>')
+
+def sec_head(title, intro="", eyebrow=""):
+    e = f'<div class="eyebrow">{eyebrow}</div>' if eyebrow else ''
+    p = f'<p>{intro}</p>' if intro else ''
+    return f'<div class="sec-head">{e}<h2>{title}</h2>{p}</div>'
+
+def feature_cards(items, cols=""):
+    cards = "".join(
+        f'<div class="fcard"><div class="fic">{icon(ic)}</div><h3>{t}</h3><p>{d}</p></div>'
+        for ic, t, d in items)
+    return f'<div class="feature-grid {cols}">{cards}</div>'
+
+def media_row(img, title, body_html, reverse=False):
+    cls = "media-row reverse" if reverse else "media-row"
+    return (f'<div class="{cls}"><div class="mr-txt"><h2>{title}</h2>{body_html}</div>'
+            f'<div class="mr-img"><img src="{img}" alt="{title}" loading="lazy"></div></div>')
+
+def lead_split(copy_html, stats):
+    s = "".join(f'<div class="ls"><b>{n}</b><span>{l}</span></div>' for n, l in stats)
+    return (f'<div class="lead-split"><div class="lead-copy">{copy_html}</div>'
+            f'<div class="lead-stats">{s}</div></div>')
+
+def callout(title, text, btn_label="Get a free quote", btn_href="/contact-us/",
+            btn2_label="", btn2_href=""):
+    b2 = f'<a class="btn btn-ghost" href="{btn2_href}" style="border-color:rgba(255,255,255,.6);color:#fff;margin-left:8px">{btn2_label}</a>' if btn2_label else ''
+    return (f'<div class="callout"><div class="co-txt"><h3>{title}</h3><p>{text}</p></div>'
+            f'<div><a class="btn btn-accent" href="{btn_href}">{btn_label}</a>{b2}</div></div>')
+
+def step_cards(items):
+    # items: list of (title, text)
+    c = "".join(f'<div class="sc"><h4>{t}</h4><p>{d}</p></div>' for t, d in items)
+    return f'<div class="step-cards">{c}</div>'
+
+def isec(html, alt=False, head=""):
+    return f'<section class="isec {"alt" if alt else ""}"><div class="container">{head}{html}</div></section>'
+
+# Standard trust/stat + why-us content reused across pages
+STATS = [("28+", "Years of experience"), ("190+", "Countries served"),
+         ("4.5★", "Average rating"), ("3", "Global hubs: USA · India · UAE")]
+WHY_US = [
+    ("award", "28+ years, FIDI/FAIM accredited", "Nearly three decades relocating families, diplomats and corporations — to FIDI/FAIM global quality standards."),
+    ("globe", "Our own hubs on both ends", "Offices and crews across the USA, India and the UAE mean one team owns your move door-to-door."),
+    ("shield", "FMC-licensed &amp; fully insured", "An FMC-licensed ocean carrier with all-risk transit insurance, so your belongings are protected the whole way."),
+    ("headset", "One dedicated coordinator", "A single point of contact plans your timing, paperwork and delivery — and answers when you call."),
+    ("doc", "In-house customs &amp; TR", "We prepare every document and clear customs ourselves, including Transfer of Residence and duty relief."),
+    ("clock", "Door-to-door tracking", "Live updates at every stage, from survey and packing to customs and final delivery."),
+]
+def why_us_band(alt=True):
+    return isec(feature_cards(WHY_US), alt=alt,
+                head=sec_head("Why families and businesses choose Universal Relocations",
+                              "The service, accreditations and people behind every move.",
+                              "Why Universal"))
+
+
+GEN_STEPS = [
+    ("Free survey", "Video or in-home survey to scope your move and give a firm, itemised quote."),
+    ("Plan &amp; pack", "A dedicated coordinator plans timing and paperwork; our crews pack to export grade."),
+    ("Ship &amp; clear", "We ship by the best method and clear customs at both ends, including TR relief."),
+    ("Deliver &amp; settle", "Door delivery, unpacking, reassembly and debris removal at your new home."),
+]
+def check_grid(items):
+    c = "".join(f'<div class="ck">{icon("check")}<span>{t}</span></div>' for t in items)
+    return f'<div class="check-grid">{c}</div>'
+def faq_isec(faqs, alt=False):
+    if not faqs: return ""
+    return isec(faq_block(faqs, ""), alt=alt, head=sec_head("Frequently asked questions", "", "FAQ"))
+def cta_isec():
+    return isec(callout(
+        "Ready to plan your move?",
+        "Get a free, no-obligation quote from our move consultants — or estimate your volume in minutes.",
+        "Get a free quote", "/contact-us/", "Moving Calculator", "/moving-calculator/"))
+# Service -> primary icon for cards
+SVC_ICON = {"international":"globe","corporate-relocation":"truck","pet-relocations":"paw",
+  "groupage-solution":"ship","storage":"warehouse","intrastate":"home","baggage-shipping":"box",
+  "insurance":"shield","fine-art-relocations":"star","hospitality-relocations":"cubes","auto-shipping":"car"}

@@ -167,19 +167,33 @@ def build(g):
     def _region_of(slug):
         r = slug.replace("moving-to-", "").replace("-", " ").title()
         return r
+    RICH_SECTIONED = set()
     for slug, (title_override, body) in C.RICH.items():
         title = title_override or SIMPLE[slug][0]
         crumbs = [("Home", "/"), (title.replace("&", "&amp;"), "")]
-        faq_html = ""; faq_head = ""
+        faqs = None
         if slug.startswith("moving-to-"):
-            f = X.dest_faqs(_region_of(slug)); faq_html = X.faq_block(f); faq_head = X.faq_schema(f)
+            faqs = X.dest_faqs(_region_of(slug))
         elif slug in ("usa", "india", "uae"):
-            f = X.hub_faqs(X.HUB_NAME[slug]); faq_html = X.faq_block(f); faq_head = X.faq_schema(f)
+            faqs = X.hub_faqs(X.HUB_NAME[slug])
         elif slug == "shipping-worldwide":
-            f = X.dest_faqs("destinations worldwide"); faq_html = X.faq_block(f); faq_head = X.faq_schema(f)
-        inner = f'<div class="prose">{body}</div>{faq_html}{cta_block()}'
-        write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
-              SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug), extra_head=faq_head))
+            faqs = X.dest_faqs("destinations worldwide")
+        if faqs is not None:
+            # Rich sectioned layout for destination & hub pages
+            sections = (X.isec(f'<div class="prose">{body}</div>')
+                        + X.why_us_band(alt=True)
+                        + X.isec(X.callout("Planning this move?",
+                                 "Get a free, no-obligation quote and a clear plan from our move consultants.",
+                                 "Get a free quote", "/contact-us/", "Estimate volume", "/moving-calculator/"))
+                        + X.faq_isec(faqs)
+                        + X.cta_isec())
+            write(slug, interior(title.replace("&", "&amp;"), crumbs, sections,
+                  SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug),
+                  extra_head=X.faq_schema(faqs), raw=True))
+        else:
+            inner = X.isec(f'<div class="prose">{body}</div>') + X.cta_isec()
+            write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
+                  SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug), raw=True))
 
     # ---- Functional + simple pages (enriched where we have real content) ----
     FUNC = X.functional_pages()
@@ -189,15 +203,16 @@ def build(g):
         crumbs = [("Home", "/"), (title.replace("&", "&amp;"), "")]
         if slug in FUNC:
             ftitle, body, faqs = FUNC[slug]
-            inner = (f'<div class="prose">{body}</div>'
-                     + (X.faq_block(faqs) if faqs else "") + cta_block())
-            write(slug, interior(ftitle, crumbs, inner,
+            sections = (X.isec(f'<div class="prose">{body}</div>')
+                        + (X.why_us_band(alt=True) if slug in ("career", "referral", "resources") else "")
+                        + X.faq_isec(faqs) + X.cta_isec())
+            write(slug, interior(ftitle, crumbs, sections,
                   SIMPLE[slug][1][:155], hero_img=X.hero_for(g, slug),
-                  extra_head=(X.faq_schema(faqs) if faqs else "")))
+                  extra_head=(X.faq_schema(faqs) if faqs else ""), raw=True))
         else:
-            inner = f'<div class="prose"><p style="font-size:1.1rem">{lead}</p></div>{cta_block()}'
+            inner = X.isec(f'<div class="prose"><p style="font-size:1.1rem">{lead}</p></div>') + X.cta_isec()
             write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
-                  f"{title} — Universal Relocations.", hero_img=X.hero_for(g, slug)))
+                  f"{title} — Universal Relocations.", hero_img=X.hero_for(g, slug), raw=True))
 
     # ---- Major-city pages for the three hubs ----
     X.build_cities(g, cta_block)
@@ -215,44 +230,63 @@ def build(g):
         "Baggage &amp; box shipping", "Vehicle / auto shipping", "Transit insurance",
         "Storage &amp; warehousing", "Pet relocation", "Fine-art &amp; specialist handling",
     ])
+    SVC_CARDS = X.feature_cards([
+        ("globe", "International relocation", "Full door-to-door household moves by ocean or air."),
+        ("ship", "LCL / groupage", "Shared-container shipping — pay only for the space you use."),
+        ("cubes", "FCL full container", "Your own 20ft/40ft container for a complete home."),
+        ("box", "Baggage &amp; boxes", "Send boxes and excess luggage with no airline fees."),
+        ("car", "Vehicle shipping", "Cars and motorcycles by container or RoRo."),
+        ("shield", "Insurance &amp; storage", "All-risk cover plus short and long-term storage."),
+    ])
     def route_page(fn, fs, tn, ts):
         bits = []
         if fs in HUBS_C:
             bits.append(f"Because {fn} is one of our hub countries, your packing, collection and export paperwork are handled directly by our own Universal Relocations team on the ground.")
         if ts in HUBS_C:
             bits.append(f"With our own hub in {tn}, customs clearance and final door-to-door delivery are managed end-to-end by our local team.")
-        hub_html = ("<p>" + " ".join(bits) + "</p>") if bits else ""
-        # Dedicated mode links for the flagship hub corridors
-        mode_html = ""
+        hub_html = (" ".join(bits)) if bits else ""
+        # Dedicated mode cards for the flagship hub corridors
+        mode_sec = ""
         if (fs, ts) in CORRIDOR_SET:
+            MICON = {"lcl":"ship","fcl":"cubes","air-freight":"plane","baggage":"box","auto-shipping":"car","pet":"paw"}
             links = "".join(
-                f'<a href="/moving/{fs}-to-{ts}/{mk}/">{X._strip(X.MODES[mk]["label"])}</a>'
+                f'<a href="/moving/{fs}-to-{ts}/{mk}/">{X.icon(MICON.get(mk,"ship"))}<span>{X._strip(X.MODES[mk]["label"]).split("(")[0].strip()}</span></a>'
                 for mk in X.MODE_ORDER)
-            mode_html = (f'<h2>Shipping options for {fn} &rarr; {tn}</h2>'
-                         f'<p>Explore a dedicated guide for each way to ship on this route:</p>'
-                         f'<div class="related-routes">{links}</div>')
+            mode_sec = X.isec(f'<div class="mode-chip-grid">{links}</div>', alt=True,
+                       head=X.sec_head(f"Shipping options for {fn} &rarr; {tn}",
+                             "A dedicated guide for every way to ship on this route.", "Choose your mode"))
         others = [(n, s) for n, s in COUNTRIES if s not in (fs, ts)][:6]
         rel = f'<a href="/moving/{ts}-to-{fs}/">{tn} &rarr; {fn}</a>' + "".join(
             f'<a href="/moving/{fs}-to-{s}/">{fn} &rarr; {n}</a>' for n, s in others)
         faqs = X.route_faqs(fn, tn)
-        inner = (
-            '<div class="prose">'
-            f'<p style="font-size:1.12rem">Planning a move from <b>{fn}</b> to <b>{tn}</b>? Universal Relocations makes your international relocation from {fn} to {tn} seamless — from export-grade packing and ocean or air freight to customs clearance and door-to-door delivery. With 28+ years of experience and full FMC licensing, we move households, professionals and businesses on this route with precision and care.</p>'
-            f'<h2>How your {fn} &rarr; {tn} move works</h2>' + C.PROCESS +
-            f'<h2>Services for your {fn} &rarr; {tn} move</h2>' + SVC_LIST +
-            mode_html +
-            f'<h2>What to know about moving from {fn} to {tn}</h2>'
-            f'<p>Most {fn}-to-{tn} household moves travel by sea freight, with air freight available for urgent or smaller shipments. Our team prepares all export and import documentation and handles customs clearance — including any transfer-of-residence or duty-relief paperwork — at both ends. Transit times vary by season and port; your dedicated move manager confirms exact timing and the most cost-effective option for your volume.</p>'
-            + hub_html +
-            f'<div style="margin:22px 0"><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
-            f'<a class="btn btn-ghost" href="/assistant/?q={quote("I want to move from " + fn + " to " + tn)}" style="margin-left:8px">Instant {fn} &rarr; {tn} estimate</a></div>'
-            f'<h2>Related routes</h2><div class="related-routes">{rel}</div>'
-            '</div>'
-            + X.faq_block(faqs))
+        lead_html = (f'<p>Planning a move from <b>{fn}</b> to <b>{tn}</b>? Universal Relocations makes your '
+            f'international relocation from {fn} to {tn} seamless — from export-grade packing and ocean or air '
+            f'freight to customs clearance and door-to-door delivery. With 28+ years of experience and full FMC '
+            f'licensing, we move households, professionals and businesses on this route with precision and care.</p>'
+            f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
+            f'<a class="btn btn-ghost" href="/assistant/?q={quote("I want to move from " + fn + " to " + tn)}" style="margin-left:8px">Instant estimate</a></p>')
+        know = (f'<p>Most {fn}-to-{tn} household moves travel by sea freight, with air freight available for urgent '
+            f'or smaller shipments. Our team prepares all export and import documentation and handles customs clearance '
+            f'— including any transfer-of-residence or duty-relief paperwork — at both ends. Transit times vary by '
+            f'season and port; your dedicated move manager confirms exact timing and the most cost-effective option for your volume.</p>'
+            + (f'<p>{hub_html}</p>' if hub_html else ''))
+        sections = (
+            X.isec(X.lead_split(lead_html, X.STATS))
+            + X.isec(SVC_CARDS, alt=(not mode_sec),
+                     head=X.sec_head(f"Services for your {fn} &rarr; {tn} move",
+                           "One team for every part of the journey.", "What we do"))
+            + mode_sec
+            + X.isec(X.media_row(g["HERO_SHIP"], f"What to know about moving from {fn} to {tn}", know))
+            + X.why_us_band(alt=True)
+            + X.isec(f'<div class="related-routes">{rel}</div>',
+                     head=X.sec_head("Related routes", "", "Explore"))
+            + X.faq_isec(faqs)
+            + X.cta_isec())
         write(f"moving/{fs}-to-{ts}", interior(f"Moving from {fn} to {tn}",
-              [("Home", "/"), (f"{fn} &rarr; {tn}", "")], inner,
+              [("Home", "/"), (f"{fn} &rarr; {tn}", "")], sections,
               f"Moving from {fn} to {tn} — international relocation, shipping and customs with Universal Relocations.",
-              hero_img=g["HERO_SHIP"], extra_head=X.faq_schema(faqs)))
+              hero_img=g["HERO_SHIP"], extra_head=X.faq_schema(faqs),
+              subtitle=f"Seamless door-to-door relocation from {fn} to {tn}.", raw=True))
     rc = 0
     for fn, fs in COUNTRIES:
         for tn, ts in COUNTRIES:

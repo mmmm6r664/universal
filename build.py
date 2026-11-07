@@ -540,16 +540,22 @@ HERO_USA     = f"{IMG}/2026/08/usa-hub.png"
 HERO_UAE     = f"{IMG}/2026/08/UAE-Hub-Page.png"
 HERO_INDIA   = f"{IMG}/2026/08/India-Taj-Mahal-1.jpg.jpeg"
 HERO_TRUCK   = f"{IMG}/2023/12/truck-and-flight-1.png"
+HERO_LOGISTICS = f"{IMG}/elementor/thumbs/logistics-transportation-contain-qu8ux9g7remb6y9c6lug6xga6jre6wa4nqfd67viqk.jpg"
 
-def page_hero(title, crumbs, hero_img=HERO_BRAND):
+def page_hero(title, crumbs, hero_img=HERO_BRAND, subtitle="", ctas=""):
     trail = ' / '.join(f'<a href="{h}">{l}</a>' if h else f'<span>{l}</span>' for l, h in crumbs)
-    style = f' style="background-image:linear-gradient(120deg,rgba(0,5,110,.86),rgba(0,5,110,.60) 55%,rgba(39,49,201,.52)),url(\'{hero_img}\')"' if hero_img else ''
+    style = f' style="background-image:linear-gradient(120deg,rgba(0,5,110,.88),rgba(0,5,110,.62) 55%,rgba(39,49,201,.55)),url(\'{hero_img}\')"' if hero_img else ''
     cls = "page-hero has-img" if hero_img else "page-hero"
+    sub = f'<p class="ph-sub">{subtitle}</p>' if subtitle else ''
+    cta = f'<div class="ph-cta">{ctas}</div>' if ctas else ''
     return f"""<section class="{cls}"{style}><div class="container">
-      <div class="crumbs">{trail}</div><h1>{title}</h1></div></section>"""
+      <div class="crumbs">{trail}</div><h1>{title}</h1>{sub}{cta}</div></section>"""
 
-def interior(title, crumbs, inner, desc="", hero_img=HERO_BRAND, extra_head=""):
-    body = page_hero(title, crumbs, hero_img) + f'<section class="section"><div class="container">{inner}</div></section>'
+def interior(title, crumbs, inner, desc="", hero_img=HERO_BRAND, extra_head="", subtitle="", ctas="", raw=False):
+    if raw:
+        body = page_hero(title, crumbs, hero_img, subtitle, ctas) + inner
+    else:
+        body = page_hero(title, crumbs, hero_img, subtitle, ctas) + f'<section class="section"><div class="container">{inner}</div></section>'
     return page(f"{title} | Universal Relocations", body, desc, extra_head=extra_head)
 
 ASSISTANT_BODY = """
