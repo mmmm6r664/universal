@@ -204,6 +204,7 @@ def build(g):
                         + X.isec(mrow, alt=True)
                         + X.compare_table()
                         + X.docs_section(alt=False)
+                        + X.core_strengths()
                         + X.why_us_band(alt=True)
                         + X.trust_logos(g, alt=False)
                         + X.isec(X.callout("Planning this move?",

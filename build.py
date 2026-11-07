@@ -271,7 +271,7 @@ def page(title, body, desc="", canonical="", extra_head=""):
   <link rel="icon" href="{IMG}/2024/01/Universal-Round-Logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css?v={ASSET_VER}">
 </head>
 <body>
@@ -498,15 +498,27 @@ HOME_BODY = f"""
   </div>
 </section>
 
-<!-- Reviews -->
+<!-- Reviews (real aggregate ratings) -->
 <section class="section">
   <div class="container text-center">
-    <span class="eyebrow">Rated 4.4 on Google · 4.5 on Trustpilot</span>
-    <h2 class="section-title">What Our Customers Say</h2>
-    <div class="reviews">
-      {review("Professional, helpful and transparent in every step of our move. We had a great experience with Universal Relocations.", "Rohan Arora")}
-      {review("Boxes were picked up on time and we were kept informed throughout. Items delivered on time with prompt responses to every query. Highly recommend for USA to India moves.", "Aarti Mehra")}
-      {review("Everything went smoothly from pickup to delivery. The team kept us informed and all boxes reached in perfect condition. Definitely recommend.", "Ashish Chaudhary")}
+    <span class="eyebrow">Reviews</span>
+    <h2 class="section-title">Rated by thousands of movers</h2>
+    <p class="section-intro">Our ratings come straight from verified customer reviews on Google and Trustpilot.</p>
+    <div class="rating-cards">
+      <a class="rating-card" href="https://www.google.com/search?q=Universal+Relocations+reviews" target="_blank" rel="noopener">
+        <div class="rc-logo">Google</div>
+        <div class="rc-score">4.4<span>/5</span></div>
+        <div class="rc-stars">★★★★<span class="half">★</span></div>
+        <div class="rc-count">Based on 67 Google reviews</div>
+        <span class="rc-cta">Read our Google reviews →</span>
+      </a>
+      <a class="rating-card" href="https://www.trustpilot.com/review/universalrelocations.com" target="_blank" rel="noopener">
+        <div class="rc-logo">Trustpilot</div>
+        <div class="rc-score">4.5<span>/5</span></div>
+        <div class="rc-stars">★★★★<span class="half">★</span></div>
+        <div class="rc-count">Based on 2000+ Trustpilot reviews</div>
+        <span class="rc-cta">Read our Trustpilot reviews →</span>
+      </a>
     </div>
   </div>
 </section>

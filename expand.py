@@ -475,6 +475,7 @@ def build_services(g, SERVICES, SERVICE_ORDER, cta_block):
                    + _ul([t for _, t in GEN_STEPS])))
             + cost_timeline_section(f"your {tclean.lower()}")
             + docs_section(alt=True)
+            + core_strengths()
             + why_us_band(alt=False)
             + trust_logos(g, alt=True)
             + isec(callout(f"Get a tailored {tclean.lower()} quote",
@@ -547,6 +548,7 @@ def build_cities(g, cta_block):
                        head=sec_head(f"Popular routes from {city}", "Dedicated guides for the moves we handle most.", "Where to"))
                 + cost_timeline_section(f"your move from {city}", alt=False)
                 + docs_section(alt=True)
+                + core_strengths()
                 + why_us_band(alt=False)
                 + trust_logos(g, alt=True)
                 + faq_isec(faqs + EXTRA_FAQS)
@@ -891,11 +893,28 @@ def trust_logos(g, alt=True):
     logos = [("FIDI","01-fidi"),("FAIM","02-faim"),("IAM","03-iamx"),("IAM-DAB","04-iam-dab"),
              ("PAIMA","05-paima"),("IPATA","06-ipata"),("ARA","07-ara"),("FIDI-PCG","08-fidi-pcg"),
              ("FMC","09-fmc"),("ISO 9001","10-iso-9001")]
-    imgs = "".join(f'<img src="{IMG}/2026/10/{f}.png" alt="{n}" loading="lazy">' for n, f in logos)
+    imgs = "".join(f'<div class="trust-card"><img src="{IMG}/2026/10/{f}.png" alt="{n}" loading="lazy"></div>' for n, f in logos)
     # duplicate the set so the marquee loops seamlessly (translateX -50%)
     return isec(f'<div class="trust-strip"><div class="trust-track">{imgs}{imgs}</div></div>', alt=alt,
         head=sec_head("Accredited, licensed and trusted",
             "Our work is held to the world’s leading moving and quality standards.", "Credentials"))
+
+# ---- Core Strengths (capabilities; value props from universalrelocations.com) ----
+CORE_STRENGTHS = [
+    ("award", "28+ years of expertise", "International moving since 1998 — seasoned experts across every kind of relocation."),
+    ("globe", "Our own global network", "Offices, crews, warehouses and in-house customs brokers in the USA, India and the UAE."),
+    ("ship", "One-stop relocation service", "International, interstate and intrastate moving — packing, shipping, customs and delivery under one roof."),
+    ("clock", "Real-time door-to-door tracking", "Follow your shipment at every stage, from survey and packing to customs and final delivery."),
+    ("headset", "24/7 online support", "Assistance at every click, whenever you need it, wherever you are."),
+    ("shield", "Licensed &amp; accredited", "An FMC-licensed NVOCC, FIDI/FAIM accredited and ISO 9001 certified."),
+]
+def core_strengths():
+    cards = "".join(
+        f'<div class="cs-card"><div class="cs-ic">{icon(ic)}</div><h3>{t}</h3><p>{d}</p></div>'
+        for ic, t, d in CORE_STRENGTHS)
+    return isec(f'<div class="cs-rail">{cards}</div>', alt=False,
+        head=sec_head("Our core strengths",
+            "What makes Universal Relocations a trusted one-stop relocation partner.", "Why us"))
 
 def prompt_band(chips=None, title="Start your move in seconds",
                 sub="Tell us what you’re moving and where — our assistant builds your estimate instantly."):
