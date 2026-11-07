@@ -62,17 +62,25 @@ TOPBAR = f"""
   </div>
 """
 
-def nav_item(label, href, children=None):
+def nav_item(label, href, children=None, promo=None):
     if not children:
         return f'<li><a href="{href}">{label}</a></li>'
-    sub = "".join(f'<li><a href="{c[1]}">{c[0]}</a></li>' for c in children)
+    sub = "".join(
+        f'<li><a href="{c[1]}"><span class="mi-dot"></span><span>{c[0]}</span></a></li>'
+        for c in children)
+    promo = promo or ("Get a free quote", "Tell us about your move — we'll send a firm, competitive quote.", "/contact-us/")
+    promo_html = (f'<a class="mega-promo" href="{promo[2]}"><div class="mp-ic">'
+                  f'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>'
+                  f'<div><b>{promo[0]}</b><span>{promo[1]}</span></div></a>')
     return (f'<li class="has-dropdown"><a href="{href}">{label}<i class="caret"></i></a>'
-            f'<ul class="dropdown">{sub}</ul></li>')
+            f'<div class="mega"><div class="mega-head">{label}</div>'
+            f'<ul class="mega-grid">{sub}</ul>{promo_html}</div></li>')
 
 NAV = "".join([
     nav_item("Home", "/"),
     nav_item("About us", "/about-us/", [
         ("Company", "/company/"),
+        ("Leadership", "/leadership/"),
         ("Corporate Social Responsibility", "/corporate-social-responsibility/"),
         ("Career", "/career/"),
         ("Company News", "/company-news/"),
