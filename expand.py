@@ -897,6 +897,9 @@ EXTRA_FAQS = [
 # Competitor-grade polish modules: trust logos, comparison table, rules
 # ===========================================================================
 def trust_logos(g, alt=True):
+    # Affiliations now live only in the site-wide TRUST_BAND (injected on every page),
+    # so the per-page slider is removed to avoid a duplicate.
+    return ""
     IMG = g["IMG"]
     logos = [("FIDI","01-fidi"),("FAIM","02-faim"),("IAM","03-iamx"),("IAM-DAB","04-iam-dab"),
              ("PAIMA","05-paima"),("IPATA","06-ipata"),("ARA","07-ara"),("FIDI-PCG","08-fidi-pcg"),
