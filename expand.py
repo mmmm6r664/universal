@@ -451,9 +451,9 @@ def build_services(g, SERVICES, SERVICE_ORDER, cta_block):
         hero = heroes.get(d.get("hero", "HERO_SHIP"), g["HERO_SHIP"])
         faqs = d.get("faqs", [])
         tclean = _strip(title)
-        SVC_BODY = {"international":"PH_STAFF1","corporate-relocation":"HERO_SURVEY","pet-relocations":"HERO_MOVE1",
+        SVC_BODY = {"international":"HERO_SHIP","corporate-relocation":"HERO_LOGISTICS","pet-relocations":"PH_PET",
                     "groupage-solution":"PH_SHIP2","storage":"HERO_LOGISTICS","intrastate":"HERO_MOVE2",
-                    "baggage-shipping":"HERO_MOVE2","insurance":"PH_STAFF2","fine-art-relocations":"HERO_MOVE1",
+                    "baggage-shipping":"HERO_MOVE2","insurance":"PH_INSURANCE","fine-art-relocations":"HERO_MOVE1",
                     "hospitality-relocations":"HERO_LOGISTICS","auto-shipping":"PH_SHIP2"}
         photo = g.get(SVC_BODY.get(slug, "PH_STAFF1"), g["HERO_SHIP"])
         over = d.get("overview") or (
