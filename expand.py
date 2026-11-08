@@ -1638,8 +1638,6 @@ def build_hubs(g):
                    f'brokers — not a chain of subcontractors. The same Universal Relocations team packs, ships, clears '
                    f'and delivers your home, so accountability stays in one place from your first survey to your doorstep.</p>',
                    reverse=True))
-            + _dp.gallery(_dp.STAFF_IDS[:4], title=f"The team behind your move",
-                   sub="Real people, real crews — across the USA, India and the UAE.", eyebrow="Our people")
             + office_locator(hubslug, g)
             + trust_logos(g, alt=True)
             + faq_isec(faqs)

@@ -439,18 +439,23 @@ TRUST_BAND = f"""
 """
 
 import drive_photos as _DP
-_LIFE_FIGS = "".join(
-    f'<figure class="dg-item"><img loading="lazy" src="https://lh3.googleusercontent.com/d/{i}=w700-h700-c" '
-    f'alt="A real Universal Relocations move — branded boxes in a customer\'s home" '
-    f'onerror="this.closest(&quot;.dg-item&quot;).style.display=&quot;none&quot;"></figure>'
-    for i in _DP.LIFESTYLE_IDS)
+# Three DISTINCT photos, each in a captioned card (designed graphic, not a gallery dump)
+_PF_CARDS = [
+    (_DP.LIFESTYLE_IDS[0], "In your home, done right", "Our crews pack and protect your belongings on-site with branded, export-grade materials."),
+    (_DP.STAFF_IDS[0], "Our own crews", "Real people across the USA, India and the UAE — not a chain of subcontractors."),
+    (_DP.BOX_IDS[4], "Branded, export-grade boxes", "Purpose-built crates, cartons and tape that keep your goods safe across oceans."),
+]
+_PF_FIGS = "".join(
+    f'<article class="pf-card"><div class="pf-img"><img loading="lazy" src="https://lh3.googleusercontent.com/d/{i}=w900" '
+    f'alt="{t}" onerror="this.closest(&quot;.pf-card&quot;).classList.add(&quot;pf-noimg&quot;)"></div>'
+    f'<div class="pf-body"><h3>{t}</h3><p>{b}</p></div></article>'
+    for i, t, b in _PF_CARDS)
 LIFESTYLE_BAND = f"""
-<section class="section">
-  <div class="container text-center">
-    <span class="eyebrow">Real moves</span>
-    <h2 class="section-title">Real homes, real moves</h2>
-    <p class="section-intro">Our branded boxes and crews in customers' homes — the everyday reality of a Universal Relocations move.</p>
-    <div class="dgrid">{_LIFE_FIGS}</div>
+<section class="section section-soft">
+  <div class="container">
+    <div class="sec-head"><span class="eyebrow">Real moves</span><h2 class="section-title">Real homes, real moves</h2>
+    <p>Branded boxes, professional crews and careful packing — the everyday reality of a Universal Relocations move.</p></div>
+    <div class="pf-grid">{_PF_FIGS}</div>
   </div>
 </section>
 """

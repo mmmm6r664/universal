@@ -41,6 +41,25 @@ def gallery(ids, alt="Universal Relocations", title="", sub="", eyebrow="Gallery
     items = "".join(
         f'<figure class="dg-item"><img loading="lazy" src="{img(i)}" alt="{alt}" '
         f'onerror="this.closest(&quot;.dg-item&quot;).style.display=&quot;none&quot;"></figure>'
-        for i in ids)
+        for i in ids[:3])
     head = X.sec_head(title, sub, eyebrow) if title else ""
-    return X.isec(f'<div class="dgrid">{items}</div>', alt=True, head=head)
+    return X.isec(f'<div class="dgrid dg3">{items}</div>', alt=True, head=head)
+
+
+def feature_band(items, title="", sub="", eyebrow="", alt=True):
+    """Designed 3-up captioned photo cards (Shiprocket-style), NOT a gallery dump.
+    items = [(file_id, caption_title, caption_text)]"""
+    import expand as X
+    cards = "".join(
+        f'<article class="pf-card"><div class="pf-img"><img loading="lazy" src="{img(i, 900)}" alt="{t}" '
+        f'onerror="this.closest(&quot;.pf-card&quot;).classList.add(&quot;pf-noimg&quot;)"></div>'
+        f'<div class="pf-body"><h3>{t}</h3><p>{b}</p></div></article>'
+        for i, t, b in items[:3])
+    head = X.sec_head(title, sub, eyebrow) if title else ""
+    return X.isec(f'<div class="pf-grid">{cards}</div>', alt=alt, head=head)
+
+
+def media_photo(fid, title, body, eyebrow="", reverse=False):
+    """A single photo integrated into a split image/text section (designed graphic)."""
+    import expand as X
+    return X.media_row(img(fid, 1200), title, (f'' if not eyebrow else '') + body, reverse=reverse)

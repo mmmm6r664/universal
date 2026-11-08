@@ -29,7 +29,7 @@ def drive_gallery(ids, alt="Universal Relocations branded packing", title="Our b
         f'onerror="this.closest(&quot;.dg-item&quot;).style.display=&quot;none&quot;"></figure>'
         for i in ids)
     import expand as X
-    return X.isec(f'<div class="dgrid">{items}</div>', alt=True,
+    return X.isec(f'<div class="dgrid dg3">{items}</div>', alt=True,
                   head=X.sec_head(title, sub, "Our materials"))
 
 
@@ -230,7 +230,7 @@ def build_extra_pages(g, cta_block):
          I(f'<div class="prose">{_p("Our packing service handles everything from everyday objects to musical instruments, bicycles, sports equipment and fine artwork — using the right method for each category so your items arrive secure and intact. Packing can be arranged at our Box Store or at your home, on a schedule that suits you.")}</div>')
          + OS()
          + PB(title="Book a packing service")
-         + drive_gallery(DRIVE_BOX_IDS)
+         + drive_gallery([DRIVE_BOX_IDS[0], DRIVE_BOX_IDS[2], DRIVE_BOX_IDS[5]])
          + I(_table(["Service","Price (USD)"], pack_rows), head=SH("Packing &amp; crating price list", "Transparent per-item pricing — no surprises on moving day.", "Pricing"))
          + I(FC([("box","Non-fragile &amp; fragile boxes","Small to extra-large, packed to protect the contents."),
                  ("star","Art, mirror &amp; TV crating","Custom crating for frames and large-screen TVs."),
