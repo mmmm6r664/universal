@@ -269,6 +269,10 @@ def build(g):
             write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
                   f"{title} — Universal Relocations.", hero_img=X.hero_for(g, slug), raw=True))
 
+    # ---- Standalone pages harvested from universalrelocations.com (real content) ----
+    import extra_pages as EP
+    EP.build_extra_pages(g, cta_block)
+
     # ---- Hub pages (usa/india/uae) in Shiprocket-style sectioned layout with city cards ----
     X.build_hubs(g)
 

@@ -21,7 +21,11 @@ COUNTRIES = [
     ("Japan", "japan"), ("Australia", "australia"), ("New Zealand", "new-zealand"),
     ("France", "france"), ("Italy", "italy"),
 ]
-ROUTE_OPTIONS = "".join(f'<option value="{s}">{n}</option>' for n, s in COUNTRIES)
+import expand as _X
+# Full country dropdown: 3 hubs first, then all 216 countries alphabetically
+_ALL_ROUTE = ([("India", "india"), ("United States", "usa"), ("United Arab Emirates", "uae")]
+              + sorted([(n, s) for n, s, r in _X.COUNTRIES_FULL], key=lambda x: x[0]))
+ROUTE_OPTIONS = "".join(f'<option value="{s}">{n}</option>' for n, s in _ALL_ROUTE)
 HUB_COUNTRIES = {"usa", "india", "uae"}
 
 # Hero background video (plane flying) — generated from the hero montage, hosted locally.

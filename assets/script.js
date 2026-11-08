@@ -71,7 +71,9 @@
     var f = from.value, t = to.value;
     if (!f || !t || f === t) { if (err) err.hidden = false; return; }
     if (err) err.hidden = true;
-    location.href = '/moving/' + f + '-to-' + t + '/';
+    var hubs = { usa: '/usa/', india: '/india/', uae: '/uae/' };
+    // Land on the destination hub page or the destination moving guide (both always exist).
+    location.href = hubs[t] || ('/moving-to-' + t + '/');
   });
 })();
 

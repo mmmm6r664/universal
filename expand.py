@@ -1584,12 +1584,18 @@ HUB_INTRO = {
 HUB_SVC = None
 def _hub_services():
     return feature_cards([
-        ("globe","International relocation","LCL &amp; FCL ocean freight and air freight, door-to-door."),
+        ("globe","International relocation","Complete door-to-door household moves by ocean or air."),
+        ("home","Household goods shipping","Whole-home shipments packed, shipped and delivered."),
         ("box","Baggage &amp; box shipping","Send boxes and excess luggage with no airline fees."),
-        ("ship","LCL &amp; FCL shipping","Shared-container (LCL) or your own 20ft/40ft container (FCL) by sea."),
-        ("car","Vehicle shipping","Cars and motorcycles by container or RoRo."),
-        ("warehouse","Storage &amp; warehousing","Secure short and long-term storage."),
+        ("ship","Groupage (LCL) shipping","Shared-container shipping — pay only for the space you use."),
+        ("briefcase","Corporate relocation","Managed moves for employees and assignees."),
+        ("building","Office relocation","Commercial and office moves with minimal downtime."),
         ("paw","Pet relocation","IPATA-affiliated, airline-approved pet moves."),
+        ("car","Auto shipping","Cars and motorcycles by container or RoRo."),
+        ("warehouse","Storage &amp; warehousing","Secure short and long-term storage."),
+        ("shieldcheck","Transit insurance","All-risk cover for your goods in transit."),
+        ("star","Fine-art relocation","Museum-grade crating for art and antiques."),
+        ("box","Packing &amp; unpacking","Export-grade packing and unpacking at both ends."),
     ])
 
 def build_hubs(g):
