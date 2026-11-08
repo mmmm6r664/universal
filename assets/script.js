@@ -161,3 +161,17 @@
     if (next) next.addEventListener('click', function () { track.scrollBy({ left: amt() * 1.5, behavior: 'smooth' }); });
   });
 })();
+
+// Office locator tabs
+(function () {
+  document.querySelectorAll('.ofc-sec').forEach(function (sec) {
+    var tabs = sec.querySelectorAll('.ofc-tab'), panels = sec.querySelectorAll('.ofc-panel');
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var k = t.getAttribute('data-ofc');
+        tabs.forEach(function (x) { x.classList.toggle('active', x === t); });
+        panels.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-ofc') === k); });
+      });
+    });
+  });
+})();

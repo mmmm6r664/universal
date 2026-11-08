@@ -1601,6 +1601,7 @@ def build_hubs(g):
                  f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
                  f'<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Get a free quote</a></p>', STATS))
             + orange_stats()
+            + route_chooser(g)
             + prompt_band(title=f"Get a moving estimate from {hubname}")
             + isec(f'<div class="city-grid">{city_cards}</div>', alt=True,
                    head=sec_head(f"Cities we move from in {hubname}",
@@ -1610,6 +1611,7 @@ def build_hubs(g):
             + compare_table()
             + core_strengths()
             + why_us_band()
+            + office_locator(hubslug, g)
             + trust_logos(g, alt=True)
             + faq_isec(faqs)
             + cta_isec())
@@ -1651,6 +1653,7 @@ def build_hub_cities(g, cta_block):
                        "Pick your destination city for LCL, FCL, baggage and full house shifting details.", "Choose destination"))
                 + isec(_hub_services(), head=sec_head(f"Our services in {city}", "", "What we do"))
                 + why_us_band()
+                + office_locator(hubslug, g)
                 + trust_logos(g, alt=True)
                 + faq_isec(faqs)
                 + cta_isec())
@@ -1739,3 +1742,92 @@ def restructure_region(body):
                         head=sec_head(m2.group(1), "", "What we handle"))
         prose = prose.replace(m2.group(0), "")
     return _linkify_chips(prose), steps_html, svc_html
+
+
+# ===========================================================================
+# Shiprocket-style tabbed OFFICE LOCATOR (real UR offices, verified from site)
+# ===========================================================================
+OFFICES3 = {
+  "india": ("India", [
+    ("Chennai","No. 236, Purva Primus, Okkiyam Thoraipakkam, Old Mahabalipuram Rd, Chennai, Tamil Nadu 600097","+91-44-40408800","chennai@universalrelocations.com"),
+    ("Bengaluru","SY No 27/4, Bidrahalli Hobli, Cheemasandra, Virgo Nagar Post, Bengaluru, Karnataka 560049","+91-8892136369","blore@universalrelocations.com"),
+    ("Hyderabad","12-7-20/40, Goods Shed Road, Moosapet, Hyderabad, Telangana 500018","+91-9080954113","hyd@universalrelocations.com"),
+    ("Mumbai","D 12, Neo Logistics Park, Usatane, Dombivli, Maharashtra 421306","+91-7395813329","mumbai@universalrelocations.com"),
+    ("New Delhi","B-297, Okhla Phase I, Okhla Industrial Estate, New Delhi 110020","+91-9599312595","delhi@universalrelocations.com"),
+  ]),
+  "usa": ("the USA", [
+    ("New Jersey","343 New Road, Unit #4, Parsippany, NJ 07054","1-973-227-5964","nj@universalrelocations.com"),
+    ("California","7401 Morton Avenue, Suite B, Newark, CA 94560","1-510-500-4466","ca@universalrelocations.com"),
+    ("Texas","4562 Sunbelt Dr, Addison, TX 75001","1-803-220-0045","texas@universalrelocations.com"),
+    ("Georgia","5850 Shiloh Road East, Suite K, Alpharetta, GA 30005","1-201-331-7085","ga@universalrelocations.com"),
+    ("Maryland","7611 Rickenbacker Dr, Gaithersburg, MD 20879","1-972-318-9646","md@universalrelocations.com"),
+  ]),
+  "uae": ("the UAE", [
+    ("Dubai","Plot No. 6, Warehouse No. 63, Dubai Investment Park First (DIP-1), Dubai","800-13-7356","contact@universalrelocations.com"),
+  ]),
+}
+import urllib.parse as _uq
+def office_locator(country_key, g=None):
+    if country_key not in OFFICES3: return ""
+    label, offices = OFFICES3[country_key]
+    himg = {"india":"PH_INDIA_HUB","usa":"PH_USA_HUB","uae":"PH_UAE_HUB"}[country_key]
+    img = (g.get(himg) if g else "")
+    tabs = "".join(
+        f'<button type="button" class="ofc-tab{" active" if i==0 else ""}" data-ofc="{i}">{c}</button>'
+        for i,(c,a,p,e) in enumerate(offices))
+    cards = ""
+    for i,(c,a,p,e) in enumerate(offices):
+        maps = "https://www.google.com/maps/search/?api=1&query=" + _uq.quote(f"Universal Relocations {c} {a}")
+        tel = "tel:" + p.replace(" ","").replace("-","")
+        cards += (
+            f'<div class="ofc-panel{" active" if i==0 else ""}" data-ofc="{i}">'
+            f'<div class="ofc-media" style="background-image:url({img})"></div>'
+            f'<div class="ofc-info"><span class="ofc-eyebrow"><i></i>{label.replace("the ","").upper()} OFFICE</span>'
+            f'<h3>{c}</h3><p class="ofc-addr">{a}</p>'
+            f'<div class="ofc-rows">'
+            f'<div><span>PHONE</span><a href="{tel}">{p}</a></div>'
+            f'<div><span>EMAIL</span><a href="mailto:{e}">{e}</a></div>'
+            f'<div><span>HOURS</span><b>Confirm directly with the branch</b></div></div>'
+            f'<div class="ofc-actions"><a class="btn ofc-dir" href="{maps}" target="_blank" rel="noopener">Get Directions</a>'
+            f'<a class="btn ofc-call" href="{tel}">Call This Office</a>'
+            f'<a class="btn ofc-more" href="/contact-us/">More Info</a></div></div></div>')
+    plural = "office" if len(offices)==1 else f"{_num_word(len(offices))} offices"
+    return (f'<section class="ofc-sec"><div class="container">'
+            f'<div class="ofc-head"><div><span class="ofc-kick"><i></i>LOCAL PRESENCE</span>'
+            f'<h2>Our offices in {label.replace("the ","")}</h2></div>'
+            f'<p class="ofc-sub">Connect with one of our {plural} in {label} for local support. '
+            f'Working hours should be confirmed directly with the branch.</p></div>'
+            f'<div class="ofc-tabs">{tabs}</div><div class="ofc-cards">{cards}</div></div></section>')
+def _num_word(n):
+    return {1:"one",2:"two",3:"three",4:"four",5:"five",6:"six"}.get(n,str(n))
+
+
+# ===========================================================================
+# "Where Are You Moving?" 4-card route chooser (for hub pages)
+# ===========================================================================
+def route_chooser(g):
+    cards = [
+        ("Inbound &amp; domestic","Shipping within USA",
+         "Relocation support for interstate and intrastate movers — household, corporate and specialist moves across the United States.",
+         g["PH_USA_HUB"], [("Explore USA","/usa/")]),
+        ("Popular route","Shipping to India",
+         "Move personal belongings, baggage and household goods to India with coordinated packing, shipping, customs and door-to-door delivery.",
+         g["PH_INDIA_HUB"], [("Explore Shipping to India","/india/")]),
+        ("Regional hub","Shipping to UAE",
+         "Plan your move to the UAE — explore shipping options for your household goods and request a free quote.",
+         g["PH_UAE_HUB"], [("Explore Shipping to UAE","/uae/")]),
+        ("Global network","Shipping Worldwide",
+         "International shipping support for destinations beyond the USA, India and the UAE — 200+ countries served.",
+         g["HERO_SHIP"], [("Explore Worldwide Shipping","/shipping-worldwide/")]),
+    ]
+    html = ""
+    for eb, t, b, img, btns in cards:
+        bb = "".join(f'<a class="rcz-btn" href="{h}">{l} <span>&rarr;</span></a>' for l, h in btns)
+        html += (f'<article class="rcz-card"><div class="rcz-img" style="background-image:url({img})"></div>'
+                 f'<div class="rcz-body"><span class="rcz-eyebrow">{eb}</span><h3>{t}</h3>'
+                 f'<p>{b}</p><div class="rcz-btns">{bb}</div></div></article>')
+    return (f'<section class="isec rcz-sec"><div class="container">'
+            f'<div class="text-center"><span class="chip"><i></i>Choose your route</span>'
+            f'<h2 class="sh-title" style="margin:10px auto 8px">Where are you moving?</h2>'
+            f'<p class="sh-sub" style="margin:0 auto 34px;max-width:620px">Select the route that best matches your international move or shipment.</p></div>'
+            f'<div class="rcz-grid">{html}</div></div></section>')
