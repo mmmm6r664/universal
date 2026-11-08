@@ -416,7 +416,47 @@ def build_extra_pages(g, cta_block):
          "Universal Relocations in the press — featured by Forbes, Fox News, Yahoo Finance, Associated Press, Gulf News, Khaleej Times and more.")
 
     # ---------------------------------------------------------------- redirects (landing / duplicate slugs)
+    # ---- US office-location pages (fix footer 404s for office states) ----
+    US_OFFICES = {
+        "california": ("California", "7401 Morton Avenue, Suite B, Newark, CA 94560", "1-510-500-4466", "ca@universalrelocations.com"),
+        "texas": ("Texas", "4562 Sunbelt Dr, Addison, TX 75001", "1-803-220-0045", "texas@universalrelocations.com"),
+        "georgia": ("Georgia", "5850 Shiloh Road East, Suite K, Alpharetta, GA 30005", "1-201-331-7085", "ga@universalrelocations.com"),
+        "maryland": ("Maryland", "7611 Rickenbacker Dr, Gaithersburg, MD 20879", "1-972-318-9646", "md@universalrelocations.com"),
+    }
+    for slug, (state, addr, phone, email) in US_OFFICES.items():
+        import urllib.parse as _uq
+        maps = "https://www.google.com/maps/search/?api=1&query=" + _uq.quote(f"Universal Relocations {addr}")
+        intro = (f'<div class="prose"><p>Universal Relocations&#39; <b>{state}</b> office is part of our US network, '
+                 f'moving households and businesses from {state} to India, the UAE and worldwide — with export-grade packing, '
+                 f'LCL and FCL ocean freight, air freight, baggage shipping, customs clearance and door-to-door delivery.</p>'
+                 f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
+                 f'<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Get a free quote</a></p></div>')
+        sections = (
+            I(intro) + OS()
+            + PB(title=f"Get a moving estimate from {state}")
+            + I(f'<div class="ofc-card-solo"><h3>Universal Relocations — {state}</h3>'
+                f'<p class="ofc-addr">{addr}</p>'
+                f'<div class="ofc-rows"><div><span>PHONE</span><a href="tel:{phone.replace("-","")}">{phone}</a></div>'
+                f'<div><span>EMAIL</span><a href="mailto:{email}">{email}</a></div></div>'
+                f'<div class="ofc-actions"><a class="btn ofc-dir" href="{maps}" target="_blank" rel="noopener">Get Directions</a>'
+                f'<a class="btn ofc-call" href="tel:{phone.replace("-","")}">Call This Office</a></div></div>',
+                head=SH(f"Our {state} office", "", "Local presence"))
+            + I(X.feature_cards([
+                ("globe","International relocation","Door-to-door household moves by ocean or air."),
+                ("ship","LCL &amp; FCL shipping","Shared-container or full-container sea freight."),
+                ("box","Baggage &amp; boxes","Send boxes and excess luggage with no airline fees."),
+                ("car","Auto shipping","Cars and motorcycles by container or RoRo."),
+                ("paw","Pet relocation","IPATA-affiliated, airline-approved pet moves."),
+                ("warehouse","Storage","Secure short and long-term storage."),
+            ], 'two'), alt=True, head=SH(f"Services from {state}", "", "What we do"))
+            + WB() + TL() + CTA())
+        write(f"usa/locations/{slug}", interior(f"Universal Relocations in {state}",
+              [("Home","/"),("USA","/usa/"),(state,"")], sections,
+              f"Universal Relocations {state} office — international moving, LCL/FCL shipping, baggage, auto and pet relocation, door to door.",
+              hero_img=g["PH_USA_HUB"], subtitle=f"International movers in {state} — to India, the UAE &amp; worldwide.", raw=True))
+
     REDIRECTS = {
+        "pet-relocation": "/services/pet-relocations/",
         "moving-to-dubai": "/uae/", "london": "/moving-to-uk/", "washington-dc": "/usa/",
         "northamerica": "/moving-to-north-america/", "southamerica": "/moving-to-south-america/",
         "relocate-to-asia": "/moving-to-asia/", "relocate-to-australia": "/moving-to-australia/",
