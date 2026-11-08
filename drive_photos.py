@@ -23,6 +23,14 @@ STAFF_IDS = [
 TEAM_TRUCK = "1jCJEUR6kjRxBfkvvWi__RmJ6TJlbk7BZ"   # 3981 team in front of branded truck
 STAFF_SOLO = "1S3wh3cxTkUdzrsJL5Vy7aDtHiH6jfkn_"   # 3960 single staff with materials
 
+# In-home lifestyle shots: people with branded boxes in customers' homes (Raw Gallery-12-10-2024)
+LIFESTYLE_IDS = [
+    "1I6qaRQ75jR6Gp2yLP9fcQsu1kW3-i14r", "1OrRxjZ89cLdsX7yUPHkCl24cLg0kAPrD",
+    "1j1GUlVQ1KyHiv0ZA-bUTyf1eNrHDpTZn", "1BO2LYsxS1ht9SBspxcPRJvytK-QMBYkL",
+    "1m-HSwhnuGMFtbRKm0zxHabxQ_rGz1jDg", "1w1cTKX9kYJXDzI3O0g5iAIOvCB59TUuE",
+    "1oGPS_Bcag1udvBJgL9639I3Wmdul7V5E", "1Y5W6DZnQCDldRni5kZzMVkXs-iWazPe1",
+]
+
 
 def img(fid, w=900):
     return f"https://lh3.googleusercontent.com/d/{fid}=w{w}"

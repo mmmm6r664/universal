@@ -438,6 +438,23 @@ TRUST_BAND = f"""
 </section>
 """
 
+import drive_photos as _DP
+_LIFE_FIGS = "".join(
+    f'<figure class="dg-item"><img loading="lazy" src="https://lh3.googleusercontent.com/d/{i}=w700-h700-c" '
+    f'alt="A real Universal Relocations move — branded boxes in a customer\'s home" '
+    f'onerror="this.closest(&quot;.dg-item&quot;).style.display=&quot;none&quot;"></figure>'
+    for i in _DP.LIFESTYLE_IDS)
+LIFESTYLE_BAND = f"""
+<section class="section">
+  <div class="container text-center">
+    <span class="eyebrow">Real moves</span>
+    <h2 class="section-title">Real homes, real moves</h2>
+    <p class="section-intro">Our branded boxes and crews in customers' homes — the everyday reality of a Universal Relocations move.</p>
+    <div class="dgrid">{_LIFE_FIGS}</div>
+  </div>
+</section>
+"""
+
 HOME_BODY = f"""
 <section class="hello-hero">
   <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/assets/hero-bg.jpg?v={ASSET_VER}">
@@ -584,6 +601,7 @@ HOME_BODY = f"""
   </div>
 </section>
 
+{LIFESTYLE_BAND}
 <!-- Video -->
 <section class="section video-sec">
   <div class="container text-center">
