@@ -1690,3 +1690,52 @@ def feature_carousel(title="Everything your move needs, under one roof",
             f'<div class="fx-nav"><button type="button" class="fx-prev" aria-label="Previous">&larr;</button>'
             f'<button type="button" class="fx-next" aria-label="Next">&rarr;</button></div></div>'
             f'<div class="fx-track" tabindex="0">{cards}</div></div></section>')
+
+
+# ===========================================================================
+# Convert region-page prose (bullet lists) into Shiprocket-style cards
+# ===========================================================================
+import re as _re_rr
+_COUNTRY_SLUG = {n: s for n, s, r in COUNTRIES_FULL}
+def _linkify_chips(html):
+    def repl(m):
+        name = m.group(1)
+        slug = _COUNTRY_SLUG.get(name)
+        return (f'<a class="country-chip" href="/moving-to-{slug}/">{name}</a>' if slug
+                else f'<span class="country-chip">{name}</span>')
+    return _re_rr.sub(r'<span class="country-chip">([^<]+)</span>', repl, html)
+
+def restructure_region(body):
+    """Return (prose_html, steps_section, services_section) with ULs turned into cards."""
+    prose = body
+    steps_html = ""
+    svc_html = ""
+    m = _re_rr.search(r'<h2>(How your move works[^<]*)</h2>\s*<ul>(.*?)</ul>', body, _re_rr.S)
+    if m:
+        items = []
+        for li in _re_rr.findall(r'<li>(.*?)</li>', m.group(2), _re_rr.S):
+            mm = _re_rr.match(r'\s*<b>(.*?)</b>\s*[—\-–]*\s*(.*)', li, _re_rr.S)
+            if mm:
+                items.append((mm.group(1).strip(), _re_rr.sub(r'<[^>]+>', '', mm.group(2)).strip()))
+            else:
+                items.append((_re_rr.sub(r'<[^>]+>', '', li).strip(), ""))
+        steps_html = isec(step_cards(items),
+                          head=sec_head(m.group(1), "A clear, managed process from quote to doorstep.", "How it works"),
+                          alt=True)
+        prose = prose.replace(m.group(0), "")
+    m2 = _re_rr.search(r'<h2>(Services for[^<]*)</h2>\s*<ul>(.*?)</ul>', body, _re_rr.S)
+    if m2:
+        ics = ["globe", "ship", "cubes", "box", "plane", "car", "shield", "warehouse", "doc", "home"]
+        items = []
+        for i, li in enumerate(_re_rr.findall(r'<li>(.*?)</li>', m2.group(2), _re_rr.S)):
+            txt = _re_rr.sub(r'<[^>]+>', '', li).strip()
+            if '—' in txt:
+                t, d = txt.split('—', 1); items.append((ics[i % len(ics)], t.strip(), d.strip()))
+            elif ' - ' in txt:
+                t, d = txt.split(' - ', 1); items.append((ics[i % len(ics)], t.strip(), d.strip()))
+            else:
+                items.append((ics[i % len(ics)], txt, "Door-to-door, handled by one accredited team."))
+        svc_html = isec(feature_cards(items, 'two'),
+                        head=sec_head(m2.group(1), "", "What we handle"))
+        prose = prose.replace(m2.group(0), "")
+    return _linkify_chips(prose), steps_html, svc_html

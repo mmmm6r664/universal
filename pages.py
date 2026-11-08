@@ -203,9 +203,13 @@ def build(g):
                 reverse=True)
             # Rich sectioned layout for destination & hub pages
             _dest_name = title.replace("Moving to ", "").replace(" Hub", "")
-            sections = (X.isec(f'<div class="prose">{body}</div>')
+            _prose, _steps, _svc = X.restructure_region(body)
+            sections = (X.isec(f'<div class="prose">{_prose}</div>')
                         + X.orange_stats()
                         + X.prompt_band(title=f"Get an instant estimate for {_dest_name}")
+                        + _steps
+                        + _svc
+                        + X.feature_carousel()
                         + X.isec(mrow, alt=True)
                         + X.compare_table()
                         + X.docs_section(alt=False)
