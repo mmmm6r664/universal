@@ -1164,3 +1164,7 @@ a { transition: color .18s ease; }
 /* Input */
 .chat-inputbar .ura-input input{border:1.5px solid #d7deea;box-shadow:0 10px 30px rgba(11,43,94,.10)}
 .chat-inputbar .ura-input button{background:linear-gradient(135deg,#f7941d,#ffb347);border:none}
+
+/* Positioning lead under Why-move heading */
+.ws-head .ws-lead{max-width:860px;margin:14px auto 0;color:#cdd6ea;font-size:1.02rem;line-height:1.6;text-align:center}
+.why-ship .ws-head{text-align:center}

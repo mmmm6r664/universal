@@ -803,7 +803,10 @@ def why_us_band(alt=True):
         f'<h3>{t}</h3></div><p>{d}</p></div>'
         for i, (n, t, d) in enumerate(WHY_SHIP))
     head = ('<div class="ws-head"><div class="eyebrow">Why Universal Relocations</div>'
-            '<h2>Why move with Universal Relocations</h2></div>')
+            '<h2>Why move with Universal Relocations</h2>'
+            '<p class="ws-lead">Universal Relocations is one of the largest and most trusted international moving '
+            'companies — an award-winning, FMC-licensed and FIDI/FAIM-accredited mover with 28+ years of experience, '
+            'our own hubs in the USA, India and the UAE, and 440,000+ families and businesses relocated across 100+ countries.</p></div>')
     return (f'<section class="isec why-ship"><div class="container">{head}'
             f'<div class="ws-grid">{cards}</div></div></section>')
 
@@ -1574,9 +1577,9 @@ def build_city_pairs(g, cta_block):
 # Hub pages (sectioned) + city pages as destination-choosers -> city-pair pages
 # ===========================================================================
 HUB_INTRO = {
-  "usa": "Moving from the USA? Universal Relocations is a one-stop international mover with our own US operation — crews, warehouses and in-house customs brokers — handling LCL, FCL, baggage, pet and auto shipping from every major US city to India, the UAE and worldwide.",
-  "india": "Moving from India? With our own offices and crews across India, we handle LCL, FCL, baggage, pet and auto shipping from every major Indian city to the USA, the UAE and destinations worldwide — packing, freight, customs and door-to-door delivery.",
-  "uae": "Moving from the UAE? Our Dubai-based team handles LCL, FCL, baggage, pet and auto shipping from across the Emirates to India, the USA and worldwide — with in-house customs clearance and door-to-door delivery.",
+  "usa": "Moving from the USA? Universal Relocations is one of the largest and most trusted international movers — an award-winning, FMC-licensed and FIDI/FAIM-accredited company with our own US operation — crews, warehouses and in-house customs brokers — handling LCL, FCL, baggage, pet and auto shipping from every major US city to India, the UAE and worldwide.",
+  "india": "Moving from India? As one of the largest and most trusted international moving companies — award-winning, FMC-licensed and FIDI/FAIM-accredited — with our own offices and crews across India, we handle LCL, FCL, baggage, pet and auto shipping from every major Indian city to the USA, the UAE and destinations worldwide — packing, freight, customs and door-to-door delivery.",
+  "uae": "Moving from the UAE? As an award-winning, FMC-licensed and FIDI/FAIM-accredited mover and one of the largest international moving companies, our Dubai-based team handles LCL, FCL, baggage, pet and auto shipping from across the Emirates to India, the USA and worldwide — with in-house customs clearance and door-to-door delivery.",
 }
 HUB_SVC = None
 def _hub_services():
