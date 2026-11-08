@@ -1168,3 +1168,7 @@ a { transition: color .18s ease; }
 /* Positioning lead under Why-move heading */
 .ws-head .ws-lead{max-width:860px;margin:14px auto 0;color:#cdd6ea;font-size:1.02rem;line-height:1.6;text-align:center}
 .why-ship .ws-head{text-align:center}
+
+/* Tone down the arc-dots motif on photo headers so it doesn't collide with title/subtitle text */
+.page-hero.has-photo::after{opacity:.22;mix-blend-mode:screen}
+.page-hero.has-photo .container{position:relative;z-index:2}
