@@ -1152,53 +1152,230 @@ def video_section(g):
 # Individual country pages: /moving-to-{slug}/  (full sitemap coverage)
 # ===========================================================================
 COUNTRIES_FULL = [
-    # Europe
-    ("Austria","austria","Europe"),("Belgium","belgium","Europe"),("Bulgaria","bulgaria","Europe"),
-    ("Croatia","croatia","Europe"),("Czech Republic","czech-republic","Europe"),("Denmark","denmark","Europe"),
-    ("Estonia","estonia","Europe"),("Finland","finland","Europe"),("France","france","Europe"),
-    ("Germany","germany","Europe"),("Greece","greece","Europe"),("Hungary","hungary","Europe"),
-    ("Iceland","iceland","Europe"),("Ireland","ireland","Europe"),("Italy","italy","Europe"),
-    ("Latvia","latvia","Europe"),("Luxembourg","luxembourg","Europe"),("Malta","malta","Europe"),
-    ("Netherlands","netherlands","Europe"),("Norway","norway","Europe"),("Poland","poland","Europe"),
-    ("Portugal","portugal","Europe"),("Romania","romania","Europe"),("Russia","russia","Europe"),
-    ("Slovakia","slovakia","Europe"),("Slovenia","slovenia","Europe"),("Spain","spain","Europe"),
-    ("Sweden","sweden","Europe"),("Switzerland","switzerland","Europe"),("Turkey","turkey","Europe"),
-    ("Ukraine","ukraine","Europe"),("United Kingdom","uk","Europe"),
-    # Asia
-    ("Bangladesh","bangladesh","Asia"),("Cambodia","cambodia","Asia"),("China","china","Asia"),
-    ("Hong Kong","hong-kong","Asia"),("Japan","japan","Asia"),("Malaysia","malaysia","Asia"),
-    ("Myanmar","myanmar","Asia"),("Nepal","nepal","Asia"),("Philippines","philippines","Asia"),
-    ("Singapore","singapore","Asia"),("South Korea","south-korea","Asia"),("Sri Lanka","sri-lanka","Asia"),
-    ("Thailand","thailand","Asia"),("Vietnam","vietnam","Asia"),
-    # Middle East
-    ("Bahrain","bahrain","the Middle East"),("Israel","israel","the Middle East"),("Jordan","jordan","the Middle East"),
-    ("Kuwait","kuwait","the Middle East"),("Oman","oman","the Middle East"),("Qatar","qatar","the Middle East"),
-    ("Saudi Arabia","saudi-arabia","the Middle East"),
-    # North America
-    ("Canada","canada","North America"),("Mexico","mexico","North America"),
-    # Central America & Caribbean
-    ("Barbados","barbados","the Caribbean"),("Costa Rica","costa-rica","Central America"),
-    ("Dominican Republic","dominican-republic","the Caribbean"),("El Salvador","el-salvador","Central America"),
-    ("Guatemala","guatemala","Central America"),("Honduras","honduras","Central America"),
-    ("Jamaica","jamaica","the Caribbean"),("Nicaragua","nicaragua","Central America"),
-    ("Panama","panama","Central America"),("Trinidad and Tobago","trinidad-and-tobago","the Caribbean"),
-    # South America
-    ("Argentina","argentina","South America"),("Bolivia","bolivia","South America"),("Brazil","brazil","South America"),
-    ("Chile","chile","South America"),("Colombia","colombia","South America"),("Ecuador","ecuador","South America"),
-    ("Paraguay","paraguay","South America"),("Peru","peru","South America"),("Uruguay","uruguay","South America"),
-    ("Venezuela","venezuela","South America"),
     # Africa
-    ("Algeria","algeria","Africa"),("Botswana","botswana","Africa"),("Egypt","egypt","Africa"),
-    ("Ethiopia","ethiopia","Africa"),("Ghana","ghana","Africa"),("Guinea","guinea","Africa"),
-    ("Kenya","kenya","Africa"),("Madagascar","madagascar","Africa"),("Malawi","malawi","Africa"),
-    ("Mauritania","mauritania","Africa"),("Mauritius","mauritius","Africa"),("Morocco","morocco","Africa"),
-    ("Mozambique","mozambique","Africa"),("Namibia","namibia","Africa"),("Rwanda","rwanda","Africa"),
-    ("Senegal","senegal","Africa"),("Sierra Leone","sierra-leone","Africa"),("South Africa","south-africa","Africa"),
-    ("Tanzania","tanzania","Africa"),("Tunisia","tunisia","Africa"),("Uganda","uganda","Africa"),
-    ("Zambia","zambia","Africa"),("Zimbabwe","zimbabwe","Africa"),
+    ('Algeria','algeria','Africa'),
+    ('Angola','angola','Africa'),
+    ('Benin','benin','Africa'),
+    ('Botswana','botswana','Africa'),
+    ('Burkina Faso','burkina-faso','Africa'),
+    ('Burundi','burundi','Africa'),
+    ('Cameroon','cameroon','Africa'),
+    ('Cape Verde','cape-verde','Africa'),
+    ('Central African Republic','central-african-republic','Africa'),
+    ('Chad','chad','Africa'),
+    ('Comoros','comoros','Africa'),
+    ("Côte d'Ivoire",'c-te-d-ivoire','Africa'),
+    ('DR Congo','dr-congo','Africa'),
+    ('Djibouti','djibouti','Africa'),
+    ('Egypt','egypt','Africa'),
+    ('Equatorial Guinea','equatorial-guinea','Africa'),
+    ('Eritrea','eritrea','Africa'),
+    ('Eswatini','eswatini','Africa'),
+    ('Ethiopia','ethiopia','Africa'),
+    ('Gabon','gabon','Africa'),
+    ('Gambia','gambia','Africa'),
+    ('Ghana','ghana','Africa'),
+    ('Guinea','guinea','Africa'),
+    ('Guinea-Bissau','guinea-bissau','Africa'),
+    ('Kenya','kenya','Africa'),
+    ('Lesotho','lesotho','Africa'),
+    ('Liberia','liberia','Africa'),
+    ('Libya','libya','Africa'),
+    ('Madagascar','madagascar','Africa'),
+    ('Malawi','malawi','Africa'),
+    ('Mali','mali','Africa'),
+    ('Mauritania','mauritania','Africa'),
+    ('Mauritius','mauritius','Africa'),
+    ('Morocco','morocco','Africa'),
+    ('Mozambique','mozambique','Africa'),
+    ('Namibia','namibia','Africa'),
+    ('Niger','niger','Africa'),
+    ('Nigeria','nigeria','Africa'),
+    ('Republic of the Congo','republic-of-the-congo','Africa'),
+    ('Rwanda','rwanda','Africa'),
+    ('Sao Tome and Principe','sao-tome-and-principe','Africa'),
+    ('Senegal','senegal','Africa'),
+    ('Seychelles','seychelles','Africa'),
+    ('Sierra Leone','sierra-leone','Africa'),
+    ('Somalia','somalia','Africa'),
+    ('South Africa','south-africa','Africa'),
+    ('South Sudan','south-sudan','Africa'),
+    ('Sudan','sudan','Africa'),
+    ('Tanzania','tanzania','Africa'),
+    ('Togo','togo','Africa'),
+    ('Tunisia','tunisia','Africa'),
+    ('Uganda','uganda','Africa'),
+    ('Zambia','zambia','Africa'),
+    ('Zimbabwe','zimbabwe','Africa'),
+    # Asia
+    ('Armenia','armenia','Asia'),
+    ('Azerbaijan','azerbaijan','Asia'),
+    ('Bangladesh','bangladesh','Asia'),
+    ('Bhutan','bhutan','Asia'),
+    ('Brunei','brunei','Asia'),
+    ('Cambodia','cambodia','Asia'),
+    ('China','china','Asia'),
+    ('Cyprus','cyprus','Asia'),
+    ('Georgia','georgia','Asia'),
+    ('Hong Kong','hong-kong','Asia'),
+    ('Indonesia','indonesia','Asia'),
+    ('Japan','japan','Asia'),
+    ('Kazakhstan','kazakhstan','Asia'),
+    ('Kyrgyzstan','kyrgyzstan','Asia'),
+    ('Laos','laos','Asia'),
+    ('Macau','macau','Asia'),
+    ('Malaysia','malaysia','Asia'),
+    ('Maldives','maldives','Asia'),
+    ('Mongolia','mongolia','Asia'),
+    ('Myanmar','myanmar','Asia'),
+    ('Nepal','nepal','Asia'),
+    ('Pakistan','pakistan','Asia'),
+    ('Philippines','philippines','Asia'),
+    ('Singapore','singapore','Asia'),
+    ('South Korea','south-korea','Asia'),
+    ('Sri Lanka','sri-lanka','Asia'),
+    ('Taiwan','taiwan','Asia'),
+    ('Tajikistan','tajikistan','Asia'),
+    ('Thailand','thailand','Asia'),
+    ('Turkey','turkey','Asia'),
+    ('Turkmenistan','turkmenistan','Asia'),
+    ('Uzbekistan','uzbekistan','Asia'),
+    ('Vietnam','vietnam','Asia'),
+    # Europe
+    ('Albania','albania','Europe'),
+    ('Andorra','andorra','Europe'),
+    ('Austria','austria','Europe'),
+    ('Belarus','belarus','Europe'),
+    ('Belgium','belgium','Europe'),
+    ('Bosnia and Herzegovina','bosnia-and-herzegovina','Europe'),
+    ('Bulgaria','bulgaria','Europe'),
+    ('Croatia','croatia','Europe'),
+    ('Czech Republic','czech-republic','Europe'),
+    ('Denmark','denmark','Europe'),
+    ('Estonia','estonia','Europe'),
+    ('Faroe Islands','faroe-islands','Europe'),
+    ('Finland','finland','Europe'),
+    ('France','france','Europe'),
+    ('Germany','germany','Europe'),
+    ('Gibraltar','gibraltar','Europe'),
+    ('Greece','greece','Europe'),
+    ('Guernsey','guernsey','Europe'),
+    ('Hungary','hungary','Europe'),
+    ('Iceland','iceland','Europe'),
+    ('Ireland','ireland','Europe'),
+    ('Isle of Man','isle-of-man','Europe'),
+    ('Italy','italy','Europe'),
+    ('Jersey','jersey','Europe'),
+    ('Latvia','latvia','Europe'),
+    ('Liechtenstein','liechtenstein','Europe'),
+    ('Lithuania','lithuania','Europe'),
+    ('Luxembourg','luxembourg','Europe'),
+    ('Malta','malta','Europe'),
+    ('Moldova','moldova','Europe'),
+    ('Monaco','monaco','Europe'),
+    ('Montenegro','montenegro','Europe'),
+    ('Netherlands','netherlands','Europe'),
+    ('North Macedonia','north-macedonia','Europe'),
+    ('Norway','norway','Europe'),
+    ('Poland','poland','Europe'),
+    ('Portugal','portugal','Europe'),
+    ('Romania','romania','Europe'),
+    ('Russia','russia','Europe'),
+    ('San Marino','san-marino','Europe'),
+    ('Serbia','serbia','Europe'),
+    ('Slovakia','slovakia','Europe'),
+    ('Slovenia','slovenia','Europe'),
+    ('Spain','spain','Europe'),
+    ('Sweden','sweden','Europe'),
+    ('Switzerland','switzerland','Europe'),
+    ('Ukraine','ukraine','Europe'),
+    ('United Kingdom','united-kingdom','Europe'),
+    # North America
+    ('Anguilla','anguilla','North America'),
+    ('Belize','belize','North America'),
+    ('Bermuda','bermuda','North America'),
+    ('Bonaire, Sint Eustatius and Saba','bonaire-sint-eustatius-and-saba','North America'),
+    ('British Virgin Islands','british-virgin-islands','North America'),
+    ('Canada','canada','North America'),
+    ('Costa Rica','costa-rica','North America'),
+    ('El Salvador','el-salvador','North America'),
+    ('Greenland','greenland','North America'),
+    ('Guatemala','guatemala','North America'),
+    ('Honduras','honduras','North America'),
+    ('Mexico','mexico','North America'),
+    ('Montserrat','montserrat','North America'),
+    ('Nicaragua','nicaragua','North America'),
+    ('Panama','panama','North America'),
+    ('Saint Barthélemy','saint-barth-lemy','North America'),
+    ('Saint Martin (French part)','saint-martin-french-part','North America'),
+    ('Turks and Caicos Islands','turks-and-caicos-islands','North America'),
+    ('US Virgin Islands','us-virgin-islands','North America'),
     # Oceania
-    ("Australia","australia","Oceania"),("Fiji","fiji","Oceania"),("New Zealand","new-zealand","Oceania"),
-    ("Papua New Guinea","papua-new-guinea","Oceania"),
+    ('American Samoa','american-samoa','Oceania'),
+    ('Australia','australia','Oceania'),
+    ('Cook Islands','cook-islands','Oceania'),
+    ('Fiji','fiji','Oceania'),
+    ('French Polynesia','french-polynesia','Oceania'),
+    ('Guam','guam','Oceania'),
+    ('Kiribati','kiribati','Oceania'),
+    ('Marshall Islands','marshall-islands','Oceania'),
+    ('Micronesia','micronesia','Oceania'),
+    ('Nauru','nauru','Oceania'),
+    ('New Caledonia','new-caledonia','Oceania'),
+    ('New Zealand','new-zealand','Oceania'),
+    ('Northern Mariana Islands','northern-mariana-islands','Oceania'),
+    ('Palau','palau','Oceania'),
+    ('Papua New Guinea','papua-new-guinea','Oceania'),
+    ('Samoa','samoa','Oceania'),
+    ('Solomon Islands','solomon-islands','Oceania'),
+    ('Tonga','tonga','Oceania'),
+    ('Tuvalu','tuvalu','Oceania'),
+    ('Vanuatu','vanuatu','Oceania'),
+    # South America
+    ('Argentina','argentina','South America'),
+    ('Bolivia','bolivia','South America'),
+    ('Brazil','brazil','South America'),
+    ('Chile','chile','South America'),
+    ('Colombia','colombia','South America'),
+    ('Ecuador','ecuador','South America'),
+    ('Falkland Islands (Malvinas)','falkland-islands-malvinas','South America'),
+    ('Guyana','guyana','South America'),
+    ('Paraguay','paraguay','South America'),
+    ('Peru','peru','South America'),
+    ('Suriname','suriname','South America'),
+    ('Uruguay','uruguay','South America'),
+    ('Venezuela','venezuela','South America'),
+    # the Caribbean
+    ('Antigua and Barbuda','antigua-and-barbuda','the Caribbean'),
+    ('Aruba','aruba','the Caribbean'),
+    ('Bahamas','bahamas','the Caribbean'),
+    ('Barbados','barbados','the Caribbean'),
+    ('Cayman Islands','cayman-islands','the Caribbean'),
+    ('Cuba','cuba','the Caribbean'),
+    ('Curaçao','cura-ao','the Caribbean'),
+    ('Dominica','dominica','the Caribbean'),
+    ('Dominican Republic','dominican-republic','the Caribbean'),
+    ('Grenada','grenada','the Caribbean'),
+    ('Haiti','haiti','the Caribbean'),
+    ('Jamaica','jamaica','the Caribbean'),
+    ('Puerto Rico','puerto-rico','the Caribbean'),
+    ('Saint Kitts and Nevis','saint-kitts-and-nevis','the Caribbean'),
+    ('Saint Lucia','saint-lucia','the Caribbean'),
+    ('Saint Vincent and the Grenadines','saint-vincent-and-the-grenadines','the Caribbean'),
+    ('Trinidad and Tobago','trinidad-and-tobago','the Caribbean'),
+    # the Middle East
+    ('Bahrain','bahrain','the Middle East'),
+    ('Iraq','iraq','the Middle East'),
+    ('Israel','israel','the Middle East'),
+    ('Jordan','jordan','the Middle East'),
+    ('Kuwait','kuwait','the Middle East'),
+    ('Lebanon','lebanon','the Middle East'),
+    ('Oman','oman','the Middle East'),
+    ('Palestine','palestine','the Middle East'),
+    ('Qatar','qatar','the Middle East'),
+    ('Saudi Arabia','saudi-arabia','the Middle East'),
+    ('Syria','syria','the Middle East'),
+    ('Yemen','yemen','the Middle East'),
 ]
 def _country_faqs(name):
     return [
@@ -1264,3 +1441,252 @@ def build_country_pages(g, cta_block):
               subtitle=f"Seamless door-to-door relocation to {n}.", raw=True))
         count += 1
     print(f"Country pages built: {count}")
+
+
+# ===========================================================================
+# City-to-city pages between the 3 hub countries (LCL/FCL/baggage/full-house)
+# ===========================================================================
+CITY3 = {
+  "usa": ("the USA", [
+    ("New York","new-york"),("Los Angeles","los-angeles"),("Chicago","chicago"),("Houston","houston"),
+    ("Phoenix","phoenix"),("Philadelphia","philadelphia"),("San Antonio","san-antonio"),("San Diego","san-diego"),
+    ("Dallas","dallas"),("San Jose","san-jose"),("Austin","austin"),("Jacksonville","jacksonville"),
+    ("San Francisco","san-francisco"),("Columbus","columbus"),("Fort Worth","fort-worth"),("Indianapolis","indianapolis"),
+    ("Charlotte","charlotte"),("Seattle","seattle"),("Denver","denver"),("Washington DC","washington-dc"),
+    ("Boston","boston"),("Nashville","nashville"),("Atlanta","atlanta"),("Miami","miami"),("New Jersey","new-jersey")]),
+  "india": ("India", [
+    ("Mumbai","mumbai"),("Delhi","delhi"),("Bangalore","bangalore"),("Hyderabad","hyderabad"),("Chennai","chennai"),
+    ("Kolkata","kolkata"),("Pune","pune"),("Ahmedabad","ahmedabad"),("Jaipur","jaipur"),("Surat","surat"),
+    ("Lucknow","lucknow"),("Kanpur","kanpur"),("Nagpur","nagpur"),("Visakhapatnam","visakhapatnam"),("Coimbatore","coimbatore"),
+    ("Kochi","kochi"),("Chandigarh","chandigarh"),("Gurgaon","gurgaon"),("Noida","noida"),("Indore","indore"),
+    ("Bhopal","bhopal"),("Vadodara","vadodara"),("Trivandrum","trivandrum"),("Mysore","mysore"),("Mangalore","mangalore")]),
+  "uae": ("the UAE", [
+    ("Dubai","dubai"),("Abu Dhabi","abu-dhabi"),("Sharjah","sharjah"),("Ajman","ajman"),
+    ("Ras Al Khaimah","ras-al-khaimah"),("Fujairah","fujairah"),("Al Ain","al-ain")]),
+}
+# directed country pairs between the three hubs
+PAIR_DIRS = [("usa","india"),("india","usa"),("usa","uae"),("uae","usa"),("india","uae"),("uae","india")]
+
+def _ship_modes_section(fc, tc):
+    cards = [
+        ("ship","LCL shipment (shared container)",
+         f"Moving a studio or one-bedroom load from {fc} to {tc}? LCL — less-than-container-load, also called groupage — "
+         f"is the most economical way to ship. Your goods are professionally packed, consolidated with other shipments into a "
+         f"shared ocean container, and you pay only for the volume you use. Ideal for partial loads and budget-conscious moves."),
+        ("cubes","FCL shipment (full container)",
+         f"For a two-bedroom home or larger from {fc} to {tc}, FCL gives you sole use of a 20ft or 40ft container. It’s loaded "
+         f"and sealed at your door, travels without being shared or re-handled, and is the fastest, most secure and most private "
+         f"way to ship a full home — and the best value once your volume is large enough."),
+        ("box","Baggage &amp; box shipping",
+         f"Just sending a few boxes or suitcases from {fc} to {tc}? Our baggage shipping service collects from your door and "
+         f"delivers to your destination with transparent per-box pricing and no airline excess-baggage fees — by air when you "
+         f"need it fast, or by sea for the lowest cost. Perfect for students and single movers."),
+        ("home","Full house shifting",
+         f"Relocating your entire home from {fc} to {tc}? Our full house shifting service handles everything end-to-end — "
+         f"export-grade packing and crating, loading, ocean or air freight, customs clearance at both ends, and delivery, "
+         f"unpacking and furniture reassembly at your new home. One dedicated coordinator owns the whole move."),
+    ]
+    html = "".join(
+        f'<div class="fcard"><div class="fic">{icon(ic)}</div><h3>{t}</h3><p>{d}</p></div>'
+        for ic, t, d in cards)
+    return isec(f'<div class="feature-grid two">{html}</div>', alt=True,
+        head=sec_head(f"Shipping options from {fc} to {tc}",
+            "LCL, FCL, baggage or a full house move — we tailor the method to your load, budget and timeline.", "What we ship"))
+
+def _pair_faqs(fc, fcountry, tc, tcountry):
+    return [
+        (f"How much does moving from {fc} to {tc} cost?",
+         f"It depends on your volume and the service — LCL (shared container), FCL (full container), baggage/boxes or full house "
+         f"shifting. Use our Moving Calculator or book a free survey for a firm, itemised {fc}-to-{tc} quote with no hidden fees."),
+        (f"How long does shipping from {fc} to {tc} take?",
+         f"Ocean freight from {fc} ({fcountry}) to {tc} ({tcountry}) is the economical option and takes several weeks door-to-door; "
+         f"air freight is far faster. Your move manager confirms exact timing after your survey."),
+        (f"Should I choose LCL or FCL from {fc} to {tc}?",
+         f"LCL suits studios and one-bedroom loads — you pay only for the space you use. FCL suits two-bedroom homes and larger, "
+         f"giving you a private, faster, more secure container. We advise the right fit for your {fc}-to-{tc} move at survey."),
+        (f"Do you handle customs clearance in {tcountry}?",
+         f"Yes — we prepare all export paperwork in {fcountry} and clear customs in {tcountry}, including any Transfer of Residence "
+         f"or duty relief you qualify for."),
+        ("Can you ship my car or pet too?",
+         f"Yes — we ship vehicles (container or RoRo) and offer IPATA-affiliated pet relocation alongside your household goods from {fc} to {tc}."),
+    ]
+
+def build_city_pairs(g, cta_block):
+    interior = g["interior"]; write = g["write"]
+    SVC_CARDS = feature_cards([
+        ("globe","Door-to-door relocation","Full international moves, managed end-to-end."),
+        ("shield","Insurance &amp; tracking","All-risk transit cover with live door-to-door tracking."),
+        ("car","Vehicle &amp; pet moves","Ship a car or relocate a pet alongside your goods."),
+    ])
+    count = 0
+    for fco, tco in PAIR_DIRS:
+        fcountry, fcities = CITY3[fco]
+        tcountry, tcities = CITY3[tco]
+        for fc, fs in fcities:
+            for tc, ts in tcities:
+                faqs = _pair_faqs(fc, fcountry, tc, tcountry)
+                # a few related pairs (same origin -> other destinations)
+                rel = "".join(
+                    f'<a href="/moving/{fs}-to-{rts}/">{fc} &rarr; {rtc}</a>'
+                    for rtc, rts in tcities[:6] if rts != ts)
+                rev = f'<a href="/moving/{ts}-to-{fs}/">{tc} &rarr; {fc}</a>'
+                intro = (f'<p>Planning a move from <b>{fc}</b> to <b>{tc}</b>? Universal Relocations makes relocating from '
+                    f'{fc}, {fcountry}, to {tc}, {tcountry}, seamless — whether you’re shipping a few boxes, a shared '
+                    f'container, a full container or shifting an entire house. With 28+ years of experience, full FMC licensing and '
+                    f'our own hubs in the USA, India and the UAE, we handle packing, freight, customs and door-to-door delivery on '
+                    f'the {fc}–{tc} route.</p>'
+                    f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
+                    f'<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Get a free quote</a></p>')
+                know = (f'<p>Most {fc}-to-{tc} household moves travel by sea freight, with air freight available for urgent or '
+                    f'smaller shipments. We prepare all export and import documentation and clear customs in {tcountry}, including '
+                    f'any transfer-of-residence or duty relief you qualify for. Transit times vary by season and port; your dedicated '
+                    f'move manager confirms exact timing and the most cost-effective option for your volume.</p>')
+                sections = (
+                    isec(lead_split(intro, STATS))
+                    + orange_stats()
+                    + prompt_band(title=f"Get an instant {fc} to {tc} estimate",
+                        chips=[(f"I want to move my home from {fc} to {tc}", f"Move a home {fc} → {tc}"),
+                               (f"I want to ship boxes from {fc} to {tc}", f"Ship boxes {fc} → {tc}"),
+                               (f"I want LCL shipping from {fc} to {tc}", f"LCL {fc} → {tc}"),
+                               (f"I want to move my car from {fc} to {tc}", f"Move a car {fc} → {tc}")])
+                    + _ship_modes_section(fc, tc)
+                    + isec(SVC_CARDS, head=sec_head(f"More for your {fc} &rarr; {tc} move", "", "Also available"))
+                    + isec(media_row(g["HERO_SHIP"], f"What to know about moving from {fc} to {tc}", know))
+                    + compare_table()
+                    + why_us_band()
+                    + trust_logos(g, alt=True)
+                    + (isec(f'<div class="related-routes">{rev}{rel}</div>',
+                           head=sec_head(f"Related {fcountry}–{tcountry} routes", "", "Explore")) if rel else "")
+                    + faq_isec(faqs)
+                    + cta_isec())
+                write(f"moving/{fs}-to-{ts}", interior(f"Moving from {fc} to {tc}",
+                      [("Home","/"),(f"{fc} &rarr; {tc}","")], sections,
+                      f"Moving from {fc} to {tc} — LCL, FCL, baggage shipping and full house shifting with Universal Relocations. Door-to-door, insured, customs handled.",
+                      hero_img=g["HERO_SHIP"], extra_head=faq_schema(faqs),
+                      subtitle=f"LCL, FCL, baggage &amp; full house shifting from {fc} to {tc}.", raw=True))
+                count += 1
+    print(f"City-pair pages built: {count}")
+
+
+# ===========================================================================
+# Hub pages (sectioned) + city pages as destination-choosers -> city-pair pages
+# ===========================================================================
+HUB_INTRO = {
+  "usa": "Moving from the USA? Universal Relocations is a one-stop international mover with our own US operation — crews, warehouses and in-house customs brokers — handling LCL, FCL, baggage shipping and full house shifting from every major US city to India, the UAE and worldwide.",
+  "india": "Moving from India? With our own offices and crews across India, we handle LCL, FCL, baggage shipping and full house shifting from every major Indian city to the USA, the UAE and destinations worldwide — packing, freight, customs and door-to-door delivery.",
+  "uae": "Moving from the UAE? Our Dubai-based team handles LCL, FCL, baggage shipping and full house shifting from across the Emirates to India, the USA and worldwide — with in-house customs clearance and door-to-door delivery.",
+}
+HUB_SVC = None
+def _hub_services():
+    return feature_cards([
+        ("globe","International relocation","LCL &amp; FCL ocean freight and air freight, door-to-door."),
+        ("box","Baggage &amp; box shipping","Send boxes and excess luggage with no airline fees."),
+        ("home","Full house shifting","Whole-home moves — packing, freight, customs and reassembly."),
+        ("car","Vehicle shipping","Cars and motorcycles by container or RoRo."),
+        ("warehouse","Storage &amp; warehousing","Secure short and long-term storage."),
+        ("paw","Pet relocation","IPATA-affiliated, airline-approved pet moves."),
+    ])
+
+def build_hubs(g):
+    interior = g["interior"]; write = g["write"]
+    heroes = {"usa": g["HERO_USA"], "india": g["HERO_INDIA"], "uae": g["HERO_UAE"]}
+    for hubslug, (label, cities) in CITY3.items():
+        hubname = HUB_NAME[hubslug]
+        city_cards = "".join(
+            f'<a href="/{hubslug}/locations/{s}/"><b>{c}</b><span>View moving options &rarr;</span></a>'
+            for c, s in cities)
+        faqs = hub_faqs(hubname)
+        sections = (
+            isec(lead_split(f'<p>{HUB_INTRO[hubslug]}</p>'
+                 f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
+                 f'<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Get a free quote</a></p>', STATS))
+            + orange_stats()
+            + prompt_band(title=f"Get a moving estimate from {hubname}")
+            + isec(f'<div class="city-grid">{city_cards}</div>', alt=True,
+                   head=sec_head(f"Cities we move from in {hubname}",
+                       "Pick your city to see routes, shipping options and a dedicated moving guide.", "Our cities"))
+            + isec(_hub_services(), head=sec_head(f"Our services from {hubname}", "One team for every kind of move.", "What we do"))
+            + feature_carousel()
+            + compare_table()
+            + core_strengths()
+            + why_us_band()
+            + trust_logos(g, alt=True)
+            + faq_isec(faqs)
+            + cta_isec())
+        write(hubslug, interior(f"Moving from {hubname}",
+              [("Home","/"),("Hubs","/"),(hubname,"")], sections,
+              f"Moving from {hubname} with Universal Relocations — LCL, FCL, baggage and full house shifting to India, the USA, the UAE and worldwide.",
+              hero_img=heroes.get(hubslug), extra_head=faq_schema(faqs),
+              subtitle=f"LCL, FCL, baggage &amp; full house shifting from {hubname}.", raw=True))
+    print("Hub pages built (sectioned).")
+
+def build_hub_cities(g, cta_block):
+    interior = g["interior"]; write = g["write"]
+    for hubslug, (label, cities) in CITY3.items():
+        hubname = HUB_NAME[hubslug]
+        others = [k for k in CITY3 if k != hubslug]
+        for city, cslug in cities:
+            # destination choosers: this city -> each other country's cities
+            dest_html = ""
+            for oco in others:
+                olabel, ocities = CITY3[oco]
+                oname = HUB_NAME[oco]
+                cards = "".join(
+                    f'<a href="/moving/{cslug}-to-{os_}/"><b>{city} &rarr; {oc}</b>'
+                    f'<span>LCL · FCL · baggage · full house</span></a>' for oc, os_ in ocities)
+                dest_html += (f'<div class="dest-block"><h3>Moving from {city} to {oname}</h3>'
+                              f'<div class="city-grid">{cards}</div></div>')
+            faqs = _city_faqs(city, hubslug)
+            intro = (f'<p>Relocating from <b>{city}</b>? Universal Relocations moves households and businesses from {city} to '
+                f'India, the USA, the UAE and worldwide — with LCL, FCL, baggage shipping and full house shifting, in-house '
+                f'customs clearance and door-to-door delivery, backed by 28+ years and our own global hubs. Choose your destination '
+                f'below for a dedicated moving guide.</p>'
+                f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
+                f'<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Get a free quote</a></p>')
+            sections = (
+                isec(lead_split(intro, STATS))
+                + orange_stats()
+                + prompt_band(title=f"Get a moving estimate from {city}")
+                + isec(dest_html, alt=True, head=sec_head(f"Where are you moving from {city}?",
+                       "Pick your destination city for LCL, FCL, baggage and full house shifting details.", "Choose destination"))
+                + isec(_hub_services(), head=sec_head(f"Our services in {city}", "", "What we do"))
+                + why_us_band()
+                + trust_logos(g, alt=True)
+                + faq_isec(faqs)
+                + cta_isec())
+            write(f"{hubslug}/locations/{cslug}",
+                  interior(f"Movers in {city}",
+                           [("Home","/"),(hubname,f"/{hubslug}/"),(city,"")], sections,
+                           f"Movers in {city} — LCL, FCL, baggage shipping and full house shifting from {city} to India, the USA, the UAE and worldwide with Universal Relocations.",
+                           hero_img=g["HERO_SHIP"], extra_head=faq_schema(faqs),
+                           subtitle=f"International movers in {city} — to India, the USA, the UAE &amp; worldwide.", raw=True))
+    print("Hub city pages built (destination choosers).")
+
+
+# ===========================================================================
+# Shiprocket-style horizontal "Superior features" carousel (real UR services)
+# ===========================================================================
+FEATURE_ITEMS = [
+    ("survey","Free pre-move survey","A no-obligation home or video survey to size your move and give you a firm, itemised quote — no guesswork, no hidden fees.","/book-a-virtual-survey/"),
+    ("shield","In-house customs clearance","Our own FMC-licensed brokers prepare every export document and clear customs at both ends, including Transfer of Residence and duty relief.","/services/"),
+    ("globe","Door-to-door tracking","One dedicated move coordinator and live status updates at every stage — from collection to final delivery at your new home.","/services/"),
+    ("box","Baggage &amp; box shipping","Send excess luggage and boxes by sea or air with no airline excess fees — priced on what you actually ship.","/services/"),
+    ("shieldcheck","All-risk transit insurance","Full-value cover for your goods in transit by sea or air, arranged with your move so you're protected end-to-end.","/services/"),
+    ("warehouse","Storage &amp; warehousing","Secure short- and long-term storage in our own facilities for the gap between move-out and move-in.","/services/"),
+    ("paw","Pet relocation","IPATA-affiliated, airline-approved pet moves — crate training, bookings and paperwork handled, crate to doorstep.","/pet-relocation/"),
+    ("car","Vehicle shipping","Cars and motorcycles shipped by container or RoRo, with all export and import formalities managed for you.","/services/"),
+]
+def feature_carousel(title="Everything your move needs, under one roof",
+                     eyebrow="Why Universal Relocations", items=None):
+    items = items or FEATURE_ITEMS
+    cards = "".join(
+        f'<article class="fx-card"><div class="fx-ic">{icon(ic)}</div>'
+        f'<h3>{t}</h3><p>{b}</p>'
+        f'<a class="fx-more" href="{h}">Learn more <span>&rarr;</span></a></article>'
+        for ic, t, b, h in items)
+    return (f'<section class="isec fx-sec"><div class="container">'
+            f'<div class="fx-head"><div>{f"<span class=chip>{eyebrow}</span>" if eyebrow else ""}'
+            f'<h2 class="sh-title">{title}</h2></div>'
+            f'<div class="fx-nav"><button type="button" class="fx-prev" aria-label="Previous">&larr;</button>'
+            f'<button type="button" class="fx-next" aria-label="Next">&rarr;</button></div></div>'
+            f'<div class="fx-track" tabindex="0">{cards}</div></div></section>')

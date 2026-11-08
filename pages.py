@@ -173,6 +173,8 @@ def build(g):
     for slug, (title_override, body) in C.RICH.items():
         if slug == "moving-check-list":
             continue
+        if slug in ("usa", "india", "uae"):
+            continue  # hubs are built by X.build_hubs() in Shiprocket-style sectioned layout
         title = title_override or SIMPLE[slug][0]
         crumbs = [("Home", "/"), (title.replace("&", "&amp;"), "")]
         faqs = None
@@ -221,7 +223,7 @@ def build(g):
         else:
             sections = X.isec(f'<div class="prose">{body}</div>')
             GUIDE_IMG = {"packing-tips": g["HERO_MOVE2"], "moving-terms": g["PH_STAFF1"],
-                         "shipping-terms": g["PH_SHIP2"], "about-us": g["PH_STAFF1"],
+                         "shipping-terms": g["PH_SHIP2"], "about-us": g["PH_PRESIDENT"],
                          "company": g["PH_STAFF2"], "corporate-social-responsibility": g["HERO_SURVEY"],
                          "shipping-worldwide": g["HERO_SHIP"]}
             if slug in GUIDE_IMG:
@@ -263,8 +265,14 @@ def build(g):
             write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
                   f"{title} — Universal Relocations.", hero_img=X.hero_for(g, slug), raw=True))
 
-    # ---- Major-city pages for the three hubs ----
-    X.build_cities(g, cta_block)
+    # ---- Hub pages (usa/india/uae) in Shiprocket-style sectioned layout with city cards ----
+    X.build_hubs(g)
+
+    # ---- Hub city pages as destination-choosers -> city-to-city pages ----
+    X.build_hub_cities(g, cta_block)
+
+    # ---- City-to-city pages (US <-> India <-> UAE, both directions) LCL/FCL/baggage/full-house ----
+    X.build_city_pairs(g, cta_block)
 
     # ---- Dedicated mode pages (LCL/FCL/air/baggage/auto/pet) for hub corridors ----
     X.build_modes(g, cta_block)

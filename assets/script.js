@@ -149,3 +149,15 @@
   if (a) a.onclick = function () { set('accepted'); };
   if (d) d.onclick = function () { set('declined'); };
 })();
+
+// Feature carousel arrows
+(function () {
+  document.querySelectorAll('.fx-sec').forEach(function (sec) {
+    var track = sec.querySelector('.fx-track');
+    var prev = sec.querySelector('.fx-prev'), next = sec.querySelector('.fx-next');
+    if (!track) return;
+    var amt = function () { var c = track.querySelector('.fx-card'); return c ? c.offsetWidth + 22 : 322; };
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -amt() * 1.5, behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left: amt() * 1.5, behavior: 'smooth' }); });
+  });
+})();

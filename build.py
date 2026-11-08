@@ -286,6 +286,7 @@ def page(title, body, desc="", canonical="", extra_head=""):
 {TOPBAR}
 {HEADER}
 {body}
+{TRUST_BAND}
 {FOOTER}
 <div class="cookie-banner" id="cookie-banner" hidden>
   <p>We use cookies to improve your experience, analyze site traffic and for marketing. By clicking Accept, you agree to our use of cookies. See our <a href="/universal-relocations-cookies-policy/">Cookies Policy</a>.</p>
@@ -419,6 +420,19 @@ PRESS_LOGOS = "".join(f'<img height="42" src="{IMG}/2025/08/{n}" alt="{a}">' for
     ("MSN.png", "MSN"), ("Associated-Press.png", "Associated Press"),
     ("Bussiness-Insider.png", "Business Insider"), ("Gulf-News.png", "Gulf News"),
     ("Khaleej-Times.png", "Khaleej Times")])
+
+# Site-wide trust band: accreditations + "As Seen On" press (injected on every page)
+TRUST_BAND = f"""
+<section class="section section-soft trust-band">
+  <div class="container text-center">
+    <span class="eyebrow">Our Affiliations</span>
+    <h2 class="section-title">Accredited &amp; Trusted</h2>
+    <div class="logos-slider"><div class="logos-track">{AFFIL_LOGOS}{AFFIL_LOGOS}</div></div>
+    <h2 class="section-title" style="margin-top:52px">As Seen On</h2>
+    <div class="logos-slider"><div class="logos-track press">{PRESS_LOGOS}{PRESS_LOGOS}</div></div>
+  </div>
+</section>
+"""
 
 HOME_BODY = f"""
 <section class="hello-hero">
@@ -603,20 +617,7 @@ HOME_BODY = f"""
   </div>
 </section>
 
-<!-- Affiliations / press -->
-<section class="section section-soft">
-  <div class="container text-center">
-    <span class="eyebrow">Our Affiliations</span>
-    <h2 class="section-title">Accredited &amp; Trusted</h2>
-    <div class="logos-slider">
-      <div class="logos-track">{AFFIL_LOGOS}{AFFIL_LOGOS}</div>
-    </div>
-    <h2 class="section-title" style="margin-top:56px">As Seen On</h2>
-    <div class="logos-slider">
-      <div class="logos-track press">{PRESS_LOGOS}{PRESS_LOGOS}</div>
-    </div>
-  </div>
-</section>
+<!-- Affiliations + press band injected site-wide via TRUST_BAND -->
 """
 
 # ---------------------------------------------------------------------------
@@ -633,18 +634,26 @@ PH_CONT1     = f"{IMG}/2023/12/40-High-cube-container.jpg"                # cont
 PH_CONT2     = f"{IMG}/2023/12/20-dry-freight.jpg"                        # container (verified)
 PH_CONT3     = f"{IMG}/2023/12/20-open-top-container-1.jpg"               # container (verified)
 PH_CONT4     = f"{IMG}/2023/12/40-High-cube-Reefer-container.jpg"         # container (verified)
-# Aliases mapped onto verified images so no media row is ever broken
-HERO_SURVEY  = PH_PRESIDENT
+# Topical real photos verified on universalrelocations.com CDN
+PH_PET       = f"{IMG}/2024/04/international-pet.png"                      # pet relocation (verified)
+PH_CRATE     = f"{IMG}/2024/04/crate-768x456.png"                         # pet travel crate (verified)
+PH_AIRLINE   = f"{IMG}/2024/04/Airline-768x456.png"                       # airline cargo (verified)
+PH_INSURANCE = f"{IMG}/2024/11/International-Moving-Insurance-Why-Its-Important-1170x694.jpg"  # (verified)
+PH_USA_HUB   = f"{IMG}/2026/08/usa-hub.png"                               # USA hub landmark (verified)
+PH_UAE_HUB   = f"{IMG}/2026/08/UAE-Hub-Page.png"                          # UAE hub landmark (verified)
+PH_INDIA_HUB = f"{IMG}/2026/08/India-Taj-Mahal-1.jpg.jpeg"                # India hub landmark (verified)
+# Aliases mapped onto verified NON-PEOPLE images (President stays on About/Leadership only)
+HERO_SURVEY  = HERO_LOGISTICS
 HERO_MOVE1   = PH_CONT1
 HERO_MOVE2   = PH_CONT2
-PH_STAFF1    = PH_PRESIDENT
+PH_STAFF1    = HERO_LOGISTICS
 PH_STAFF2    = PH_CONT3
 PH_CANADA    = HERO_SHIP
 PH_AUS1      = PH_SHIP2
 PH_AUS2      = PH_CONT4
-HERO_USA     = HERO_SHIP
-HERO_UAE     = HERO_LOGISTICS
-HERO_INDIA   = PH_CONT4
+HERO_USA     = PH_USA_HUB
+HERO_UAE     = PH_UAE_HUB
+HERO_INDIA   = PH_INDIA_HUB
 HERO_TRUCK   = HERO_LOGISTICS
 
 def page_hero(title, crumbs, hero_img=HERO_BRAND, subtitle="", ctas=""):
