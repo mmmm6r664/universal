@@ -1444,7 +1444,7 @@ def build_country_pages(g, cta_block):
 
 
 # ===========================================================================
-# City-to-city pages between the 3 hub countries (LCL/FCL/baggage/full-house)
+# City-to-city pages between the 3 hub countries (LCL/FCL/baggage/pet/auto)
 # ===========================================================================
 CITY3 = {
   "usa": ("the USA", [
@@ -1481,23 +1481,25 @@ def _ship_modes_section(fc, tc):
          f"Just sending a few boxes or suitcases from {fc} to {tc}? Our baggage shipping service collects from your door and "
          f"delivers to your destination with transparent per-box pricing and no airline excess-baggage fees — by air when you "
          f"need it fast, or by sea for the lowest cost. Perfect for students and single movers."),
-        ("home","Full house shifting",
-         f"Relocating your entire home from {fc} to {tc}? Our full house shifting service handles everything end-to-end — "
-         f"export-grade packing and crating, loading, ocean or air freight, customs clearance at both ends, and delivery, "
-         f"unpacking and furniture reassembly at your new home. One dedicated coordinator owns the whole move."),
+        ("paw","Pet shipping",
+         f"Moving a pet from {fc} to {tc}? Our IPATA-affiliated pet relocation team handles airline-approved crates, bookings, "
+         f"vaccinations and import paperwork, with care at every step — door to doorstep, so your companion travels safely and comfortably."),
+        ("car","Auto shipping",
+         f"Shipping a car or motorcycle from {fc} to {tc}? We move vehicles by container or RoRo, handle all export and import "
+         f"formalities, and can load your vehicle alongside your household goods for a combined, cost-effective move."),
     ]
     html = "".join(
         f'<div class="fcard"><div class="fic">{icon(ic)}</div><h3>{t}</h3><p>{d}</p></div>'
         for ic, t, d in cards)
     return isec(f'<div class="feature-grid two">{html}</div>', alt=True,
         head=sec_head(f"Shipping options from {fc} to {tc}",
-            "LCL, FCL, baggage or a full house move — we tailor the method to your load, budget and timeline.", "What we ship"))
+            "LCL, FCL, baggage, pet or auto shipping — we tailor the method to your load, budget and timeline.", "What we ship"))
 
 def _pair_faqs(fc, fcountry, tc, tcountry):
     return [
         (f"How much does moving from {fc} to {tc} cost?",
-         f"It depends on your volume and the service — LCL (shared container), FCL (full container), baggage/boxes or full house "
-         f"shifting. Use our Moving Calculator or book a free survey for a firm, itemised {fc}-to-{tc} quote with no hidden fees."),
+         f"It depends on your volume and the service — LCL (shared container), FCL (full container), baggage/boxes, pet or auto "
+         f"shipping. Use our Moving Calculator or book a free survey for a firm, itemised {fc}-to-{tc} quote with no hidden fees."),
         (f"How long does shipping from {fc} to {tc} take?",
          f"Ocean freight from {fc} ({fcountry}) to {tc} ({tcountry}) is the economical option and takes several weeks door-to-door; "
          f"air freight is far faster. Your move manager confirms exact timing after your survey."),
@@ -1561,9 +1563,9 @@ def build_city_pairs(g, cta_block):
                     + cta_isec())
                 write(f"moving/{fs}-to-{ts}", interior(f"Moving from {fc} to {tc}",
                       [("Home","/"),(f"{fc} &rarr; {tc}","")], sections,
-                      f"Moving from {fc} to {tc} — LCL, FCL, baggage shipping and full house shifting with Universal Relocations. Door-to-door, insured, customs handled.",
+                      f"Moving from {fc} to {tc} — LCL, FCL, baggage, pet and auto shipping with Universal Relocations. Door-to-door, insured, customs handled.",
                       hero_img=g["HERO_SHIP"], extra_head=faq_schema(faqs),
-                      subtitle=f"LCL, FCL, baggage &amp; full house shifting from {fc} to {tc}.", raw=True))
+                      subtitle=f"LCL, FCL, baggage, pet &amp; auto shipping from {fc} to {tc}.", raw=True))
                 count += 1
     print(f"City-pair pages built: {count}")
 
@@ -1572,16 +1574,16 @@ def build_city_pairs(g, cta_block):
 # Hub pages (sectioned) + city pages as destination-choosers -> city-pair pages
 # ===========================================================================
 HUB_INTRO = {
-  "usa": "Moving from the USA? Universal Relocations is a one-stop international mover with our own US operation — crews, warehouses and in-house customs brokers — handling LCL, FCL, baggage shipping and full house shifting from every major US city to India, the UAE and worldwide.",
-  "india": "Moving from India? With our own offices and crews across India, we handle LCL, FCL, baggage shipping and full house shifting from every major Indian city to the USA, the UAE and destinations worldwide — packing, freight, customs and door-to-door delivery.",
-  "uae": "Moving from the UAE? Our Dubai-based team handles LCL, FCL, baggage shipping and full house shifting from across the Emirates to India, the USA and worldwide — with in-house customs clearance and door-to-door delivery.",
+  "usa": "Moving from the USA? Universal Relocations is a one-stop international mover with our own US operation — crews, warehouses and in-house customs brokers — handling LCL, FCL, baggage, pet and auto shipping from every major US city to India, the UAE and worldwide.",
+  "india": "Moving from India? With our own offices and crews across India, we handle LCL, FCL, baggage, pet and auto shipping from every major Indian city to the USA, the UAE and destinations worldwide — packing, freight, customs and door-to-door delivery.",
+  "uae": "Moving from the UAE? Our Dubai-based team handles LCL, FCL, baggage, pet and auto shipping from across the Emirates to India, the USA and worldwide — with in-house customs clearance and door-to-door delivery.",
 }
 HUB_SVC = None
 def _hub_services():
     return feature_cards([
         ("globe","International relocation","LCL &amp; FCL ocean freight and air freight, door-to-door."),
         ("box","Baggage &amp; box shipping","Send boxes and excess luggage with no airline fees."),
-        ("home","Full house shifting","Whole-home moves — packing, freight, customs and reassembly."),
+        ("ship","LCL &amp; FCL shipping","Shared-container (LCL) or your own 20ft/40ft container (FCL) by sea."),
         ("car","Vehicle shipping","Cars and motorcycles by container or RoRo."),
         ("warehouse","Storage &amp; warehousing","Secure short and long-term storage."),
         ("paw","Pet relocation","IPATA-affiliated, airline-approved pet moves."),
@@ -1601,7 +1603,7 @@ def build_hubs(g):
                  f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
                  f'<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Get a free quote</a></p>', STATS))
             + orange_stats()
-            + route_chooser(g)
+            + route_chooser(g, current=hubslug)
             + prompt_band(title=f"Get a moving estimate from {hubname}")
             + isec(f'<div class="city-grid">{city_cards}</div>', alt=True,
                    head=sec_head(f"Cities we move from in {hubname}",
@@ -1617,9 +1619,9 @@ def build_hubs(g):
             + cta_isec())
         write(hubslug, interior(f"Moving from {hubname}",
               [("Home","/"),("Hubs","/"),(hubname,"")], sections,
-              f"Moving from {hubname} with Universal Relocations — LCL, FCL, baggage and full house shifting to India, the USA, the UAE and worldwide.",
+              f"Moving from {hubname} with Universal Relocations — LCL, FCL, baggage, pet and auto shipping to India, the USA, the UAE and worldwide.",
               hero_img=heroes.get(hubslug), extra_head=faq_schema(faqs),
-              subtitle=f"LCL, FCL, baggage &amp; full house shifting from {hubname}.", raw=True))
+              subtitle=f"LCL, FCL, baggage, pet &amp; auto shipping from {hubname}.", raw=True))
     print("Hub pages built (sectioned).")
 
 def build_hub_cities(g, cta_block):
@@ -1635,12 +1637,12 @@ def build_hub_cities(g, cta_block):
                 oname = HUB_NAME[oco]
                 cards = "".join(
                     f'<a href="/moving/{cslug}-to-{os_}/"><b>{city} &rarr; {oc}</b>'
-                    f'<span>LCL · FCL · baggage · full house</span></a>' for oc, os_ in ocities)
+                    f'<span>LCL · FCL · baggage · pet · auto</span></a>' for oc, os_ in ocities)
                 dest_html += (f'<div class="dest-block"><h3>Moving from {city} to {oname}</h3>'
                               f'<div class="city-grid">{cards}</div></div>')
             faqs = _city_faqs(city, hubslug)
             intro = (f'<p>Relocating from <b>{city}</b>? Universal Relocations moves households and businesses from {city} to '
-                f'India, the USA, the UAE and worldwide — with LCL, FCL, baggage shipping and full house shifting, in-house '
+                f'India, the USA, the UAE and worldwide — with LCL, FCL, baggage, pet and auto shipping, in-house '
                 f'customs clearance and door-to-door delivery, backed by 28+ years and our own global hubs. Choose your destination '
                 f'below for a dedicated moving guide.</p>'
                 f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
@@ -1650,7 +1652,7 @@ def build_hub_cities(g, cta_block):
                 + orange_stats()
                 + prompt_band(title=f"Get a moving estimate from {city}")
                 + isec(dest_html, alt=True, head=sec_head(f"Where are you moving from {city}?",
-                       "Pick your destination city for LCL, FCL, baggage and full house shifting details.", "Choose destination"))
+                       "Pick your destination city for LCL, FCL, baggage, pet and auto shipping details.", "Choose destination"))
                 + isec(_hub_services(), head=sec_head(f"Our services in {city}", "", "What we do"))
                 + why_us_band()
                 + office_locator(hubslug, g)
@@ -1660,7 +1662,7 @@ def build_hub_cities(g, cta_block):
             write(f"{hubslug}/locations/{cslug}",
                   interior(f"Movers in {city}",
                            [("Home","/"),(hubname,f"/{hubslug}/"),(city,"")], sections,
-                           f"Movers in {city} — LCL, FCL, baggage shipping and full house shifting from {city} to India, the USA, the UAE and worldwide with Universal Relocations.",
+                           f"Movers in {city} — LCL, FCL, baggage, pet and auto shipping from {city} to India, the USA, the UAE and worldwide with Universal Relocations.",
                            hero_img=g["HERO_SHIP"], extra_head=faq_schema(faqs),
                            subtitle=f"International movers in {city} — to India, the USA, the UAE &amp; worldwide.", raw=True))
     print("Hub city pages built (destination choosers).")
@@ -1805,21 +1807,46 @@ def _num_word(n):
 # ===========================================================================
 # "Where Are You Moving?" 4-card route chooser (for hub pages)
 # ===========================================================================
-def route_chooser(g):
-    cards = [
-        ("Inbound &amp; domestic","Shipping within USA",
-         "Relocation support for interstate and intrastate movers — household, corporate and specialist moves across the United States.",
-         g["PH_USA_HUB"], [("Explore USA","/usa/")]),
-        ("Popular route","Shipping to India",
-         "Move personal belongings, baggage and household goods to India with coordinated packing, shipping, customs and door-to-door delivery.",
-         g["PH_INDIA_HUB"], [("Explore Shipping to India","/india/")]),
-        ("Regional hub","Shipping to UAE",
-         "Plan your move to the UAE — explore shipping options for your household goods and request a free quote.",
-         g["PH_UAE_HUB"], [("Explore Shipping to UAE","/uae/")]),
-        ("Global network","Shipping Worldwide",
-         "International shipping support for destinations beyond the USA, India and the UAE — 200+ countries served.",
-         g["HERO_SHIP"], [("Explore Worldwide Shipping","/shipping-worldwide/")]),
-    ]
+def route_chooser(g, current=None):
+    # Per-hub card definitions. The current hub leads with a "within/from" card.
+    HUBCARD = {
+        "usa": ("Our USA hub","Shipping within the USA",
+                "Relocation support for interstate and intrastate movers — household, corporate and specialist moves across the United States.",
+                "PH_USA_HUB","/usa/","Explore USA"),
+        "india": ("Our India hub","Shipping to &amp; from India",
+                "Move personal belongings, baggage and household goods to and from India with coordinated packing, shipping, customs and door-to-door delivery.",
+                "PH_INDIA_HUB","/india/","Explore Shipping to India"),
+        "uae": ("Our UAE hub","Shipping to &amp; from the UAE",
+                "Plan your move to or from the UAE — explore shipping options for your household goods and request a free quote.",
+                "PH_UAE_HUB","/uae/","Explore Shipping to UAE"),
+    }
+    SELF = {
+        "usa": ("Inbound &amp; domestic","Shipping within the USA",
+                "Interstate and intrastate moves plus international export from the USA — household, corporate and specialist relocations.",
+                "PH_USA_HUB","/usa/","Explore USA"),
+        "india": ("Your home hub","Shipping to &amp; from India",
+                "Export from India or bring your home back to India — coordinated packing, ocean &amp; air freight, customs and door-to-door delivery.",
+                "PH_INDIA_HUB","/india/","Explore India"),
+        "uae": ("Your home hub","Shipping to &amp; from the UAE",
+                "Move to or from the UAE with our Dubai team — LCL, FCL, baggage, pet and auto shipping, customs handled in-house.",
+                "PH_UAE_HUB","/uae/","Explore UAE"),
+    }
+    order = ["usa","india","uae"]
+    cards = []
+    if current in order:
+        eb,t,b,img,href,lab = SELF[current]
+        cards.append((eb,t,b,g[img],[(lab,href)]))
+        for k in order:
+            if k==current: continue
+            eb,t,b,img,href,lab = HUBCARD[k]
+            cards.append((eb,t,b,g[img],[(lab,href)]))
+    else:
+        for k in order:
+            eb,t,b,img,href,lab = HUBCARD[k]
+            cards.append((eb,t,b,g[img],[(lab,href)]))
+    cards.append(("Global network","Shipping Worldwide",
+        "International shipping support for destinations beyond the USA, India and the UAE — 200+ countries served.",
+        g["HERO_SHIP"], [("Explore Worldwide Shipping","/shipping-worldwide/")]))
     html = ""
     for eb, t, b, img, btns in cards:
         bb = "".join(f'<a class="rcz-btn" href="{h}">{l} <span>&rarr;</span></a>' for l, h in btns)
