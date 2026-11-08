@@ -8,6 +8,31 @@ def _p(*paras):
     return "".join(f"<p>{t}</p>" for t in paras)
 
 
+# Real Universal Relocations photos from the owner's Google Drive (Photoshoots/Boxes).
+# Rendered via Drive's public image endpoint; requires the folder be "Anyone with link".
+DRIVE_BOX_IDS = [
+    "1ZkDlhXgHzX1vh8WpFoIOq05phJKAVXQt", "16qJ6QeySxsyanEzbZKrHmy794V-JiKCe",
+    "19c02apim0dZwlrs-Q2kIEr1_b8nOP8dE", "1z5RBgMFT7uBClaJxFVoVxV98cNpAZbVp",
+    "11WekY74iZUQdXOAAQt9Eji2fFqTFmm5f", "18O5jlKkyXbSNP7eY17WJV6sP3RnT1VV2",
+    "1c1zPLoVlx6qVnLFPRPTFVBH---JmAqRm", "12otzk-k5U1YX8mRmdZTfkXUavDv5UYM1",
+]
+
+
+def _drive_img(fid, w=800):
+    return f"https://lh3.googleusercontent.com/d/{fid}=w{w}"
+
+
+def drive_gallery(ids, alt="Universal Relocations branded packing", title="Our branded packing materials",
+                  sub="Export-grade boxes, crates and tape — all Universal Relocations branded."):
+    items = "".join(
+        f'<figure class="dg-item"><img loading="lazy" src="{_drive_img(i)}" alt="{alt}" '
+        f'onerror="this.closest(&quot;.dg-item&quot;).style.display=&quot;none&quot;"></figure>'
+        for i in ids)
+    import expand as X
+    return X.isec(f'<div class="dgrid">{items}</div>', alt=True,
+                  head=X.sec_head(title, sub, "Our materials"))
+
+
 def _table(headers, rows):
     h = "".join(f"<th>{c}</th>" for c in headers)
     body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in rows)
@@ -205,6 +230,7 @@ def build_extra_pages(g, cta_block):
          I(f'<div class="prose">{_p("Our packing service handles everything from everyday objects to musical instruments, bicycles, sports equipment and fine artwork — using the right method for each category so your items arrive secure and intact. Packing can be arranged at our Box Store or at your home, on a schedule that suits you.")}</div>')
          + OS()
          + PB(title="Book a packing service")
+         + drive_gallery(DRIVE_BOX_IDS)
          + I(_table(["Service","Price (USD)"], pack_rows), head=SH("Packing &amp; crating price list", "Transparent per-item pricing — no surprises on moving day.", "Pricing"))
          + I(FC([("box","Non-fragile &amp; fragile boxes","Small to extra-large, packed to protect the contents."),
                  ("star","Art, mirror &amp; TV crating","Custom crating for frames and large-screen TVs."),
