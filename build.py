@@ -656,17 +656,19 @@ HERO_UAE     = PH_UAE_HUB
 HERO_INDIA   = PH_INDIA_HUB
 HERO_TRUCK   = HERO_LOGISTICS
 
-def page_hero(title, crumbs, hero_img=HERO_BRAND, subtitle="", ctas=""):
-    # Clean, consistent gradient header (no stretched background photo) + route-arc motif.
+def page_hero(title, crumbs, hero_img=HERO_SHIP, subtitle="", ctas=""):
+    # Relevant photo overlaid behind a strong navy gradient (keeps text crisp) + route-arc motif.
     trail = ' / '.join(f'<a href="{h}">{l}</a>' if h else f'<span>{l}</span>' for l, h in crumbs)
-    style = ''
-    cls = "page-hero"
+    img = hero_img or HERO_BRAND
+    style = (f' style="background-image:linear-gradient(118deg,rgba(0,16,63,.90),rgba(0,5,110,.80) 55%,rgba(10,31,140,.78)),'
+             f"url('{img}');background-size:cover;background-position:center;\"")
+    cls = "page-hero has-photo"
     sub = f'<p class="ph-sub">{subtitle}</p>' if subtitle else ''
     cta = f'<div class="ph-cta">{ctas}</div>' if ctas else ''
     return f"""<section class="{cls}"{style}><div class="container">
       <div class="crumbs">{trail}</div><h1>{title}</h1>{sub}{cta}</div></section>"""
 
-def interior(title, crumbs, inner, desc="", hero_img=HERO_BRAND, extra_head="", subtitle="", ctas="", raw=False):
+def interior(title, crumbs, inner, desc="", hero_img=HERO_SHIP, extra_head="", subtitle="", ctas="", raw=False):
     if raw:
         body = page_hero(title, crumbs, hero_img, subtitle, ctas) + inner
     else:
