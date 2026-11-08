@@ -252,7 +252,7 @@ def build(g):
             FUNC_IMG = {"career": g["PH_STAFF1"], "referral": g["HERO_SURVEY"],
                         "file-a-claim": g["HERO_LOGISTICS"], "resources": g["HERO_MOVE1"],
                         "company-news": g["PH_STAFF2"]}
-            sections = X.isec(f'<div class="prose">{body}</div>')
+            sections = X.isec(f'<div class="prose">{body}</div>') + X.orange_stats()
             if slug in FUNC_IMG:
                 sections += X.isec(X.media_row(FUNC_IMG[slug], "One team, 28+ years, three hubs",
                     '<p>Universal Relocations is an accredited, FMC-licensed mover with our own offices, crews and '
@@ -265,6 +265,15 @@ def build(g):
                   extra_head=(X.faq_schema(faqs) if faqs else ""), raw=True))
         else:
             inner = (X.isec(f'<div class="prose"><p style="font-size:1.1rem">{lead}</p></div>')
+                     + X.orange_stats()
+                     + X.isec(X.feature_cards([
+                         ("globe","International relocation","Door-to-door household moves by ocean or air."),
+                         ("ship","LCL &amp; FCL shipping","Shared-container or full-container sea freight."),
+                         ("box","Baggage &amp; boxes","Send boxes and excess luggage with no airline fees."),
+                         ("car","Auto shipping","Cars and motorcycles by container or RoRo."),
+                         ("paw","Pet relocation","IPATA-affiliated, airline-approved pet moves."),
+                         ("warehouse","Storage","Secure short and long-term storage."),
+                       ], 'two'), alt=True, head=X.sec_head("What we do", "One team for every kind of move.", "Our services"))
                      + X.why_us_band() + X.trust_logos(g, alt=True) + X.cta_isec())
             write(slug, interior(title.replace("&", "&amp;"), crumbs, inner,
                   f"{title} — Universal Relocations.", hero_img=X.hero_for(g, slug), raw=True))
