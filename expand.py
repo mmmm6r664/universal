@@ -7,6 +7,7 @@ Expansion module for Universal Relocations:
 Imported and called by pages.build().
 """
 from urllib.parse import quote
+import facts as _facts
 
 # ---------------------------------------------------------------------------
 # FAQ engine  (accordion HTML + schema.org FAQPage JSON-LD)
@@ -1427,6 +1428,9 @@ def build_country_pages(g, cta_block):
             + isec(SVC_CARDS, alt=True, head=sec_head(f"Our services for moving to {n}",
                    "One team for every part of your move.", "What we do"))
             + isec(media_row(g["HERO_SHIP"], f"What to know about moving to {n}", know))
+            + (isec(f'<div class="prose">{_facts.about_section(s)}</div>', alt=True,
+                    head=sec_head(f"About {n}", "Local facts for your move.", "Destination guide"))
+               if _facts.has(s) else "")
             + compare_table()
             + cost_timeline_section(f"your move to {n}")
             + docs_section(alt=False)
@@ -1535,13 +1539,15 @@ def build_city_pairs(g, cta_block):
                     f'<a href="/moving/{fs}-to-{rts}/">{fc} &rarr; {rtc}</a>'
                     for rtc, rts in tcities[:6] if rts != ts)
                 rev = f'<a href="/moving/{ts}-to-{fs}/">{tc} &rarr; {fc}</a>'
+                _angle = _facts.route_angle(fco, tco)
                 intro = (f'<p>Planning a move from <b>{fc}</b> to <b>{tc}</b>? Universal Relocations makes relocating from '
                     f'{fc}, {fcountry}, to {tc}, {tcountry}, seamless — whether you’re shipping a few boxes, a shared '
-                    f'container, a full container or shifting an entire house. With 28+ years of experience, full FMC licensing and '
+                    f'container or a full container. With 28+ years of experience, full FMC licensing and '
                     f'our own hubs in the USA, India and the UAE, we handle packing, freight, customs and door-to-door delivery on '
                     f'the {fc}–{tc} route.</p>'
-                    f'<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
-                    f'<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Get a free quote</a></p>')
+                    + (f'<p>{_angle}</p>' if _angle else '')
+                    + '<p><a class="btn btn-primary" href="/moving-calculator/">Estimate your volume</a> '
+                    + '<a class="btn btn-ghost" href="/contact-us/" style="margin-left:8px">Get a free quote</a></p>')
                 know = (f'<p>Most {fc}-to-{tc} household moves travel by sea freight, with air freight available for urgent or '
                     f'smaller shipments. We prepare all export and import documentation and clear customs in {tcountry}, including '
                     f'any transfer-of-residence or duty relief you qualify for. Transit times vary by season and port; your dedicated '

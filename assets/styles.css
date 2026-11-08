@@ -1172,3 +1172,9 @@ a { transition: color .18s ease; }
 /* Tone down the arc-dots motif on photo headers so it doesn't collide with title/subtitle text */
 .page-hero.has-photo::after{opacity:.22;mix-blend-mode:screen}
 .page-hero.has-photo .container{position:relative;z-index:2}
+
+/* Country quick-facts strip (unique SEO content) */
+.quick-facts{display:flex;flex-wrap:wrap;gap:14px;margin:22px 0 4px}
+.qf{background:#f4f7fd;border:1px solid #e7ecf6;border-radius:12px;padding:12px 16px;min-width:120px}
+.qf span{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#7a869c;font-weight:700;margin-bottom:3px}
+.qf b{color:#00056e;font-size:1.02rem}
