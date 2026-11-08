@@ -1810,25 +1810,25 @@ def _num_word(n):
 def route_chooser(g, current=None):
     # Per-hub card definitions. The current hub leads with a "within/from" card.
     HUBCARD = {
-        "usa": ("Our USA hub","Shipping within the USA",
-                "Relocation support for interstate and intrastate movers — household, corporate and specialist moves across the United States.",
-                "PH_USA_HUB","/usa/","Explore USA"),
-        "india": ("Our India hub","Shipping to &amp; from India",
-                "Move personal belongings, baggage and household goods to and from India with coordinated packing, shipping, customs and door-to-door delivery.",
+        "usa": ("Popular route","Shipping to the USA",
+                "Move household goods, baggage and personal effects to the USA with coordinated packing, ocean or air freight, customs and door-to-door delivery.",
+                "PH_USA_HUB","/usa/","Explore Shipping to USA"),
+        "india": ("Popular route","Shipping to India",
+                "Move personal belongings, baggage and household goods to India with coordinated packing, shipping, customs and door-to-door delivery.",
                 "PH_INDIA_HUB","/india/","Explore Shipping to India"),
-        "uae": ("Our UAE hub","Shipping to &amp; from the UAE",
-                "Plan your move to or from the UAE — explore shipping options for your household goods and request a free quote.",
+        "uae": ("Regional hub","Shipping to the UAE",
+                "Plan your move to the UAE — explore shipping options for your household goods and request a free quote.",
                 "PH_UAE_HUB","/uae/","Explore Shipping to UAE"),
     }
     SELF = {
         "usa": ("Inbound &amp; domestic","Shipping within the USA",
-                "Interstate and intrastate moves plus international export from the USA — household, corporate and specialist relocations.",
+                "Relocation support for interstate and intrastate movers — household, corporate and specialist moves across the United States.",
                 "PH_USA_HUB","/usa/","Explore USA"),
-        "india": ("Your home hub","Shipping to &amp; from India",
-                "Export from India or bring your home back to India — coordinated packing, ocean &amp; air freight, customs and door-to-door delivery.",
+        "india": ("Domestic &amp; interstate","Shipping within India",
+                "Household, interstate and local moves across India — export-grade packing, transport and delivery by our own crews.",
                 "PH_INDIA_HUB","/india/","Explore India"),
-        "uae": ("Your home hub","Shipping to &amp; from the UAE",
-                "Move to or from the UAE with our Dubai team — LCL, FCL, baggage, pet and auto shipping, customs handled in-house.",
+        "uae": ("Local &amp; domestic","Shipping within the UAE",
+                "Local and interstate moves across the Emirates — packing, transport and delivery handled by our own Dubai team.",
                 "PH_UAE_HUB","/uae/","Explore UAE"),
     }
     order = ["usa","india","uae"]
