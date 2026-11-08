@@ -679,8 +679,11 @@ ASSISTANT_BODY = """
 <section class="chat-page">
   <div class="chat-wrap">
     <div class="chat-head">
-      <h1>Universal Relocations Move Assistant</h1>
-      <p>Tell me about your move and I'll get you an instant estimate.</p>
+      <div class="cha-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.8L3 20l1-4a8.4 8.4 0 0 1-.8-3.6A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg></div>
+      <div class="cha-txt">
+        <h1>Universal Relocations Move Assistant</h1>
+        <p>Online now — tell me about your move and I'll get you an instant estimate.</p>
+      </div>
     </div>
     <div class="chat-stream" id="chat-stream"></div>
     <div class="chat-inputbar" id="chat-inputbar"></div>
