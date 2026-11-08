@@ -8,6 +8,7 @@ Imported and called by pages.build().
 """
 from urllib.parse import quote
 import facts as _facts
+import drive_photos as _dp
 
 # ---------------------------------------------------------------------------
 # FAQ engine  (accordion HTML + schema.org FAQPage JSON-LD)
@@ -1628,6 +1629,14 @@ def build_hubs(g):
             + compare_table()
             + core_strengths()
             + why_us_band()
+            + isec(media_row(_dp.img(_dp.TEAM_TRUCK, 1200),
+                   f"Your move, handled by our own team",
+                   f'<p>When you move from {hubname}, you work with our own crews, warehouses and in-house customs '
+                   f'brokers — not a chain of subcontractors. The same Universal Relocations team packs, ships, clears '
+                   f'and delivers your home, so accountability stays in one place from your first survey to your doorstep.</p>',
+                   reverse=True))
+            + _dp.gallery(_dp.STAFF_IDS[:4], title=f"The team behind your move",
+                   sub="Real people, real crews — across the USA, India and the UAE.", eyebrow="Our people")
             + office_locator(hubslug, g)
             + trust_logos(g, alt=True)
             + faq_isec(faqs)
